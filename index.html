@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>petshop-project</title>
+  <link rel="stylesheet" href="./src/index.css">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be_Vietnam_Pro:wght@300;400;500;600&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface-variant": "#554434",
+            "surface-container-high": "#e7e8e9",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#ffdf9b",
+            "on-primary-fixed": "#2e1500",
+            "inverse-on-surface": "#f0f1f2",
+            "on-secondary-container": "#006575",
+            "surface-container": "#edeeef",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed": "#001f25",
+            "on-tertiary-container": "#564000",
+            "error": "#ba1a1a",
+            "tertiary": "#785a00",
+            "on-primary-container": "#683700",
+            "surface-dim": "#d9dadb",
+            "error-container": "#ffdad6",
+            "surface-tint": "#8f4e00",
+            "tertiary-fixed-dim": "#edc157",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#f3f4f5",
+            "surface-container-highest": "#e1e3e4",
+            "outline": "#887361",
+            "inverse-surface": "#2e3132",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#a7edff",
+            "primary-fixed": "#ffdcc2",
+            "secondary-fixed-dim": "#58d6f1",
+            "secondary": "#006878",
+            "on-tertiary-fixed-variant": "#5b4300",
+            "primary-fixed-dim": "#ffb77a",
+            "primary-container": "#f99a3f",
+            "on-background": "#191c1d",
+            "on-primary-fixed-variant": "#6d3a00",
+            "on-secondary": "#ffffff",
+            "primary": "#8f4e00",
+            "on-error": "#ffffff",
+            "on-surface": "#191c1d",
+            "on-primary": "#ffffff",
+            "outline-variant": "#dbc2ad",
+            "secondary-container": "#69e5ff",
+            "surface": "#f8f9fa",
+            "tertiary-container": "#d5ab44",
+            "background": "#f8f9fa",
+            "on-secondary-fixed-variant": "#004e5b",
+            "on-tertiary-fixed": "#251a00",
+            "inverse-primary": "#ffb77a",
+            "surface-variant": "#e1e3e4"
+          },
+          fontFamily: {
+            "headline": ["Plus Jakarta Sans"],
+            "body": ["Be Vietnam Pro"],
+            "label": ["Plus Jakarta Sans"]
+          },
+          borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+</head>
+
+<body class="bg-surface font-body text-on-surface">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
