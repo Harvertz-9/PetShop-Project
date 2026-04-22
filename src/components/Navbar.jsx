@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -10,7 +11,7 @@ export default function Navbar() {
                 <div className="hidden lg:flex gap-6 items-center">
                     <a className="text-orange-600 dark:text-orange-400 font-bold border-b-2 border-orange-500 pb-1 font-headline text-sm" href="#">Home</a>
                     <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Services</a>
-                    <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Catalog</a>
+                    <Link to="/CatalogProduct" className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm">Catalog</Link>
                     <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">About Us</a>
                     <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Contact Us</a>
                 </div>
@@ -19,9 +20,9 @@ export default function Navbar() {
                         <span className="material-symbols-outlined">shopping_cart</span>
                     </button>
                     <div className="hidden sm:flex items-center gap-2">
-                        <button className="text-slate-600 dark:text-slate-400 font-bold px-4 py-2 rounded-full hover:bg-surface-container-low dark:hover:bg-slate-800 transition-all duration-300 scale-95 active:scale-90 text-sm">
+                        <Link to="/signin" className="text-slate-600 dark:text-slate-400 font-bold px-4 py-2 rounded-full hover:bg-surface-container-low dark:hover:bg-slate-800 transition-all duration-300 scale-95 active:scale-90 text-sm">
                             Sign In
-                        </button>
+                        </Link>
                         <button className="bg-gradient-to-r from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-full font-bold hover:opacity-90 transition-all duration-300 scale-95 active:scale-90 shadow-lg text-sm">
                             Sign Up
                         </button>
@@ -53,7 +54,7 @@ export default function Navbar() {
                             <span className="font-medium text-slate-700 dark:text-slate-200">My Cart</span>
                         </div>
                         <div className="flex flex-col gap-3 pt-4">
-                            <button className="w-full text-slate-700 dark:text-slate-200 font-bold py-4 rounded-xl border-2 border-surface-container hover:bg-surface-container-low transition-all">Sign In</button>
+                            <Link to="/signin" className="w-full text-slate-700 dark:text-slate-200 font-bold py-4 rounded-xl border-2 border-surface-container hover:bg-surface-container-low transition-all">Sign In</Link>
                             <button className="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold py-4 rounded-xl shadow-lg hover:opacity-90 transition-all">Sign Up</button>
                         </div>
                     </div>
