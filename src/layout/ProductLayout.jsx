@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import { Link } from "react-router-dom"
 
 export default function ProductLayout() {
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false)
@@ -129,7 +130,7 @@ export default function ProductLayout() {
                         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
 
                             {/* Product Card 1 */}
-                            <div className="group cursor-pointer">
+                            <Link to='/ProductDetail' className="group cursor-pointer">
                                 <div className="relative aspect-square bg-surface-container-low rounded-lg overflow-hidden mb-3">
                                     <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" alt="Premium leather dog collar with brass hardware" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjUnC4mOdPixnlThKWLXMQPxBdfRuKohYfITSS01si8h1wdvajKJJHmD9tdoc33Kuqiv_7OlTbVrSi1wPELxPBqTmW_CjyLBojWRY04MZnyOXY8Z1iE61lZ6Nq-lARprIr_aHFz9pga4R4jTSi606OQJ2ExN_EcY_H6oOihLuvQZxIi0cV832qPJdiKebNUx8pRDHcYFXAGAJSm1fOvA9vXy7TwOeZHsEFalurG-o5418JzhGn9i2WhdIvinGMZc-FmWTadzCXmiOo" />
                                     <span className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest shadow-sm">Bestseller</span>
@@ -145,7 +146,7 @@ export default function ProductLayout() {
                                         </button>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
 
                             {/* Product Card 2 */}
                             <div className="group cursor-pointer">
