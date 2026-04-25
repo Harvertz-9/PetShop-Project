@@ -1,6 +1,20 @@
-import { Link } from 'react-router-dom'  // ← tambahkan ini
+import { useState } from "react"
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/useAuth'
 
 export default function SignInLayout() {
+    const { signIn, error } = useAuth()
+    const navigate = useNavigate()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const role = signIn(email, password)
+        if (role === "admin") navigate("/admin")
+        else if (role === "user") navigate("/")
+    }
+
     return (
         <>
             <div className="absolute -top-24 -left-24 w-64 h-64 sm:w-96 sm:h-96 bg-primary-container/20 rounded-full blur-3xl"></div>
@@ -10,12 +24,20 @@ export default function SignInLayout() {
                     <div className="p-6 sm:p-10">
                         <div className="mb-6 sm:mb-8 text-center">
                             <div className="flex justify-center mb-6">
-                                <span className="text-2xl font-black text-orange-600 dark:text-orange-500 tracking-tight select-none">Pet Atelier</span>
+                                <span className="text-2xl font-black text-orange-600 tracking-tight select-none">Pet Atelier</span>
                             </div>
                             <h2 className="font-bold text-xl sm:text-2xl text-on-surface mb-2">Welcome Back!</h2>
                             <p className="text-on-surface-variant text-sm">Please enter your details to sign in.</p>
                         </div>
-                        <form className="space-y-5 sm:space-y-6">
+
+                        {/* Error message */}
+                        {error && (
+                            <div className="mb-4 px-4 py-3 bg-error-container/30 text-error rounded-xl text-sm font-medium">
+                                {error}
+                            </div>
+                        )}
+
+                        <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
                             <div className="space-y-2">
                                 <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-on-surface-variant ml-1" htmlFor="email">
                                     Email Address
@@ -27,6 +49,9 @@ export default function SignInLayout() {
                                         id="email"
                                         placeholder="hello@petatelier.com"
                                         type="email"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -44,6 +69,9 @@ export default function SignInLayout() {
                                         id="password"
                                         placeholder="••••••••"
                                         type="password"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -54,6 +82,7 @@ export default function SignInLayout() {
                                 Sign In
                             </button>
                         </form>
+
                         <div className="relative my-8 sm:my-10 text-center">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-outline-variant/30"></div>
@@ -62,10 +91,18 @@ export default function SignInLayout() {
                                 Or continue with
                             </span>
                         </div>
-                        <div className="mt-8 text-center">
+
+                        {/* Hint akun untuk testing */}
+                        {/* <div className="mb-6 p-4 bg-surface-container-low rounded-xl text-xs text-on-surface-variant space-y-1">
+                            <p className="font-bold text-on-surface mb-2">Test Accounts:</p>
+                            <p>👑 Admin: <span className="font-mono">admin@petatelier.com</span> / <span className="font-mono">admin123</span></p>
+                            <p>👤 User: <span className="font-mono">user@petatelier.com</span> / <span className="font-mono">user123</span></p>
+                        </div> */}
+
+                        <div className="text-center">
                             <p className="text-sm text-on-surface-variant font-medium">
                                 Don't have an account?{' '}
-                                <Link to="/SignUp" className="text-primary font-bold hover:underline" >Sign Up</Link>
+                                <Link to="/signup" className="text-primary font-bold hover:underline">Sign Up</Link>
                             </p>
                         </div>
                     </div>
