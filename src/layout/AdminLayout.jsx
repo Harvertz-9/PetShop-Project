@@ -1,190 +1,172 @@
-import { Link } from "react-router-dom"
+import Sidebar from "../components/Sidebar"
 export default function AdminLayout() {
     return (
         <>
-            <header className="lg:hidden flex items-center justify-between p-4 bg-slate-50 border-b border-outline-variant/15 sticky top-0 z-50">
-                <h1 className="text-lg font-bold text-slate-900 headline-font">Atelier Admin</h1>
-                <label className="cursor-pointer p-2" for="mobile-menu-checkbox">
-                    <span className="material-symbols-outlined">menu</span>
-                </label>
-            </header>
-            <input className="hidden" id="mobile-menu-checkbox" type="checkbox" />
-            <div className="overlay fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="document.getElementById('mobile-menu-checkbox').checked = false"></div>
-            <aside className="h-full w-72 fixed left-0 top-0 overflow-y-auto bg-slate-50 border-r border-outline-variant/15 flex flex-col p-6 gap-2 z-50 transition-transform -translate-x-full lg:translate-x-0">
-                <div className="mb-8 px-4 hidden lg:block">
-                    <h1 className="text-xl font-bold text-slate-900 headline-font">Atelier Admin</h1>
-                    <p className="text-xs text-on-surface-variant/70">Store Management</p>
-                </div>
-                <div className="lg:hidden flex justify-between items-center mb-8 px-4">
-                    <div>
-                        <h1 className="text-xl font-bold text-slate-900 headline-font">Atelier Admin</h1>
-                        <p className="text-xs text-on-surface-variant/70">Store Management</p>
-                    </div>
-                    <label className="cursor-pointer" for="mobile-menu-checkbox">
-                        <span className="material-symbols-outlined">close</span>
-                    </label>
-                </div>
-                <nav className="flex flex-col gap-2">
-                    <a className="bg-orange-100 text-orange-700 rounded-full px-4 py-3 flex items-center gap-3 font-['Be_Vietnam_Pro'] text-sm font-medium transition-transform hover:translate-x-1" href="#">
-                        <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-                        Dashboard
-                    </a>
-                    <a className="text-slate-500 px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 rounded-full transition-all font-['Be_Vietnam_Pro'] text-sm font-medium hover:translate-x-1" href="#">
-                        <span className="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-                        Manage Toys
-                    </a>
-                    <Link to='/ManageFood' className="text-slate-500 px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 rounded-full transition-all font-['Be_Vietnam_Pro'] text-sm font-medium hover:translate-x-1">
-                        <span className="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-                        Manage Food
-                    </Link>
-                    <a className="text-slate-500 px-4 py-3 flex items-center gap-3 hover:bg-slate-200/50 rounded-full transition-all font-['Be_Vietnam_Pro'] text-sm font-medium hover:translate-x-1" href="#">
-                        <span className="material-symbols-outlined" data-icon="monitoring">monitoring</span>
-                        Manage Collars
-                    </a>
-                </nav>
-                <div className="mt-auto pt-6 border-t border-outline-variant/15">
-                    <div className="flex items-center gap-3 px-4">
-                        <div className="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
-                            <img alt="Admin profile photo" className="w-full h-full object-cover" data-alt="Professional headshot of a friendly business manager in a light-filled modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3CZUM5CrQEHuEQ9HfV_l_LsoiHnrSyv4nXUwt5kYBdQWIOBnoynIUb4nbQiOU7r0Ez_RGN2uOQzRYjt11mYf7zomt3PXr0fQ9ttAVHVtowFGDvbb3vQ1lFXm4BGZ_yhGcDr7G5ayAzxty9h9nnbo0yzCkjHUQ5S4WPl9YTmaJ2h1p65Yfk0egyL8kWxcgCZS2-vvGIIJI6QuPtuNtqSmi7n_losCoOnvrYqxB46LYxdKleFewZIskHj_6qr8vGAY_8lhs_tnw4DIH" />
-                        </div>
-                        <div>
-                            <p className="text-sm font-bold">Alex Rivers</p>
-                            <p className="text-xs text-on-surface-variant">Store Owner</p>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <main className="lg:ml-72 flex-grow p-4 md:p-10 transition-all">
-                <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 md:mb-12 gap-4">
-                    <div>
-                        <h2 className="text-3xl md:text-4xl font-extrabold headline-font tracking-tight text-on-surface">Overview</h2>
-                        <p className="text-on-surface-variant mt-2 text-base md:text-lg">Welcome back to Pet Atelier.</p>
-                    </div>
-                </header>
-                <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-12">
-                    <div className="bg-surface-container-low p-6 md:p-8 rounded-xl flex flex-col gap-4">
-                        <div className="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
-                            <span className="material-symbols-outlined" data-icon="pets">pets</span>
-                        </div>
-                        <div>
-                            <p className="text-on-surface-variant font-medium">Total Pets</p>
-                            <h3 className="text-3xl md:text-4xl font-black headline-font">1,284</h3>
-                        </div>
-                        <p className="text-xs font-bold text-green-600 bg-green-100 self-start px-2 py-1 rounded-full">+12% this month</p>
-                    </div>
-                    <div className="bg-surface-container-low p-6 md:p-8 rounded-xl flex flex-col gap-4">
-                        <div className="w-12 h-12 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary">
-                            <span className="material-symbols-outlined" data-icon="today">today</span>
-                        </div>
-                        <div>
-                            <p className="text-on-surface-variant font-medium">Appointments Today</p>
-                            <h3 className="text-3xl md:text-4xl font-black headline-font">24</h3>
-                        </div>
-                        <p className="text-xs font-bold text-orange-600 bg-orange-100 self-start px-2 py-1 rounded-full">4 pending</p>
-                    </div>
-                    <div className="bg-surface-container-low p-6 md:p-8 rounded-xl flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
-                        <div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
-                            <span className="material-symbols-outlined" data-icon="payments">payments</span>
-                        </div>
-                        <div>
-                            <p className="text-on-surface-variant font-medium">Monthly Revenue</p>
-                            <h3 className="text-3xl md:text-4xl font-black headline-font">$42,850</h3>
-                        </div>
-                        <p className="text-xs font-bold text-green-600 bg-green-100 self-start px-2 py-1 rounded-full">On track for target</p>
-                    </div>
-                </section>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <section className="lg:col-span-2 bg-surface-container-lowest rounded-lg p-6 md:p-8 shadow-[0_20px_40px_rgba(25,28,29,0.06)] overflow-hidden">
-                        <div className="flex justify-between items-center mb-6 md:mb-8">
-                            <h3 className="text-xl md:text-2xl font-bold headline-font">Grooming Today</h3>
-                            <button className="text-primary font-bold hover:underline text-sm md:text-base">View All</button>
-                        </div>
-                        <div className="space-y-4 md:space-y-6">
-                            <div className="flex items-center justify-between p-3 md:p-4 hover:bg-surface-container-low rounded-lg transition-colors group">
-                                <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden shrink-0">
-                                        <img alt="Golden Retriever" className="w-full h-full object-cover" data-alt="Portrait of a happy golden retriever with a fresh haircut sitting against a soft blue studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6lBTOh-PJoF55ApPZFX-xoPMtUHagBvyxWrgw8QwrrgaMzAQtL9qOqtxSV963H9WB_JBUixjuTqPe4YioYdQ-H8sIqX2Rt5sRYShq22-_vPJAdfTDEhk-2STbs-OkB1KNxoSS3z1t-9cFxLp9_zFj8Z0_lGg93LCQ0XDf4qNDkvGy318ls6h5rQW1aXAkBnVYncQTT6qqLYo-0kLEVfyHQw7mPbBo7gKsagHgCS66vxgSs48QSvVBdBWgzt9y7sOgQLaaXeSwYZI6" />
-                                    </div>
-                                    <div className="truncate">
-                                        <p className="font-bold text-on-surface text-sm md:text-base truncate">Buddy</p>
-                                        <p className="text-xs md:text-sm text-on-surface-variant truncate">Golden Retriever • Full Grooming</p>
-                                    </div>
-                                </div>
-                                <div className="text-right shrink-0">
-                                    <p className="font-bold text-xs md:text-base">10:30 AM</p>
-                                    <span className="inline-block px-2 md:px-3 py-1 rounded-full bg-green-100 text-green-700 text-[10px] md:text-xs font-bold">Checked In</span>
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-between p-3 md:p-4 hover:bg-surface-container-low rounded-lg transition-colors group">
-                                <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden shrink-0">
-                                        <img alt="Calico Cat" className="w-full h-full object-cover" data-alt="Fluffy calico cat with bright green eyes looking curiously at the camera on a white sheepskin rug" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfF8Sb31cTj_bQjfqL18pttxLl59vaxq_4ujE5nK2N78ptZHXlkYY3z-uxpIxbkXnUH5iDUWt9L2xnn4NK7khBO9faOaeP1iGyDDTsVVDorO7d4gzAI9qqA2GEDwo3qUGH9HEph3T9hCd3-T7PB5nbAVCSFPCrHbXu8udYq8Ms2v2LQ81EnNRnj8lnrJc9wYlM9VWuAhJ7IblPjcWHKUiX3hn3HSswPl8VY_i7P9PxTmRRY-UCWJiZ9-DhdFL9G8RTrzj2v-BUZ6oD" />
-                                    </div>
-                                    <div className="truncate">
-                                        <p className="font-bold text-on-surface text-sm md:text-base truncate">Luna</p>
-                                        <p className="text-xs md:text-sm text-on-surface-variant truncate">Calico Cat • Nail Trimming</p>
-                                    </div>
-                                </div>
-                                <div className="text-right shrink-0">
-                                    <p className="font-bold text-xs md:text-base">11:15 AM</p>
-                                    <span className="inline-block px-2 md:px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-[10px] md:text-xs font-bold">In Progress</span>
-                                </div>
-                            </div>
-                            <div className="flex items-center justify-between p-3 md:p-4 hover:bg-surface-container-low rounded-lg transition-colors group">
-                                <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden shrink-0">
-                                        <img alt="Corgi" className="w-full h-full object-cover" data-alt="Adorable corgi dog tilting its head playfully on a polished wooden floor in a sunny living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtKgVPWoVbWnK-FordOqMwpp9Z4bfaWfnP_6HErW6a91PouKrHRS7wNa6aaCS57w8TAnfLQu-7gDiQAiad5iGfB9hw_WSTPDtXBpZBrfjAZJhtoPcYmoar1cnHd2OxeLbBIWxRxs9btJCFRqP1jybdgaHvJXdMe7yuVpdlTPKdKHo6aj8iVZBsaSPVOD10hOXEuhWm4VEDwzNhdwMijK1f_SMIML0hQXS7Oi7iOA-yey9MIr9HY7uzhGRsAALToIXoYiZBxqcucADy" />
-                                    </div>
-                                    <div className="truncate">
-                                        <p className="font-bold text-on-surface text-sm md:text-base truncate">Oliver</p>
-                                        <p className="text-xs md:text-sm text-on-surface-variant truncate">Corgi • Bath &amp; Brush</p>
-                                    </div>
-                                </div>
-                                <div className="text-right shrink-0">
-                                    <p className="font-bold text-xs md:text-base">01:00 PM</p>
-                                    <span className="inline-block px-2 md:px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[10px] md:text-xs font-bold">Upcoming</span>
-                                </div>
+            <div className="flex">
+            <Sidebar />
+            <main className="flex-grow flex flex-col min-w-0">
+                <div className="p-8 space-y-12">
+                    <section className="flex flex-col md:flex-row justify-between items-end gap-6">
+                        <div className="flex items-center justify-between w-full">
+                            <h1 className="text-5xl font-extrabold text-on-surface tracking-tight leading-none">Dashboard</h1>
+                            <div className="flex gap-3">
+                                <button className="px-4 py-2 text-md md:px-8 md:py-4 bg-secondary-container text-on-secondary-container font-bold rounded-full hover:shadow-lg transition-all flex items-center gap-2">
+                                    <span className="material-symbols-outlined md:flex hidden" data-icon="download">download</span>
+                                    Export Report
+                                </button>
                             </div>
                         </div>
                     </section>
-                    <section className="flex flex-col gap-8">
-                        <div className="bg-surface-container-low rounded-lg p-6 md:p-8">
-                            <h3 className="text-lg md:text-xl font-bold headline-font mb-4 md:mb-6">Inventory Alerts</h3>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-surface-container-lowest rounded-lg border border-error/10">
-                                    <div className="text-error shrink-0">
-                                        <span className="material-symbols-outlined" data-icon="warning">warning</span>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs md:text-sm font-bold text-on-surface">Organic Kibble (Beef)</p>
-                                        <p className="text-[10px] md:text-xs text-on-surface-variant">Only 3 units left</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-surface-container-lowest rounded-lg border border-tertiary/10">
-                                    <div className="text-tertiary shrink-0">
-                                        <span className="material-symbols-outlined" data-icon="inventory">inventory</span>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs md:text-sm font-bold text-on-surface">Silk Fur Conditioner</p>
-                                        <p className="text-[10px] md:text-xs text-on-surface-variant">Reorder suggested</p>
-                                    </div>
-                                </div>
+                    <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.06)] relative overflow-hidden group">
+                            <div className="absolute -right-4 -top-4 w-32 h-32 bg-primary/5 rounded-full group-hover:scale-125 transition-transform duration-500"></div>
+                            <span className="material-symbols-outlined text-primary mb-4 block" data-icon="payments">payments</span>
+                            <h3 className="text-on-surface-variant text-sm font-bold uppercase tracking-widest">Total Sales (MTD)</h3>
+                            <div className="flex items-baseline gap-2 mt-2">
+                                <span className="text-4xl font-black text-on-surface">$42,890</span>
+                                <span className="text-emerald-600 text-sm font-bold flex items-center">+12%</span>
                             </div>
-                            <button className="w-full mt-6 py-3 text-sm font-bold text-primary hover:bg-primary/5 rounded-full transition-colors">Go to Dashboard</button>
+                            <div className="mt-6 flex items-center text-xs text-on-surface-variant font-medium gap-1">
+                                <span className="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span>
+                                Surpassing previous quarter by 4.2%
+                            </div>
                         </div>
-                        <div className="bg-gradient-to-br from-secondary to-on-secondary-fixed-variant rounded-lg p-6 md:p-8 text-on-secondary relative overflow-hidden group">
-                            <div className="relative z-10">
-                                <h3 className="text-lg md:text-xl font-bold headline-font mb-2">Summer Sale</h3>
-                                <p className="text-xs md:text-sm text-secondary-fixed/80 mb-6 leading-relaxed">Launch the "Happy Tail" package.</p>
-                                <button className="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-full text-xs md:text-sm font-bold group-hover:scale-105 transition-transform">Get Started</button>
+                        <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.06)] relative overflow-hidden group">
+                            <div className="absolute -right-4 -top-4 w-32 h-32 bg-secondary/5 rounded-full group-hover:scale-125 transition-transform duration-500"></div>
+                            <span className="material-symbols-outlined text-secondary mb-4 block" data-icon="calendar_today">calendar_today</span>
+                            <h3 className="text-on-surface-variant text-sm font-bold uppercase tracking-widest">Active Appointments</h3>
+                            <div className="flex items-baseline gap-2 mt-2">
+                                <span className="text-4xl font-black text-on-surface">18</span>
+                                <span className="text-on-surface-variant text-sm">/ 25 slots</span>
                             </div>
-                            <div className="absolute -right-4 -bottom-4 opacity-20 transition-transform group-hover:scale-110 duration-500">
-                                <span className="material-symbols-outlined text-7xl md:text-9xl" data-icon="campaign">campaign</span>
+                            <div className="mt-6 w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+                                <div className="bg-secondary h-full rounded-full w-[72%]"></div>
+                            </div>
+                        </div>
+                        <div className="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_40px_rgba(25,28,29,0.06)] relative overflow-hidden group">
+                            <div className="absolute -right-4 -top-4 w-32 h-32 bg-tertiary/5 rounded-full group-hover:scale-125 transition-transform duration-500"></div>
+                            <span className="material-symbols-outlined text-tertiary mb-4 block" data-icon="inventory_2">inventory_2</span>
+                            <h3 className="text-on-surface-variant text-sm font-bold uppercase tracking-widest">Inventory Health</h3>
+                            <div className="flex items-baseline gap-2 mt-2">
+                                <span className="text-4xl font-black text-on-surface">94%</span>
+                                <span className="text-orange-600 text-sm font-bold flex items-center">3 low stock</span>
+                            </div>
+                            <div className="mt-6 flex gap-2">
+                                <span className="px-3 py-1 bg-tertiary-container/20 text-on-tertiary-container rounded-full text-xs font-bold uppercase">Collars Optimal</span>
+                                <span className="px-3 py-1 bg-error-container/20 text-on-error-container rounded-full text-xs font-bold uppercase">Food Alert</span>
+                            </div>
+                        </div>
+                    </section>
+                    <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div className="lg:col-span-8 bg-surface-container-low rounded-xl p-8 space-y-8">
+                            <div className="flex justify-between items-center">
+                                <h2 className="text-2xl font-extrabold tracking-tight">Sales Trajectory</h2>
+                                <div className="flex bg-white/50 p-1 rounded-full border border-outline-variant/15">
+                                    <button className="px-4 py-1 rounded-full text-xs font-bold bg-white shadow-sm">Weekly</button>
+                                    <button className="px-4 py-1 rounded-full text-xs font-bold text-on-surface-variant">Monthly</button>
+                                </div>
+                            </div>
+                            <div className="h-[300px] flex items-end gap-3 px-4">
+                                <div className="flex-1 bg-primary-container/30 h-[40%] rounded-t-lg group relative">
+                                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">Mon</div>
+                                </div>
+                                <div className="flex-1 bg-primary-container/50 h-[65%] rounded-t-lg group relative"></div>
+                                <div className="flex-1 bg-primary-container h-[85%] rounded-t-lg group relative"></div>
+                                <div className="flex-1 bg-primary-container/60 h-[55%] rounded-t-lg group relative"></div>
+                                <div className="flex-1 bg-primary-container/40 h-[45%] rounded-t-lg group relative"></div>
+                                <div className="flex-1 bg-primary-container h-[95%] rounded-t-lg group relative"></div>
+                                <div className="flex-1 bg-secondary h-[75%] rounded-t-lg group relative"></div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-outline-variant/15">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shadow-sm">
+                                        <span className="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Top Category</p>
+                                        <p className="text-lg font-black">Bespoke Collars</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-secondary shadow-sm">
+                                        <span className="material-symbols-outlined" data-icon="stars">stars</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Growth Lead</p>
+                                        <p className="text-lg font-black">Organic Kibble</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="lg:col-span-4 flex flex-col gap-8">
+                            <div className="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.06)] flex-grow flex flex-col">
+                                <h2 className="text-xl font-extrabold mb-6 flex items-center gap-2">
+                                    Upcoming Paws
+                                    <span className="px-2 py-0.5 bg-secondary-container/20 text-on-secondary-container rounded text-xs">4 Total</span>
+                                </h2>
+                                <div className="space-y-6 flex-grow">
+                                    <div className="flex items-start gap-4">
+                                        <div className="relative">
+                                            <img alt="A happy Beagle dog" className="w-14 h-14 rounded-lg object-cover" data-alt="close-up portrait of a friendly beagle with floppy ears and brown eyes, warm outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkQcXLcHpLEvpnx-v4cUIo_4JcfRSgROvLRtAwy4mZ3rECNWtnJgxp5Yy5tzmqoxwu6FFsKor2h81OMQs-wHgOskgY60w6XiDjPPY9huD455YKA312FV9qq_aB4AH2TTtK4HKnL6jAuDsR3AMYccbqWJor-rsG5IJi2vdpq-ivB7AqM3P4kkau5HlJJ-_EM7rZq0Qn6NN8mg_aJEJoTf5flbSquQIzwIvZAzReUTBhbg-kVpdGuw6a-UkJ_Hv6Wcybia5WwAkdhZ_Z" />
+                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></div>
+                                        </div>
+                                        <div className="flex-grow">
+                                            <div className="flex justify-between">
+                                                <p className="font-bold text-on-surface">Barnaby</p>
+                                                <p className="text-xs font-black text-secondary">09:30 AM</p>
+                                            </div>
+                                            <p className="text-xs text-on-surface-variant">Full Groom &amp; Spa</p>
+                                            <div className="mt-2 flex gap-1">
+                                                <span className="px-2 py-0.5 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-tighter">Gold Tier</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-4">
+                                        <div className="relative">
+                                            <img alt="A fluffy white Pomeranian" className="w-14 h-14 rounded-lg object-cover" data-alt="close-up of a fluffy small white dog with bright dark eyes looking directly at the camera, soft indoor studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3q2lftsrm8_07uqV840oyMlrrtmN2hCncjbkWIYfWUKusP7uiFUrlX9CUcazGrP4WyhrH_riOLtyE6HSVNmqKO-U_E0oguv2f4Cevbx1wmB_iIOMRtfBYrD4G2CfhuCDcPbVCM78-CvqSMhzSoASSsfScLL9sGsD6Ix9bkYyrTlitPXPaoCJ_NihC5d-sf2YNWtp_Od5YzTmlbFhiXWU1Etf9PNLBgRRCpXXfqUoff8diHCtyc7TcDDFMTyzdU0db2FulZTugXWpg" />
+                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-orange-400 border-2 border-white rounded-full"></div>
+                                        </div>
+                                        <div className="flex-grow">
+                                            <div className="flex justify-between">
+                                                <p className="font-bold text-on-surface">Luna</p>
+                                                <p className="text-xs font-black text-secondary">11:15 AM</p>
+                                            </div>
+                                            <p className="text-xs text-on-surface-variant">Claw Trim Only</p>
+                                            <div className="mt-2 flex gap-1">
+                                                <span className="px-2 py-0.5 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-tighter">Regular</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-4 opacity-70">
+                                        <div className="relative">
+                                            <img alt="Golden Retriever" className="w-14 h-14 rounded-lg object-cover" data-alt="Golden Retriever puppy sitting in green grass during late afternoon golden hour with soft rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFGvJ013s5BlKPKOhLU0RRC_StpCM_LNV8w_8kapW9qdouWtSStCBYxxjeLtTg4uWuhMxPKI4VNpq2yscWmZNoQ-V4xV-QOYpD2X32Hy57LuJ0-nqKl53g6-WlCeNohPs4LW6N_PZLAW7X3G-fBMVAhsuEANQa157NJTIkflPKueDGc8csBPmXzJ7oRKdmSECpK36OVbPVKnHUD4fNJWUM5Bt7cEQ8oqRyTNQiRDs9FsgOzJGrH_XtMtzhDLLl3AUuApLsAXZx638i" />
+                                        </div>
+                                        <div className="flex-grow">
+                                            <div className="flex justify-between">
+                                                <p className="font-bold text-on-surface">Cooper</p>
+                                                <p className="text-xs font-black text-secondary">02:00 PM</p>
+                                            </div>
+                                            <p className="text-xs text-on-surface-variant">Teeth Cleaning</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button className="w-full mt-8 py-3 bg-surface-container text-on-surface-variant font-bold text-sm rounded-full hover:bg-surface-container-high transition-colors">
+                                    View All Appointments
+                                </button>
+                            </div>
+                            <div className="bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-white relative overflow-hidden">
+                                <div className="relative z-10">
+                                    <h3 className="text-xl font-extrabold leading-tight">Refill Inventory Now</h3>
+                                    <p className="text-sm opacity-90 mt-2">3 types of "Organic Lamb" are running low. Order before 4PM for tomorrow's delivery.</p>
+                                    <button className="mt-4 px-6 py-2 bg-white text-primary font-bold rounded-full text-xs">Manage Stock</button>
+                                </div>
+                                <span className="material-symbols-outlined absolute -bottom-4 -right-4 text-9xl opacity-10" data-icon="restaurant">restaurant</span>
                             </div>
                         </div>
                     </section>
                 </div>
-            </main>
+            </main> 
+            </div>
         </>
     )
 }
