@@ -9,7 +9,7 @@ export default function ProductLayout() {
     return (
         <>
             <Navbar />
-            <main className="max-w-screen-2xl mx-auto px-4 md:px-8 py-6 md:py-12">
+            <main className="max-w-screen-2xl mx-auto px-4 pt-20 md:px-8 py-6 md:py-12">
 
                 {/* Hero Section */}
                 <section className="mb-12 md:mb-16 relative overflow-hidden rounded-lg bg-surface-container-low p-8 md:p-12 lg:p-16 flex flex-col lg:flex-row items-center gap-8 md:gap-12">
@@ -35,7 +35,7 @@ export default function ProductLayout() {
                             alt="A joyful golden retriever jumping mid-air in a bright, sun-drenched studio"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwVR2FM6A43jk8ObwrYfOb9HzxlW5Tzm-VBDvg2ANxSbW7y-LTO_HYUFhfQdcyYevoT0AZABOyMya3nzmC_b7aDFo2-_6tK2rsmWsNFTCJueU5RVTnjjf0aw_i-6CYypfrwIYzsVt3Uee6DScdzyxzEC0ovJssBkwp2bDv2m9BfiREXA4u9H3dTSMEnm4Ay1lYD_g0sn3YeE8eNb9h83x3SIK12YbBHoEKd1EGDZBk4sotSeaGjkPuLxwL6RJRM4iahnmFhyszulFJ"
                         />
-                        <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-4 md:p-6 rounded-lg shadow-xl z-20">
+                        <div className="absolute -bottom-4 -left-4 md:-bottom-6 md:-left-6 bg-white p-4 md:p-6 rounded-lg shadow-xl hidden md:flex z-20">
                             <div className="flex items-center gap-3 md:gap-4">
                                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
                                     <span

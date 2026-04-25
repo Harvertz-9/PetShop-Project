@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export default function DetailProductLayout() {
     return (
         <>
-            <nav className="fixed top-0 w-full z-50 px-6 py-8 md:px-12 pointer-events-none">
+            <nav className="fixed top-0 w-full z-50 px-6 py-8 md:px-12 pointer-events-none bg-white backdrop-blur-lg">
                 <div className="max-w-7xl mx-auto w-full pointer-events-auto">
                     <a className="inline-flex items-center gap-2 px-4 py-2 rounded-full custom-glass shadow-[0_20px_40px_rgba(25,28,29,0.06)] group hover:bg-surface-container-lowest transition-all duration-300 active:scale-95" href="#">
                         <span className="material-symbols-outlined text-primary font-bold">arrow_back</span>

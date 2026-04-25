@@ -8,7 +8,7 @@ export default function CartLayout() {
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
                     <div class="lg:col-span-8 space-y-6 md:space-y-10">
                         <div class="space-y-4 md:space-y-6">
-                            <div class="bg-surface-container-low p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
+                            <div class="bg-white shadow-2xl p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
                                 <div class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded-xl bg-surface-container">
                                     <img alt="Artisan Leather Collar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3z7y_dT6jJ3YqOM75ccnIIoB4HctgRF7hAPmlaGjLwsswfFZ7zs6zQlkRkwi9pSh5XZLjjAz3bR5P37rFUE8ydfcMbzg8exCNe4jdvZtfOF7VRzkOeyftyub7yKDO4wKv1B795F2GnTTpqSyL3ZRcGrfuZl9CBnysMO4Eav9Pz6vb0Fk9hpcizcMOVRSB6hU3J5GdXBZCPx3VJusEWhmTdsCeKpMu_bdHraB5G3zoEQ5jmsmtqBuLBtbtXgy0T4QW2dCJJENL1o51" />
                                 </div>
@@ -37,7 +37,7 @@ export default function CartLayout() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-surface-container-low p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
+                            <div class="bg-white shadow-2xl p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
                                 <div class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded-xl bg-surface-container">
                                     <img alt="Organic Wellness Bites" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6RROTqizLAY8fkTY1N2D2GlvGhrYXw_px4i6O6V7mKY_CZWLX8Go1YF3H8TyEhyOR6ehHGezbpPCqqt63l6kbvSs0nQyBKzyRb1flrMz2vp3DLMfXfncylxkxAKQz5tRsG6QZYtMR3wN6SCpHVnGF3u2_sA0K-u7o56R729VlLE8bbxVzHnplmxGH_CFqJ6-kgwoLJhCDzq7my_vPr-4kZBKMHo5vs0IVgbJd0uez3dXjDfqSIR5FUSbjURGrG7wkoVXfom3aH-nh" />
                                 </div>
@@ -66,7 +66,7 @@ export default function CartLayout() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-surface-container-low p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
+                            <div class="bg-white shadow-2xl p-4 md:p-6 rounded-2xl md:rounded-xl flex gap-4 md:gap-8 items-start md:items-center">
                                 <div class="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 overflow-hidden rounded-xl bg-surface-container">
                                     <img alt="Zen Ceramic Bowl" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW892lQNphpxZj4jqbfAJ0HkeFc2iePpuv_If638wwxGB5EvncbeHYhLIEPSYFmZjJg7or7EY83G7BUSR_u6EVE8EexM1c9yx86RyBlMUppdvHDH3bqfs73Mvic-EZNZI4G-GMOQ2nEBJm09kcjNEldsW0n4LfMBPyp7axn3CHYjRCS6TYp8YhjIUMBWQeHZgfKutUYAVs8rUQ4gS7K8MmfpJdzLeE0I8qoB7YscRHE9X3vsco8DzqNGhcd6wlGa0zFXRADMa-DqpH" />
                                 </div>
@@ -99,7 +99,7 @@ export default function CartLayout() {
                     </div>
                     <div class="lg:col-span-4">
                         <div class="sticky top-28 space-y-6">
-                            <div class="bg-white md:bg-surface-container-lowest p-6 md:p-8 rounded-2xl md:rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.04)] md:shadow-[0_20px_40px_rgba(25,28,29,0.06)] space-y-6">
+                            <div class="bg-white md:bg-surface-container-lowest p-6 md:p-8 rounded-2xl md:rounded-xl shadow-2xl space-y-6">
                                 <h2 class="text-xl md:text-2xl font-black font-display tracking-tight hidden md:block">Order Summary</h2>
                                 <div class="space-y-3 md:space-y-4">
                                     <div class="flex justify-between text-on-surface-variant text-sm md:text-base">
