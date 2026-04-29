@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
 import { useCart } from '../context/useCart'
 
@@ -10,6 +10,27 @@ export default function Navbar() {
     const { totalItems } = useCart()
     const navigate = useNavigate()
     const dropdownRef = useRef(null)
+    const location = useLocation()
+    const { pathname } = location
+
+    const isActive = (path) => {
+        if (path === '/') {
+            return pathname === '/';
+        }
+        return pathname.startsWith(path);
+    }
+
+    const getDesktopClass = (path) => {
+        return isActive(path)
+            ? "text-orange-600 dark:text-orange-400 font-bold border-b-2 border-orange-500 pb-1 font-headline text-sm"
+            : "text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm"
+    }
+
+    const getMobileClass = (path) => {
+        return isActive(path)
+            ? "block text-lg font-bold text-orange-600 py-3 border-b border-surface-container-low"
+            : "block text-lg font-medium text-slate-700 py-3 border-b border-surface-container-low"
+    }
 
     // Tutup dropdown kalau klik di luar
     useEffect(() => {
@@ -33,11 +54,11 @@ export default function Navbar() {
             <div className="flex justify-between items-center px-4 md:px-8 py-4 max-w-7xl mx-auto">
                 <div className="text-2xl font-bold tracking-tight text-orange-600 dark:text-orange-400 font-headline">Pet Atelier</div>
                 <div className="hidden lg:flex gap-6 items-center">
-                    <Link to='/' className="text-orange-600 dark:text-orange-400 font-bold border-b-2 border-orange-500 pb-1 font-headline text-sm" href="#">Home</Link>
-                    <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Services</a>
-                    <Link to='/CatalogProduct' className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Catalog</Link>
-                    <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">About Us</a>
-                    <a className="text-slate-600 dark:text-slate-400 font-medium hover:text-orange-500 transition-colors font-headline text-sm" href="#">Contact Us</a>
+                    <Link to='/' className={getDesktopClass('/')}>Home</Link>
+                    <Link to='/HomeServices' className={getDesktopClass('/HomeServices')}>Services</Link>
+                    <Link to='/CatalogProduct' className={getDesktopClass('/CatalogProduct')}>Catalog</Link>
+                    <Link to='/HomeAboutUs' className={getDesktopClass('/HomeAboutUs')}>About Us</Link>
+                    <Link to='/HomeContactUs' className={getDesktopClass('/HomeContactUs')}>Contact Us</Link>
                 </div>
 
                 <div className="flex items-center gap-3 md:gap-4">
@@ -143,11 +164,11 @@ export default function Navbar() {
             {mobileMenuOpen && (
                 <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-2xl border-t border-surface-variant overflow-y-auto max-h-[calc(100vh-64px)]">
                     <div className="p-6 flex flex-col gap-4">
-                        <Link to='/' className="text-lg font-bold text-orange-600 py-3 border-b border-surface-container-low" href="#">Home</Link>
-                        <a className="text-lg font-medium text-slate-700 py-3 border-b border-surface-container-low" href="#">Services</a>
-                        <Link to='/CatalogProduct' className="text-lg font-medium text-slate-700 py-3 border-b border-surface-container-low" href="#">Catalog</Link>
-                        <a className="text-lg font-medium text-slate-700 py-3 border-b border-surface-container-low" href="#">About Us</a>
-                        <a className="text-lg font-medium text-slate-700 py-3 border-b border-surface-container-low" href="#">Contact Us</a>
+                        <Link to='/' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/')}>Home</Link>
+                        <Link to='/services' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/services')}>Services</Link>
+                        <Link to='/CatalogProduct' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/CatalogProduct')}>Catalog</Link>
+                        <Link to='/about' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/about')}>About Us</Link>
+                        <Link to='/contact' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/contact')}>Contact Us</Link>
 
                         {user ? (
                             <div className="flex flex-col gap-3 pt-2">

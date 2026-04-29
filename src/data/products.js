@@ -7,7 +7,7 @@ export const PRODUCTS = [
         badge: "Bestseller",
         badgeStyle: "bg-white/90 backdrop-blur-sm",
         src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAjUnC4mOdPixnlThKWLXMQPxBdfRuKohYfITSS01si8h1wdvajKJJHmD9tdoc33Kuqiv_7OlTbVrSi1wPELxPBqTmW_CjyLBojWRY04MZnyOXY8Z1iE61lZ6Nq-lARprIr_aHFz9pga4R4jTSi606OQJ2ExN_EcY_H6oOihLuvQZxIi0cV832qPJdiKebNUx8pRDHcYFXAGAJSm1fOvA9vXy7TwOeZHsEFalurG-o5418JzhGn9i2WhdIvinGMZc-FmWTadzCXmiOo",
-        longDesc: "Our Heirloom Collar is forged from double-tanned full-grain leather that develops a unique patina over time. Finished with solid brass hardware, it’s designed to last for decades of discovery. We source our materials from sustainable tanneries that use environmentally friendly processes. Every single piece is meticulously hand-stitched by skilled artisans, ensuring maximum durability and a premium feel that your pet deserves. Whether you're taking your dog for a walk in the park or attending a special pet event, this collar offers unmatched comfort and timeless style.",
+        longDesc: "Our Heirloom Collar is forged from double-tanned full-grain leather that develops a unique patina over time. Finished with solid brass hardware, it’s designed to last for decades of discovery. We source our materials from sustainable tanneries that use environmentally friendly processes.",
         rating: "4.9",
         category: "Paws & Play Signature"
     },

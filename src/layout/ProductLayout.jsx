@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
@@ -11,6 +11,26 @@ export default function ProductLayout() {
     const [addedId, setAddedId] = useState(null) // feedback animasi
     const { addToCart } = useCart()
     const navigate = useNavigate()
+
+    const categories = useMemo(() => {
+        const allCategories = PRODUCTS.map(p => p.category).filter(Boolean)
+        return [...new Set(allCategories)]
+    }, [])
+
+    const [selectedCategories, setSelectedCategories] = useState([])
+
+    const toggleCategory = (category) => {
+        setSelectedCategories(prev => 
+            prev.includes(category) 
+                ? prev.filter(c => c !== category)
+                : [...prev, category]
+        )
+    }
+
+    const filteredProducts = useMemo(() => {
+        if (selectedCategories.length === 0) return PRODUCTS
+        return PRODUCTS.filter(product => selectedCategories.includes(product.category))
+    }, [selectedCategories])
 
     const handleAddToCart = (e, product) => {
         e.preventDefault()  // mencegah Link navigate
@@ -83,34 +103,25 @@ export default function ProductLayout() {
                         <div>
                             <h3 className="font-headline font-bold text-lg mb-6">Categories</h3>
                             <div className="flex flex-col gap-3">
-                                <label className="flex items-center gap-3 cursor-pointer group">
-                                    <div className="w-4 h-4 rounded border-2 border-outline-variant group-hover:border-primary transition-colors"></div>
-                                    <span className="text-sm font-medium text-on-surface-variant">Chew Toys</span>
-                                </label>
-                                <label className="flex items-center gap-3 cursor-pointer group">
-                                    <div className="w-4 h-4 rounded border-2 border-primary bg-primary flex items-center justify-center">
-                                        <span className="material-symbols-outlined text-[10px] text-white">check</span>
+                                {categories.map(category => (
+                                    <div 
+                                        key={category}
+                                        className="flex items-center gap-3 cursor-pointer group"
+                                        onClick={() => toggleCategory(category)}
+                                    >
+                                        {selectedCategories.includes(category) ? (
+                                            <div className="w-4 h-4 rounded border-2 border-primary bg-primary flex items-center justify-center">
+                                                <span className="material-symbols-outlined text-[10px] text-white">check</span>
+                                            </div>
+                                        ) : (
+                                            <div className="w-4 h-4 rounded border-2 border-outline-variant group-hover:border-primary transition-colors"></div>
+                                        )}
+                                        <span className={`text-sm ${selectedCategories.includes(category) ? 'font-bold text-on-surface' : 'font-medium text-on-surface-variant'}`}>
+                                            {category}
+                                        </span>
                                     </div>
-                                    <span className="text-sm font-bold text-on-surface">Artisan Food</span>
-                                </label>
-                                <label className="flex items-center gap-3 cursor-pointer group">
-                                    <div className="w-4 h-4 rounded border-2 border-outline-variant group-hover:border-primary transition-colors"></div>
-                                    <span className="text-sm font-medium text-on-surface-variant">Boutique Collars</span>
-                                </label>
+                                ))}
                             </div>
-                        </div>
-                        <div>
-                            <h3 className="font-headline font-bold text-lg mb-6">Breed Size</h3>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="px-3 py-1.5 rounded-full bg-primary text-on-primary text-xs font-bold cursor-pointer">Small</span>
-                                <span className="px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-medium cursor-pointer">Medium</span>
-                                <span className="px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-medium cursor-pointer">Large</span>
-                            </div>
-                        </div>
-                        <div className="bg-secondary-container/20 p-6 rounded-lg">
-                            <h4 className="font-headline font-bold text-sm mb-1">Atelier Rewards</h4>
-                            <p className="text-[10px] text-on-secondary-fixed-variant mb-3">Earn points on every organic purchase.</p>
-                            <button className="text-secondary font-bold text-xs underline">Join Club</button>
                         </div>
                     </aside>
 
@@ -118,13 +129,13 @@ export default function ProductLayout() {
                     <div className="space-y-8">
                         <div className="hidden lg:flex justify-between items-end">
                             <div>
-                                <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase tracking-wider">Showing 1-{PRODUCTS.length} of {PRODUCTS.length} products</p>
+                                <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase tracking-wider">Showing {filteredProducts.length > 0 ? 1 : 0}-{filteredProducts.length} of {PRODUCTS.length} products</p>
                                 <h2 className="text-2xl font-bold font-headline">The Essentials</h2>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                            {PRODUCTS.map(product => (
+                            {filteredProducts.map(product => (
                                 <Link key={product.id} to={`/product/${product.id}`} className="group cursor-pointer">
                                     <div className="relative aspect-square bg-surface-container-low rounded-lg overflow-hidden mb-3">
                                         <img
@@ -193,14 +204,19 @@ export default function ProductLayout() {
                                 <div>
                                     <h3 className="font-headline font-bold text-sm mb-4">Categories</h3>
                                     <div className="flex flex-col gap-3">
-                                        <label className="flex items-center gap-3">
-                                            <input className="rounded text-primary focus:ring-primary w-4 h-4" type="checkbox" />
-                                            <span className="text-sm">Chew Toys</span>
-                                        </label>
-                                        <label className="flex items-center gap-3">
-                                            <input defaultChecked className="rounded text-primary focus:ring-primary w-4 h-4" type="checkbox" />
-                                            <span className="text-sm font-bold">Artisan Food</span>
-                                        </label>
+                                        {categories.map(category => (
+                                            <label key={category} className="flex items-center gap-3">
+                                                <input 
+                                                    className="rounded text-primary focus:ring-primary w-4 h-4" 
+                                                    type="checkbox"
+                                                    checked={selectedCategories.includes(category)}
+                                                    onChange={() => toggleCategory(category)}
+                                                />
+                                                <span className={`text-sm ${selectedCategories.includes(category) ? 'font-bold' : ''}`}>
+                                                    {category}
+                                                </span>
+                                            </label>
+                                        ))}
                                     </div>
                                 </div>
                                 <div>
@@ -215,7 +231,7 @@ export default function ProductLayout() {
                                 <button onClick={() => setFilterDrawerOpen(false)} className="bg-primary text-on-primary py-3.5 rounded-xl font-bold w-full text-sm">
                                     Apply Filters
                                 </button>
-                                <button className="text-on-surface-variant font-bold text-xs w-full">Clear All</button>
+                                <button onClick={() => setSelectedCategories([])} className="text-on-surface-variant font-bold text-xs w-full">Clear All</button>
                             </div>
                         </div>
                     </div>

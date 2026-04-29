@@ -1,4 +1,4 @@
-export default function MainLayout({ children }) {
+export default function MainLayout() {
     return (
         <>
         <main class="pt-16">

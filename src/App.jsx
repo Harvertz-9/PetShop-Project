@@ -12,6 +12,9 @@ import ManageCollars from "./pages/dashboard/ManageCollars";
 import ProfileDashboard from "./pages/dashboard/ProfileDashboard";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
+import HomeServices from "./pages/landing/HomeServices";
+import HomeAboutUs from "./pages/landing/HomeAboutUs";
+import HomeContactUs from "./pages/landing/HomeContactUs";
 
 // Guard: hanya admin yang bisa akses
 function AdminRoute({ children }) {
@@ -33,6 +36,9 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/HomeServices" element={<HomeServices />} />
+        <Route path="/HomeAboutUs" element={<HomeAboutUs />} />
+        <Route path="/HomeContactUs" element={<HomeContactUs />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/CatalogProduct" element={<CatalogProduct />} />

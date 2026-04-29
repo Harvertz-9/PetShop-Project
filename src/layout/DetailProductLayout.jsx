@@ -12,6 +12,7 @@ export default function DetailProductLayout({ product }) {
     const [cartAnim, setCartAnim] = useState(false)
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setQty(1)
         setIsReadMoreOpen(false)
     }, [product])
@@ -91,9 +92,9 @@ export default function DetailProductLayout({ product }) {
                                 </p>
                                 <button onClick={() => setIsReadMoreOpen(!isReadMoreOpen)} className="text-primary font-headline font-bold text-sm underline underline-offset-8 hover:text-primary-container transition-colors inline-flex items-center group">
                                     {isReadMoreOpen ? "Show Less" : "Read More"}
-                                    <span className={`material-symbols-outlined ml-1 transition-transform ${isReadMoreOpen ? 'rotate-180' : 'group-hover:translate-x-1'}`}>
+                                    {/* <span className={`material-symbols-outlined ml-1 transition-transform ${isReadMoreOpen ? 'rotate-180' : 'group-hover:translate-x-1'}`}>
                                         {isReadMoreOpen ? 'expand_less' : 'chevron_right'}
-                                    </span>
+                                    </span> */}
                                 </button>
                             </div>
                             <div className="p-6 md:p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 space-y-8">
