@@ -1,18 +1,30 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useCart } from "../context/useCart"
+import { PRODUCTS } from "../data/products"
 
 export default function DetailProductLayout({ product }) {
     const navigate = useNavigate()
-    const { addToCart } = useCart()
+    const { addToCart, totalItems } = useCart()
     const [qty, setQty] = useState(1)
+    const [isReadMoreOpen, setIsReadMoreOpen] = useState(false)
+    const [added, setAdded] = useState(false)
+    const [cartAnim, setCartAnim] = useState(false)
+
+    useEffect(() => {
+        setQty(1)
+        setIsReadMoreOpen(false)
+    }, [product])
 
     const handleIncrease = () => setQty(prev => prev + 1)
     const handleDecrease = () => setQty(prev => Math.max(1, prev - 1))
 
     const handleAddToCart = () => {
         addToCart(product, qty)
-        setQty(1) // reset after adding
+        setAdded(true)
+        setCartAnim(true)
+        setTimeout(() => setCartAnim(false), 300)
+        setTimeout(() => setAdded(false), 1500)
     }
 
     const handleBuyNow = () => {
@@ -22,14 +34,25 @@ export default function DetailProductLayout({ product }) {
 
     if (!product) return null;
 
+    const youMayAlsoLike = PRODUCTS.filter(p => p.id !== product.id).slice(0, 4)
+
     return (
         <>
-            <nav className="fixed top-0 w-full z-50 px-6 py-8 md:px-12 pointer-events-none bg-white backdrop-blur-lg">
-                <div className="max-w-7xl mx-auto w-full pointer-events-auto">
-                    <a className="inline-flex items-center gap-2 px-4 py-2 rounded-full custom-glass shadow-[0_20px_40px_rgba(25,28,29,0.06)] group hover:bg-surface-container-lowest transition-all duration-300 active:scale-95" href="#">
+            <nav className="fixed top-0 w-full z-50 px-6 py-8 md:px-12 pointer-events-none bg-white/80 backdrop-blur-lg">
+                <div className="max-w-7xl mx-auto w-full pointer-events-auto flex justify-between items-center">
+                    <Link to='/CatalogProduct' className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 shadow-[0_20px_40px_rgba(25,28,29,0.06)] group hover:bg-surface-container-lowest transition-all duration-300 active:scale-95">
                         <span className="material-symbols-outlined text-primary font-bold">arrow_back</span>
-                        <Link to='/CatalogProduct' className="font-headline font-bold text-on-surface-variant tracking-tight text-sm">Back</Link>
-                    </a>
+                        <span className="font-headline font-bold text-on-surface-variant tracking-tight text-sm">Back</span>
+                    </Link>
+                    
+                    <Link to="/cart" className="relative p-2.5 bg-white/60 shadow-[0_20px_40px_rgba(25,28,29,0.06)] text-on-surface hover:bg-surface-container-lowest rounded-full transition-all duration-300 active:scale-95">
+                        <span className="material-symbols-outlined">shopping_cart</span>
+                        {totalItems > 0 && (
+                            <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-on-primary text-[10px] font-black rounded-full flex items-center justify-center">
+                                {totalItems > 9 ? "9+" : totalItems}
+                            </span>
+                        )}
+                    </Link>
                 </div>
             </nav>
             <main className="pt-28 pb-16 px-6 md:px-12 lg:px-24 max-w-7xl mx-auto">
@@ -63,21 +86,23 @@ export default function DetailProductLayout({ product }) {
                         </header>
                         <div className="space-y-6">
                             <div className="space-y-4">
-                                <p className="text-base lg:text-lg leading-relaxed text-on-surface-variant font-body">
+                                <p className={`text-base lg:text-lg leading-relaxed text-on-surface-variant font-body transition-all duration-300 ${!isReadMoreOpen ? 'line-clamp-3' : ''}`}>
                                     {product.longDesc || product.desc}
                                 </p>
-                                <button className="text-primary font-headline font-bold text-sm underline underline-offset-8 hover:text-primary-container transition-colors inline-flex items-center group">
-                                    Read More
-                                    <span className="material-symbols-outlined ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                                <button onClick={() => setIsReadMoreOpen(!isReadMoreOpen)} className="text-primary font-headline font-bold text-sm underline underline-offset-8 hover:text-primary-container transition-colors inline-flex items-center group">
+                                    {isReadMoreOpen ? "Show Less" : "Read More"}
+                                    <span className={`material-symbols-outlined ml-1 transition-transform ${isReadMoreOpen ? 'rotate-180' : 'group-hover:translate-x-1'}`}>
+                                        {isReadMoreOpen ? 'expand_less' : 'chevron_right'}
+                                    </span>
                                 </button>
                             </div>
                             <div className="p-6 md:p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 space-y-8">
                                 <div className="space-y-4">
-                                    <label className="font-label font-bold text-xs uppercase tracking-wider text-on-surface-variant">Select Size</label>
+                                    <label className="font-label font-bold text-xs uppercase tracking-wider text-on-surface-variant">Select Variant</label>
                                     <div className="flex flex-wrap gap-3">
-                                        <button className="px-6 py-2.5 rounded-full bg-surface-container-lowest text-on-surface font-label text-sm font-semibold border border-outline-variant/20 hover:border-primary/40 transition-all">Small</button>
-                                        <button className="px-6 py-2.5 rounded-full bg-primary text-on-primary font-label text-sm font-bold shadow-lg shadow-primary/20 ring-2 ring-primary ring-offset-2 ring-offset-surface-container-low">Medium</button>
-                                        <button className="px-6 py-2.5 rounded-full bg-surface-container-lowest text-on-surface font-label text-sm font-semibold border border-outline-variant/20 hover:border-primary/40 transition-all">Large</button>
+                                        <button className="w-16 h-16 rounded-xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
+                                            <img src={product.src} alt="Variant" className="w-full h-full object-cover" />
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="space-y-4">
@@ -86,14 +111,22 @@ export default function DetailProductLayout({ product }) {
                                             <button onClick={handleDecrease} className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
                                                 <span className="material-symbols-outlined">remove</span>
                                             </button>
-                                            <span className="px-6 font-headline font-bold text-on-surface min-w-[3rem] text-center">{qty}</span>
+                                            <input 
+                                                type="number" 
+                                                min="1" 
+                                                value={qty} 
+                                                onChange={(e) => setQty(Math.max(1, parseInt(e.target.value) || 1))}
+                                                className="w-14 bg-transparent font-headline font-bold text-on-surface text-center focus:outline-none focus:ring-0 border-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" 
+                                            />
                                             <button onClick={handleIncrease} className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
                                                 <span className="material-symbols-outlined">add</span>
                                             </button>
                                         </div>
-                                        <button onClick={handleAddToCart} className="flex-1 w-full flex items-center justify-center gap-3 bg-secondary-container text-on-secondary-container py-4 px-8 rounded-xl font-headline font-bold hover:brightness-105 transition-all shadow-[0_10px_20px_rgba(105,229,255,0.2)] active:scale-[0.98]">
-                                            <span className="material-symbols-outlined">shopping_cart</span>
-                                            Add to Cart
+                                        <button onClick={handleAddToCart} className={`flex-1 w-full flex items-center justify-center gap-3 bg-secondary-container text-on-secondary-container py-4 px-8 rounded-xl font-headline font-bold hover:brightness-105 shadow-[0_10px_20px_rgba(105,229,255,0.2)] active:scale-[0.98] transition-all duration-300 ${cartAnim ? 'scale-[1.03] shadow-[0_15px_30px_rgba(105,229,255,0.4)] ring-4 ring-secondary-container/30 bg-primary text-on-primary' : ''}`}>
+                                            <span className={`material-symbols-outlined transition-all ${cartAnim ? 'scale-125' : ''}`}>
+                                                {added ? "check" : "shopping_cart"}
+                                            </span>
+                                            {added ? "Added!" : "Add to Cart"}
                                         </button>
                                     </div>
                                     <button onClick={handleBuyNow} className="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-extrabold text-lg shadow-[0_20px_40px_rgba(143,78,0,0.2)] hover:shadow-[0_25px_50px_rgba(143,78,0,0.3)] transition-all active:scale-[0.98]">
@@ -127,73 +160,27 @@ export default function DetailProductLayout({ product }) {
                         </a>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                        <div className="group cursor-pointer">
-                            <div className="relative aspect-[1/1] bg-surface-container-low rounded-lg overflow-hidden mb-3">
-                                <img alt="Slate Gray Rope Leash" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuYhz6kyGY8yzdKDVDd7Pao0wIwWHN7yy96CCD45tv1uqMCIqAC4jTcSlMopz0PaTU61KbWDafSYj56VLwKs-ttyj6oUNLP63pHkKe5pVZduLsZkwsoOBtbPQmswrPOOhQmXYuChBMbiUgZ83gi4umGz9lGQsi4HklD04Dj8Au71FO_drO1rKZwUD2P7ejuHX5K9YYM9bhlPL8hJubtrA4Pyrg_-piUKgFCVcZ02lZ_hQr31LQZ1SMq6bpupRrOB2OSCCmyKbELEQx" />
-                                <span className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest shadow-sm">Bestseller</span>
-                            </div>
-                            <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">Slate Gray Rope Leash</h3>
-                            <p className="text-[10px] text-on-surface-variant mb-2">Artisan Collection</p>
-                            <div className="flex items-center justify-between gap-1">
-                                <p className="font-bold text-primary text-sm">$45.00</p>
-                                <div className="flex items-center gap-1">
-                                    <button className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
-                                    <button className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
-                                        <span className="material-symbols-outlined text-base">shopping_cart</span>
-                                    </button>
+                        {youMayAlsoLike.map(item => (
+                            <Link key={item.id} to={`/product/${item.id}`} onClick={() => window.scrollTo(0,0)} className="group cursor-pointer block">
+                                <div className="relative aspect-[1/1] bg-surface-container-low rounded-lg overflow-hidden mb-3">
+                                    <img alt={item.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src={item.src} />
+                                    {item.badge && (
+                                        <span className={`absolute top-2 left-2 ${item.badgeStyle || 'bg-white/90 text-on-surface'} backdrop-blur-sm px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest shadow-sm`}>{item.badge}</span>
+                                    )}
                                 </div>
-                            </div>
-                        </div>
-                        <div className="group cursor-pointer">
-                            <div className="relative aspect-[1/1] bg-surface-container-low rounded-lg overflow-hidden mb-3">
-                                <img alt="Saffron Velvet Harness" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJGK5bM7co7N5MNiNcvS6LCvls31W24YzDeZBCU8NvcIHLLuw_n5D16t6_7pDrAMuB4snZA4lrntK-SJfj_yKPXsdF8sZt6L7QWOzQNM4moUdFovGxIEi2bllrND6--Eqf0URofnCsFENYJ5tJNbCk15hICPlwsP-OLDSBZiZOIs2-nx3cS1u1sTwqFHjLfp_s5Z4wu3l52rTlal5ngy7EdPEw9mBbWEmNyMjPD6SrLK-yHreklfS7ZHdvH2uu6HBUusroyXkDjjR-" />
-                                <span className="absolute top-2 left-2 bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest shadow-sm">Eco Friendly</span>
-                            </div>
-                            <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">Saffron Velvet Harness</h3>
-                            <p className="text-[10px] text-on-surface-variant mb-2">Soft Touch Series</p>
-                            <div className="flex items-center justify-between gap-1">
-                                <p className="font-bold text-primary text-sm">$65.00</p>
-                                <div className="flex items-center gap-1">
-                                    <button className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
-                                    <button className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
-                                        <span className="material-symbols-outlined text-base">shopping_cart</span>
-                                    </button>
+                                <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">{item.name}</h3>
+                                <p className="text-[10px] text-on-surface-variant mb-2">{item.desc}</p>
+                                <div className="flex items-center justify-between gap-1">
+                                    <p className="font-bold text-primary text-sm">${item.price.toFixed(2)}</p>
+                                    <div className="flex items-center gap-1">
+                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(item, 1); navigate("/checkout"); }} className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
+                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(item, 1); }} className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
+                                            <span className="material-symbols-outlined text-base">shopping_cart</span>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="group cursor-pointer">
-                            <div className="relative aspect-[1/1] bg-surface-container-low rounded-lg overflow-hidden mb-3">
-                                <img alt="Forest Green Canvas Bed" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClhYggt8pLHXdTVWxGBt7FcAE1xTGUSe00Ms6bcuswB8AsA_lewfliXQN5eis3hLit9cN2mQfkBGSsCCP2tznIdb788whKFCkE58iEq2BtFB1ZhvlRgmpsNBQU-3qABaQDJAzzo1GA4EhhCSDIiLu1WoW-lO-Ok0-5A9W9pTBb03rVW5VN1vUK4oEVRkRRBp3n3MoMI1pzeEP2dRHxtABLuVgMLfEA_YO63KEG3rJDtUT29aVStZvM_VGgIv3FdB0mrCnkUdvsc5U7" />
-                                <span className="absolute top-2 left-2 bg-primary text-on-primary px-2 py-0.5 rounded text-[8px] font-bold uppercase tracking-widest shadow-sm">New</span>
-                            </div>
-                            <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">Forest Green Canvas Bed</h3>
-                            <p className="text-[10px] text-on-surface-variant mb-2">Orthopedic Support</p>
-                            <div className="flex items-center justify-between gap-1">
-                                <p className="font-bold text-primary text-sm">$120.00</p>
-                                <div className="flex items-center gap-1">
-                                    <button className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
-                                    <button className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
-                                        <span className="material-symbols-outlined text-base">shopping_cart</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="group cursor-pointer">
-                            <div className="relative aspect-[1/1] bg-surface-container-low rounded-lg overflow-hidden mb-3">
-                                <img alt="Ceramic Artisan Bowl" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDYm2mgmjfLy3gT_hX9AigFkSYzovjGpVJdyCqxZKnry6WjXa-qPIHsupWVSA_H93-EqFrQS7UYHjNL3TpGTHV190bEwEgwqIMRMn1fMPtoV-Q-Zc90RLfpMqm6gLdO2kVnSm8sQpj8q9npaOcprN4wjrQqikvJqOFNeRMeZ7qlycWRzxxTGvN42Ifr5g-rd9TbVB_0UwUw9VGOt7Y4rCZWva3ux2AogSToG3QeoHd8PI_LUanbKoCthTU9cm5V6HEN-8LmONGhw0L" />
-                            </div>
-                            <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">Ceramic Artisan Bowl</h3>
-                            <p className="text-[10px] text-on-surface-variant mb-2">Hand-glazed Earthware</p>
-                            <div className="flex items-center justify-between gap-1">
-                                <p className="font-bold text-primary text-sm">$32.00</p>
-                                <div className="flex items-center gap-1">
-                                    <button className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
-                                    <button className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
-                                        <span className="material-symbols-outlined text-base">shopping_cart</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                            </Link>
+                        ))}
                     </div>
                 </section>
             </main>
