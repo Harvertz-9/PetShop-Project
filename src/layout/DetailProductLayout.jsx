@@ -1,13 +1,34 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { useCart } from "../context/useCart"
 
-export default function DetailProductLayout() {
+export default function DetailProductLayout({ product }) {
+    const navigate = useNavigate()
+    const { addToCart } = useCart()
+    const [qty, setQty] = useState(1)
+
+    const handleIncrease = () => setQty(prev => prev + 1)
+    const handleDecrease = () => setQty(prev => Math.max(1, prev - 1))
+
+    const handleAddToCart = () => {
+        addToCart(product, qty)
+        setQty(1) // reset after adding
+    }
+
+    const handleBuyNow = () => {
+        addToCart(product, qty)
+        navigate("/checkout")
+    }
+
+    if (!product) return null;
+
     return (
         <>
             <nav className="fixed top-0 w-full z-50 px-6 py-8 md:px-12 pointer-events-none bg-white backdrop-blur-lg">
                 <div className="max-w-7xl mx-auto w-full pointer-events-auto">
                     <a className="inline-flex items-center gap-2 px-4 py-2 rounded-full custom-glass shadow-[0_20px_40px_rgba(25,28,29,0.06)] group hover:bg-surface-container-lowest transition-all duration-300 active:scale-95" href="#">
                         <span className="material-symbols-outlined text-primary font-bold">arrow_back</span>
-                        <Link to='/' className="font-headline font-bold text-on-surface-variant tracking-tight text-sm">Back</Link>
+                        <Link to='/CatalogProduct' className="font-headline font-bold text-on-surface-variant tracking-tight text-sm">Back</Link>
                     </a>
                 </div>
             </nav>
@@ -15,33 +36,35 @@ export default function DetailProductLayout() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
                     <div className="relative w-full">
                         <div className="relative overflow-hidden rounded-xl bg-surface-container-low shadow-[0_15px_30px_rgba(25,28,29,0.05)]">
-                            <img alt="Cognac Leather Heirloom Collar" className="w-full h-auto aspect-[4/5] lg:aspect-square object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAA_No3oHc9HGwGH9kso80U2HzGaDOUXRj6jpI3hVXxn9p-2z9eUvhAL2Ti8G4idmwxS3auMhm-rUKivsjS66W_zlpo1zFtBTAeJ8M-aExq3dJeo-UJVFYdY5mQDU3g2HpANeeAYMnx1dUAKn7cL98b_92TkYf9tFY4vwfHs3mqqaPnnnqg5cm08MuHAmGkGaISnMvrUFYmFc-mFzA1c5lQdIVyevE01ohftiYHxnJPYdVvbAIyKW7FdB0kbDhLY3N4DmYmuUHXsrm_" />
-                            <div className="absolute top-4 right-4">
-                                <span className="bg-tertiary-container/90 backdrop-blur-md text-on-tertiary-container px-4 py-1.5 rounded-full font-label text-[10px] font-bold tracking-widest uppercase">Handcrafted Heirloom</span>
-                            </div>
+                            <img alt={product.name} className="w-full h-auto aspect-[4/5] lg:aspect-square object-cover" src={product.src} />
+                            {product.badge && (
+                                <div className="absolute top-4 right-4">
+                                    <span className={`${product.badgeStyle || "bg-tertiary-container text-on-tertiary-container"} backdrop-blur-md px-4 py-1.5 rounded-full font-label text-[10px] font-bold tracking-widest uppercase`}>{product.badge}</span>
+                                </div>
+                            )}
                         </div>
                         <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-primary-fixed/20 rounded-full blur-3xl -z-10"></div>
                     </div>
                     <div className="flex flex-col space-y-8">
                         <header className="space-y-3">
                             <div className="space-y-1">
-                                <p className="text-primary font-label font-bold text-xs tracking-[0.2em] uppercase">Paws &amp; Play Signature</p>
+                                <p className="text-primary font-label font-bold text-xs tracking-[0.2em] uppercase">{product.category}</p>
                                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-headline font-extrabold text-on-surface leading-tight tracking-tight">
-                                    Cognac Leather Heirloom Collar
+                                    {product.name}
                                 </h1>
                             </div>
                             <div className="flex items-center gap-5">
-                                <span className="text-3xl font-headline font-bold text-on-surface">$85.00</span>
+                                <span className="text-3xl font-headline font-bold text-on-surface">${product.price.toFixed(2)}</span>
                                 <div className="flex items-center bg-secondary-container/30 px-3 py-1 rounded-full">
                                     <span className="material-symbols-outlined text-on-secondary-container text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                                    <span className="text-on-secondary-container font-label text-xs font-bold ml-1">4.9 / 5.0</span>
+                                    <span className="text-on-secondary-container font-label text-xs font-bold ml-1">{product.rating || "4.9"} / 5.0</span>
                                 </div>
                             </div>
                         </header>
                         <div className="space-y-6">
                             <div className="space-y-4">
                                 <p className="text-base lg:text-lg leading-relaxed text-on-surface-variant font-body">
-                                    Our Heirloom Collar is forged from double-tanned full-grain leather that develops a unique patina over time. Finished with solid brass hardware, it’s designed to last for decades of discovery.
+                                    {product.longDesc || product.desc}
                                 </p>
                                 <button className="text-primary font-headline font-bold text-sm underline underline-offset-8 hover:text-primary-container transition-colors inline-flex items-center group">
                                     Read More
@@ -60,20 +83,20 @@ export default function DetailProductLayout() {
                                 <div className="space-y-4">
                                     <div className="flex flex-col sm:flex-row items-center gap-4">
                                         <div className="flex items-center bg-surface-container-highest rounded-xl p-1 w-full sm:w-auto border border-outline-variant/10">
-                                            <button className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
+                                            <button onClick={handleDecrease} className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
                                                 <span className="material-symbols-outlined">remove</span>
                                             </button>
-                                            <span className="px-6 font-headline font-bold text-on-surface min-w-[3rem] text-center">1</span>
-                                            <button className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
+                                            <span className="px-6 font-headline font-bold text-on-surface min-w-[3rem] text-center">{qty}</span>
+                                            <button onClick={handleIncrease} className="w-12 h-12 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-lowest active:scale-90 transition-all">
                                                 <span className="material-symbols-outlined">add</span>
                                             </button>
                                         </div>
-                                        <button className="flex-1 w-full flex items-center justify-center gap-3 bg-secondary-container text-on-secondary-container py-4 px-8 rounded-xl font-headline font-bold hover:brightness-105 transition-all shadow-[0_10px_20px_rgba(105,229,255,0.2)] active:scale-[0.98]">
+                                        <button onClick={handleAddToCart} className="flex-1 w-full flex items-center justify-center gap-3 bg-secondary-container text-on-secondary-container py-4 px-8 rounded-xl font-headline font-bold hover:brightness-105 transition-all shadow-[0_10px_20px_rgba(105,229,255,0.2)] active:scale-[0.98]">
                                             <span className="material-symbols-outlined">shopping_cart</span>
                                             Add to Cart
                                         </button>
                                     </div>
-                                    <button className="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-extrabold text-lg shadow-[0_20px_40px_rgba(143,78,0,0.2)] hover:shadow-[0_25px_50px_rgba(143,78,0,0.3)] transition-all active:scale-[0.98]">
+                                    <button onClick={handleBuyNow} className="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-extrabold text-lg shadow-[0_20px_40px_rgba(143,78,0,0.2)] hover:shadow-[0_25px_50px_rgba(143,78,0,0.3)] transition-all active:scale-[0.98]">
                                         Buy Now
                                     </button>
                                 </div>

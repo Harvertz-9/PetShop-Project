@@ -11,6 +11,7 @@ import ManageToys from "./pages/dashboard/ManageToys";
 import ManageCollars from "./pages/dashboard/ManageCollars";
 import ProfileDashboard from "./pages/dashboard/ProfileDashboard";
 import Cart from "./pages/cart/Cart";
+import Checkout from "./pages/checkout/Checkout";
 
 // Guard: hanya admin yang bisa akses
 function AdminRoute({ children }) {
@@ -33,8 +34,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/CatalogProduct" element={<CatalogProduct />} />
-        <Route path="/ProductDetail" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/SignIn" element={<GuestRoute><SignIn /></GuestRoute>} />
         <Route path="/SignUp" element={<GuestRoute><SignUp /></GuestRoute>} />
         <Route path="/AdminDashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
