@@ -24,6 +24,13 @@ function AdminRoute({ children }) {
   return children
 }
 
+// Guard: hanya user login yang bisa akses
+function PrivateRoute({ children }) {
+  const { user } = useAuth()
+  if (!user) return <Navigate to="/SignIn" replace />
+  return children
+}
+
 // Guard: kalau sudah login tidak perlu ke signin/signup lagi
 function GuestRoute({ children }) {
   const { user } = useAuth()
@@ -39,8 +46,8 @@ function App() {
         <Route path="/HomeServices" element={<HomeServices />} />
         <Route path="/HomeAboutUs" element={<HomeAboutUs />} />
         <Route path="/HomeContactUs" element={<HomeContactUs />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/Cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
+        <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
         <Route path="/CatalogProduct" element={<CatalogProduct />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/SignIn" element={<GuestRoute><SignIn /></GuestRoute>} />

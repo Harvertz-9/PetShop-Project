@@ -3,19 +3,23 @@ import { Link, useNavigate } from "react-router-dom"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { useCart } from "../context/useCart"
-import { PRODUCTS } from "../data/products"
+import { useAuth } from "../context/useAuth"
+import { useProduct } from "../context/useProduct"
 
 
 export default function ProductLayout() {
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false)
     const [addedId, setAddedId] = useState(null) // feedback animasi
     const { addToCart } = useCart()
+    const { user } = useAuth()
+    const { products } = useProduct()
     const navigate = useNavigate()
+    const [visibleCount, setVisibleCount] = useState(4)
 
     const categories = useMemo(() => {
-        const allCategories = PRODUCTS.map(p => p.category).filter(Boolean)
+        const allCategories = products.map(p => p.category).filter(Boolean)
         return [...new Set(allCategories)]
-    }, [])
+    }, [products])
 
     const [selectedCategories, setSelectedCategories] = useState([])
 
@@ -28,13 +32,17 @@ export default function ProductLayout() {
     }
 
     const filteredProducts = useMemo(() => {
-        if (selectedCategories.length === 0) return PRODUCTS
-        return PRODUCTS.filter(product => selectedCategories.includes(product.category))
-    }, [selectedCategories])
+        if (selectedCategories.length === 0) return products
+        return products.filter(product => selectedCategories.includes(product.category))
+    }, [selectedCategories, products])
 
     const handleAddToCart = (e, product) => {
         e.preventDefault()  // mencegah Link navigate
         e.stopPropagation()
+        if (!user) {
+            navigate("/SignIn")
+            return
+        }
         addToCart(product)
         setAddedId(product.id)
         setTimeout(() => setAddedId(null), 1500)
@@ -43,6 +51,10 @@ export default function ProductLayout() {
     const handleBuyNow = (e, product) => {
         e.preventDefault()
         e.stopPropagation()
+        if (!user) {
+            navigate("/SignIn")
+            return
+        }
         addToCart(product)
         navigate("/checkout")
     }
@@ -129,13 +141,13 @@ export default function ProductLayout() {
                     <div className="space-y-8">
                         <div className="hidden lg:flex justify-between items-end">
                             <div>
-                                <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase tracking-wider">Showing {filteredProducts.length > 0 ? 1 : 0}-{filteredProducts.length} of {PRODUCTS.length} products</p>
+                                <p className="text-[10px] font-bold text-on-surface-variant mb-1 uppercase tracking-wider">Showing {filteredProducts.length > 0 ? 1 : 0}-{Math.min(visibleCount, filteredProducts.length)} of {products.length} products</p>
                                 <h2 className="text-2xl font-bold font-headline">The Essentials</h2>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-                            {filteredProducts.map(product => (
+                            {filteredProducts.slice(0, visibleCount).map(product => (
                                 <Link key={product.id} to={`/product/${product.id}`} className="group cursor-pointer">
                                     <div className="relative aspect-square bg-surface-container-low rounded-lg overflow-hidden mb-3">
                                         <img
@@ -181,11 +193,13 @@ export default function ProductLayout() {
                             ))}
                         </div>
 
-                        <div className="flex justify-center pt-8 md:pt-12">
-                            <button className="bg-surface-container-highest px-8 py-2.5 rounded-full font-bold hover:bg-primary hover:text-on-primary transition-all w-full md:w-auto text-sm">
-                                Load More Products
-                            </button>
-                        </div>
+                        {visibleCount < filteredProducts.length && (
+                            <div className="flex justify-center pt-8 md:pt-12">
+                                <button onClick={() => setVisibleCount(prev => prev + 4)} className="bg-surface-container-highest px-8 py-2.5 rounded-full font-bold hover:bg-primary hover:text-on-primary transition-all w-full md:w-auto text-sm">
+                                    Load More Products
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
 

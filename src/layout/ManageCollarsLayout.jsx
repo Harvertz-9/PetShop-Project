@@ -1,16 +1,41 @@
+import { useState } from "react"
 import Sidebar from "../components/Sidebar"
+import { useProduct } from "../context/useProduct"
+
 export default function ManageCollarsLayout() {
+    const { products, addProduct } = useProduct()
+    const collarProducts = products.filter(p => p.category?.toLowerCase().includes('collar') || p.category?.toLowerCase().includes('signature') || p.name.toLowerCase().includes('collar'))
+
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+    const [newCollar, setNewCollar] = useState({
+        name: "",
+        price: 0,
+        category: "Paws & Play Signature",
+        desc: "",
+        src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAlJFa8SnFf2rhp4IgD3TIhJigW_TiyX_BQRKL6Sul6lVO1i7YtJLqQlRFo_5NPsxgyyUYQaTzgnKC65kupL24sC1LzAWy712TfAb35eTFp651Kfe2moTrOmNtZPHEj5fstdZ-G2g0Mx4y4DqeWsUlIpigwiRFGn1IggyqCWbN-mycVteMJt_Y3aTdNOhHIoteQfeWTrS7EbsCmzUXziKgnLYrSJpp3blHH3Ova45CxstsQAXZQ6gThAhK4q78XQEb4A324FClZo27_"
+    })
+
+    const handleAdd = (e) => {
+        e.preventDefault();
+        if(!newCollar.name || !newCollar.price) return;
+        addProduct({
+            ...newCollar,
+            price: Number(newCollar.price),
+        });
+        setIsAddModalOpen(false);
+        setNewCollar({...newCollar, name: "", price: 0, desc: ""});
+    }
     return (
         <>
             <div className="flex">
                 <Sidebar />
-                <main className="flex-1 flex flex-col min-w-0 bg-surface">
+                <main className="flex-1 flex flex-col min-w-0">
                     <div className="p-8 lg:p-12 space-y-8 max-w-7xl mx-auto w-full">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div className="space-y-2">
                                 <h1 className="text-4xl font-extrabold text-on-surface tracking-tight leading-none">Manage Collars</h1>
                             </div>
-                            <button className="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all w-fit">
+                            <button onClick={() => setIsAddModalOpen(true)} className="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-xl font-bold flex items-center gap-3 shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all w-fit">
                                 <span className="material-symbols-outlined" data-icon="add" style={{fontVariationSettings: "'wght' 700"}}>add</span>
                                 Add New Collar
                             </button>
@@ -89,129 +114,49 @@ export default function ManageCollarsLayout() {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-surface-container">
-                                        <tr className="hover:bg-surface-container-low transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-16 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
-                                                        <img alt="Signature Leather Collar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="macro close-up of a premium cognac brown leather dog collar with brass hardware on a white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlJFa8SnFf2rhp4IgD3TIhJigW_TiyX_BQRKL6Sul6lVO1i7YtJLqQlRFo_5NPsxgyyUYQaTzgnKC65kupL24sC1LzAWy712TfAb35eTFp651Kfe2moTrOmNtZPHEj5fstdZ-G2g0Mx4y4DqeWsUlIpigwiRFGn1IggyqCWbN-mycVteMJt_Y3aTdNOhHIoteQfeWTrS7EbsCmzUXziKgnLYrSJpp3blHH3Ova45CxstsQAXZQ6gThAhK4q78XQEb4A324FClZo27_" />
+                                        {collarProducts.map(product => (
+                                            <tr key={product.id} className="hover:bg-surface-container-low transition-colors group">
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-4">
+                                                        <div className="w-16 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
+                                                            <img alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={product.src} />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold text-on-surface">{product.name}</p>
+                                                            <p className="text-xs text-on-surface-variant">Category: {product.category}</p>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <p className="font-bold text-on-surface">Signature Cognac Leather</p>
-                                                        <p className="text-xs text-on-surface-variant">SKU: COL-LEA-CGN-01</p>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <span className="px-3 py-1 rounded-full bg-tertiary-container/20 text-on-tertiary-container text-xs font-bold">Material</span>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex gap-1">
+                                                        <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">S</span>
+                                                        <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">M</span>
+                                                        <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">L</span>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="px-3 py-1 rounded-full bg-tertiary-container/20 text-on-tertiary-container text-xs font-bold">Premium Leather</span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex gap-1">
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">S</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">M</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">L</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden">
-                                                        <div className="bg-primary h-full rounded-full" style={ { width: "85%" }}></div>
+                                                </td>
+                                                <td className="px-6 py-5">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden">
+                                                            <div className="bg-primary h-full rounded-full" style={ { width: "85%" }}></div>
+                                                        </div>
+                                                        <span className="text-sm font-bold text-on-surface">${product.price.toFixed(2)}</span>
                                                     </div>
-                                                    <span className="text-sm font-bold text-on-surface">42 units</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <button className="p-2 hover:bg-primary-fixed rounded-full text-primary transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="edit">edit</span>
-                                                    </button>
-                                                    <button className="p-2 hover:bg-error-container rounded-full text-error transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="delete">delete</span>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="hover:bg-surface-container-low transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-16 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
-                                                        <img alt="Midnight Blue Fabric Collar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="stylish midnight blue waterproof fabric dog collar with geometric pattern and silver buckle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDREbUTLkq7gY4COsYMDZbLZVtUzFuoO9D2uelcKeWcv0HAG8fsLKfpq5Q7uM_j7uq0aUyddJjilXkXBbC9PqlIw2CiKrfpXhf3jlIs1yohgcI8zZx1zMWT_TgT6eK9XrwhaQPqkXg6scTVHST02FGohfBiv4BHiGdX1pf3fizqq91p5ZNc4d3V7Plh7BZd-4TnhyvkgnBRH8eSFe6SxLiWzUJLI___78LA6tltuDEouMk_pFsFW-JH8UPHySKCWjkqpDffgY-ou81" />
+                                                </td>
+                                                <td className="px-6 py-5 text-right">
+                                                    <div className="flex justify-end gap-2">
+                                                        <button className="p-2 hover:bg-primary-fixed rounded-full text-primary transition-all">
+                                                            <span className="material-symbols-outlined text-xl" data-icon="edit">edit</span>
+                                                        </button>
+                                                        <button className="p-2 hover:bg-error-container rounded-full text-error transition-all">
+                                                            <span className="material-symbols-outlined text-xl" data-icon="delete">delete</span>
+                                                        </button>
                                                     </div>
-                                                    <div>
-                                                        <p className="font-bold text-on-surface">Midnight Explorer Fabric</p>
-                                                        <p className="text-xs text-on-surface-variant">SKU: COL-FAB-MID-02</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="px-3 py-1 rounded-full bg-secondary-container/20 text-on-secondary-container text-xs font-bold">Recycled Fabric</span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex gap-1">
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">S</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">M</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">L</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden">
-                                                        <div className="bg-error h-full rounded-full" style={{ width: "12%" }}></div>
-                                                    </div>
-                                                    <span className="text-sm font-bold text-error">Low Stock (5)</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <button className="p-2 hover:bg-primary-fixed rounded-full text-primary transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="edit">edit</span>
-                                                    </button>
-                                                    <button className="p-2 hover:bg-error-container rounded-full text-error transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="delete">delete</span>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr className="hover:bg-surface-container-low transition-colors group">
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-16 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
-                                                        <img alt="Emerald Vegan Leather Collar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="luxurious emerald green vegan apple-leather collar with gold plated hardware on a minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAC1qsGsd7BPIAx_4N7D6LrDQJqeiUXN6LglPnkBE4TTP0BNIfxSsL1cNAhROJ-CJwE3RpYlDZhAVp_qFKBsGzWbHTChqy1Xu-bTZCDFX-BLrP-T3APVAWyiA-aVPV-nWocsoYrb95D59pOG72nMVGUZHFK37CBJK99lUU6_uJbB7FVZsB0jOVfAWkB2gEH-WPG53a7HjZY-CmFeGl7qoJZFjByFhHhwEg1Edvc2EYSgKSnWPcy1bzKT3dK1wWT6-3N5r93zY_3Azpf" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="font-bold text-on-surface">Emerald Luxe (Vegan)</p>
-                                                        <p className="text-xs text-on-surface-variant">SKU: COL-VEG-EMR-03</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <span className="px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-bold">Vegan Leather</span>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex gap-1">
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">S</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-surface-container text-[10px] font-bold">M</span>
-                                                    <span className="w-6 h-6 flex items-center justify-center rounded bg-primary text-on-primary text-[10px] font-bold">L</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden">
-                                                        <div className="bg-primary h-full rounded-full" style={{ width: "55%" }}></div>
-                                                    </div>
-                                                    <span className="text-sm font-bold text-on-surface">28 units</span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-5 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    <button className="p-2 hover:bg-primary-fixed rounded-full text-primary transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="edit">edit</span>
-                                                    </button>
-                                                    <button className="p-2 hover:bg-error-container rounded-full text-error transition-all">
-                                                        <span className="material-symbols-outlined text-xl" data-icon="delete">delete</span>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -231,6 +176,32 @@ export default function ManageCollarsLayout() {
                         </div>
                     </div>
                 </main>
+                
+                {isAddModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                        <div className="bg-surface-container-lowest p-8 rounded-2xl shadow-2xl w-full max-w-md">
+                            <h2 className="text-2xl font-bold mb-6">Add New Collar Product</h2>
+                            <form onSubmit={handleAdd} className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-bold text-on-surface-variant mb-1">Product Name</label>
+                                    <input type="text" required value={newCollar.name} onChange={e => setNewCollar({...newCollar, name: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline-variant/30" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-on-surface-variant mb-1">Price ($)</label>
+                                    <input type="number" step="0.01" required value={newCollar.price} onChange={e => setNewCollar({...newCollar, price: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline-variant/30" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-on-surface-variant mb-1">Description</label>
+                                    <textarea value={newCollar.desc} onChange={e => setNewCollar({...newCollar, desc: e.target.value})} className="w-full bg-surface-container p-3 rounded-lg border border-outline-variant/30 resize-none" rows="3"></textarea>
+                                </div>
+                                <div className="flex gap-4 pt-4">
+                                    <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 bg-surface-container hover:bg-surface-container-high py-3 rounded-xl font-bold transition-all">Cancel</button>
+                                    <button type="submit" className="flex-1 bg-primary text-white hover:bg-primary/90 py-3 rounded-xl font-bold transition-all">Save Product</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     )

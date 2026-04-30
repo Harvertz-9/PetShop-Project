@@ -7,7 +7,7 @@ export default function ContactLayout() {
             <main class="pt-28">
                 <section class="px-8 max-w-7xl mx-auto mb-20">
                     <div class="relative overflow-hidden rounded-xl bg-surface-container-low min-h-[400px] flex items-center">
-                        <div class="absolute inset-0 opacity-20 pointer-events-none">
+                        <div class="absolute inset-0 opacity-30 pointer-events-none">
                             <img alt="Pet Atelier Interior" class="w-full h-full object-cover" data-alt="A warm and inviting interior of a high-end pet boutique, featuring soft natural lighting filtering through large windows. The space is filled with elegant wooden shelves holding artisan pet accessories and plush bedding. A golden retriever sits calmly in the foreground of this serene and professional setting, capturing the premium brand essence of Pet Atelier with a soft orange and cream color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfKD-SXo0bm-UNuUE_A4or4c-U86iG700GIJkE_HbeZZhcxSQUmuqucwnJ3U7G4-MCnMd9sIxbFqxjcQoQ7rX6Y6pGjz7wgzpXFOgrDD5YqQRVUYbnqacHbuZnljdz3093yc1lfpiBYlY9HhnTS1LJd6kx1HqJRzGJ1i3iTdr4KryeonWUpGb9aKau_GZI0ClvmteD70fVa7fltxzabYbu8SikOfNm_rdWoIFEWZdo_w5Esvg5yGWgxySFMiS54nR_QVCuEKDJ8UZZ" />
                         </div>
                         <div class="relative z-10 p-12 md:p-20 max-w-2xl">
@@ -100,7 +100,14 @@ export default function ContactLayout() {
                 <section class="px-8 max-w-7xl mx-auto mt-20">
                     <div class="relative w-full h-[500px] rounded-xl overflow-hidden shadow-sm">
                         <div class="absolute inset-0 bg-surface-container-highest flex items-center justify-center">
-                            <img alt="Map Location" class="w-full h-full object-cover grayscale opacity-50 contrast-125" data-alt="A stylized minimalist map of a modern urban neighborhood, rendered in a clean light-mode aesthetic with soft orange accents indicating the location of the Pet Atelier. The map features elegant, thin-line street grids and rounded markers for key landmarks, illuminated by a soft, warm overhead glow that maintains a professional yet friendly atmosphere." data-location="San Francisco" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq0_8JS8c_FoMBaFynxLyWdxAHvBz_TJCh3t3fHVHQY5-t-T9EhdcKgoV8HCrWWM7Bw-1bvm_HOf_DhC3vWSNsbPqSiaHZpIdfbuc7-ZnorEHhaR8TtdfDc11himkpqLdUcQ99gtDBUN71ABf7TXH1Ueip4OItFd1rqHe6IDSuv55uXt8KdcR4dgKxtl8JwyKIXYhnBgBxbeuSTY7apJOsrSYvFJRTzhtK-mPmtWEwXM5KBmWJk_C_lO6NmHVZQ94_hN_3dy4FqSXy" />
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.948096635625!2d115.18492767243917!3d-8.60098206841414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd2393933b4b86b%3A0xe913399d59df98fd!2sPerumahan%20Graha%20Pertiwi%20Abianbase!5e0!3m2!1sid!2sid!4v1777532304093!5m2!1sid!2sid" 
+                                class="w-full h-full border-0 contrast-125" 
+                                allowFullScreen="" 
+                                loading="lazy" 
+                                referrerPolicy="no-referrer-when-downgrade"
+                                title="Map Location"
+                            ></iframe>
                         </div>
                         <div class="absolute bottom-8 left-8 bg-surface-container-lowest/80 backdrop-blur-md p-6 rounded-lg max-w-xs shadow-xl border border-white/20">
                             <div class="flex items-center gap-3 mb-2">
