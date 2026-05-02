@@ -23,10 +23,16 @@ export function ProductProvider({ children }) {
     const addProduct = (newProduct) => {
         const productToAdd = {
             ...newProduct,
-            id: Date.now(), // Generate unique ID
+            id: Date.now(),
             rating: newProduct.rating || "5.0"
         };
         setProducts(prev => [productToAdd, ...prev]);
+    };
+
+    const updateProduct = (id, updatedData) => {
+        setProducts(prev =>
+            prev.map(p => p.id === id ? { ...p, ...updatedData, price: Number(updatedData.price) } : p)
+        );
     };
 
     const deleteProduct = (id) => {
@@ -34,7 +40,7 @@ export function ProductProvider({ children }) {
     };
 
     return (
-        <ProductContext.Provider value={{ products, addProduct, deleteProduct }}>
+        <ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}>
             {children}
         </ProductContext.Provider>
     );

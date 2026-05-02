@@ -110,14 +110,24 @@ export default function Navbar() {
                                                 Admin Dashboard
                                             </Link>
                                         )}
-                                        <a href="#" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors">
+                                        <Link
+                                            to={user.role === "admin" ? "/ProfileDashboard" : "/my-profile"}
+                                            onClick={() => setProfileOpen(false)}
+                                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors"
+                                        >
                                             <span className="material-symbols-outlined text-lg text-slate-400">person</span>
                                             My Profile
-                                        </a>
-                                        <a href="#" className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors">
-                                            <span className="material-symbols-outlined text-lg text-slate-400">receipt_long</span>
-                                            My Orders
-                                        </a>
+                                        </Link>
+                                        {user.role !== "admin" && (
+                                            <Link
+                                                to="/my-orders"
+                                                onClick={() => setProfileOpen(false)}
+                                                className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors"
+                                            >
+                                                <span className="material-symbols-outlined text-lg text-slate-400">receipt_long</span>
+                                                My Orders
+                                            </Link>
+                                        )}
                                         <div className="border-t border-surface-container-high mt-1 pt-1">
                                             <button
                                                 onClick={handleSignOut}
@@ -165,10 +175,10 @@ export default function Navbar() {
                 <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-2xl border-t border-surface-variant overflow-y-auto max-h-[calc(100vh-64px)]">
                     <div className="p-6 flex flex-col gap-4">
                         <Link to='/' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/')}>Home</Link>
-                        <Link to='/services' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/services')}>Services</Link>
+                        <Link to='/HomeServices' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/HomeServices')}>Services</Link>
                         <Link to='/CatalogProduct' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/CatalogProduct')}>Catalog</Link>
-                        <Link to='/about' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/about')}>About Us</Link>
-                        <Link to='/contact' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/contact')}>Contact Us</Link>
+                        <Link to='/HomeAboutUs' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/HomeAboutUs')}>About Us</Link>
+                        <Link to='/HomeContactUs' onClick={() => setMobileMenuOpen(false)} className={getMobileClass('/HomeContactUs')}>Contact Us</Link>
 
                         {user ? (
                             <div className="flex flex-col gap-3 pt-2">

@@ -48,10 +48,26 @@ export function AuthProvider({ children }) {
         return true
     }
 
+    const updateProfile = ({ name, password }) => {
+        if (!user) return false
+        const updated = {
+            ...user,
+            ...(name ? { name } : {}),
+            ...(password ? { password } : {})
+        }
+        // Update di MOCK_USERS juga
+        const idx = MOCK_USERS.findIndex(u => u.id === user.id)
+        if (idx !== -1) {
+            MOCK_USERS[idx] = { ...MOCK_USERS[idx], ...updated }
+        }
+        setUser(updated)
+        return true
+    }
+
     const signOut = () => setUser(null)
 
     return (
-        <AuthContext.Provider value={{ user, error, signIn, signUp, signOut }}>
+        <AuthContext.Provider value={{ user, error, signIn, signUp, signOut, updateProfile }}>
             {children}
         </AuthContext.Provider>
     )

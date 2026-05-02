@@ -15,6 +15,8 @@ import Checkout from "./pages/checkout/Checkout";
 import HomeServices from "./pages/landing/HomeServices";
 import HomeAboutUs from "./pages/landing/HomeAboutUs";
 import HomeContactUs from "./pages/landing/HomeContactUs";
+import MyProfile from "./pages/user/MyProfile";
+import MyOrders from "./pages/user/MyOrders";
 
 // Guard: hanya admin yang bisa akses
 function AdminRoute({ children }) {
@@ -57,6 +59,8 @@ function App() {
         <Route path="/ManageFood" element={<ManageFood />} />
         <Route path="/ManageCollars" element={<ManageCollars />} />
         <Route path="/ProfileDashboard" element={<ProfileDashboard />} />
+        <Route path="/my-profile" element={<PrivateRoute><MyProfile /></PrivateRoute>} />
+        <Route path="/my-orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
       </Routes>
     </>
   )
