@@ -1,64 +1,232 @@
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Sidebar from "../components/Sidebar"
 import { useAuth } from "../context/useAuth"
 
 export default function ProfileDashboardLayout() {
-    const { user } = useAuth()
-    return (
-        <>
-            <div className="flex">
-                <Sidebar />
-                <main class="flex-1 overflow-y-auto">
-                    <div class="m-12 max-w-4xl mx-auto space-y-12">
-                        <div class="space-y-8">
-                            <div class="bg-surface-container-lowest rounded-xl shadow-2xl flex flex-col items-center text-center">
-                                <div className="relative group">
-                                    <div className="size-40 m-5 rounded-full overflow-hidden border-8 border-surface-container-low shadow-inner">
-                                        {user?.avatar ? (
-                                            <img className="w-full h-full object-cover" src={user.avatar} alt={user?.name} />
-                                        ) : (
-                                            <div className="w-full h-full bg-primary text-white flex items-center justify-center text-6xl font-bold">
-                                                {user?.name?.charAt(0).toUpperCase() || 'A'}
-                                            </div>
-                                        )}
-                                    </div>
-                                    <button className="absolute bottom-5 right-7 p-3 items-center flex bg-primary text-on-primary rounded-full shadow-lg group-hover:scale-110 transition-transform">
-                                        <span className="material-symbols-outlined" data-icon="edit">edit</span>
-                                    </button>
-                                </div>
-                                <div className="space-y-2">
-                                    <h2 className="text-4xl font-black text-on-surface">{user?.name || "Citak Bokep"}</h2>
-                                    <p className="text-on-surface-variant font-medium text-lg italic">{user?.role || "Admin"}</p>
-                                </div>
-                                <div class="bg-transparent rounded-xl p-10 space-y-10 text-left">
-                                    <div>
-                                        <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
-                                            <span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
-                                            Account Settings
-                                        </h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-4">Email</label>
-                                                <input className="w-full bg-surface-container-low border-1 shadow-2xl rounded-full px-6 py-4 focus:ring-2 focus:ring-primary/20 transition-all" value={user?.email || ""} readOnly type="email" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-4">Password</label>
-                                                <input className="w-full bg-surface-container-low border-1 shadow-2xl rounded-full px-6 py-4 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="••••••••••••" type="password" />
-                                            </div>
-                                        </div>
-                                    </div>
+    const { user, updateProfile, signOut } = useAuth()
+    const navigate = useNavigate()
+    const [name, setName] = useState(user?.name || "")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [showPassword, setShowPassword] = useState(false)
+    const [saving, setSaving] = useState(false)
+    const [saved, setSaved] = useState(false)
+    const [error, setError] = useState("")
 
-                                    <div class="flex justify-end pt-6">
-                                        <button class="px-12 py-4 bg-gradient-to-r from-orange-600 to-orange-400 text-white rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
-                                            <span class="material-symbols-outlined" data-icon="save">save</span>
-                                            Save Profile Changes
-                                        </button>
-                                    </div>
+    const handleSave = (e) => {
+        e.preventDefault()
+        setError("")
+
+        if (password && password !== confirmPassword) {
+            setError("Passwords do not match.")
+            return
+        }
+        if (password && password.length < 6) {
+            setError("Password must be at least 6 characters.")
+            return
+        }
+
+        setSaving(true)
+        setTimeout(() => {
+            updateProfile({ name, password: password || undefined })
+            setSaving(false)
+            setSaved(true)
+            setPassword("")
+            setConfirmPassword("")
+            setTimeout(() => setSaved(false), 3000)
+        }, 800)
+    }
+
+    const handleSignOut = () => {
+        signOut()
+        navigate("/")
+    }
+
+    if (!user) {
+        navigate("/SignIn")
+        return null
+    }
+
+    return (
+        <div className="flex bg-surface-container-lowest min-h-screen">
+            <Sidebar />
+            <main className="flex-1 overflow-y-auto pt-16 pb-16 px-4 md:px-8">
+                <div className="max-w-2xl mx-auto">
+                    {/* Header */}
+                    <div className="mb-8">
+                        <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">Dashboard</p>
+                        <h1 className="text-4xl font-extrabold font-headline text-on-surface">Admin Profile</h1>
+                    </div>
+
+                    {/* Profile Card */}
+                    <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(25,28,29,0.08)] overflow-hidden">
+                        {/* Avatar Section */}
+                        <div className="relative bg-gradient-to-br from-primary/10 to-primary-container/20 px-8 pt-10 pb-6 flex flex-col items-center text-center">
+                            <div className="relative group mb-4">
+                                <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-xl">
+                                    {user.avatar ? (
+                                        <img className="w-full h-full object-cover" src={user.avatar} alt={user.name} />
+                                    ) : (
+                                        <div className="w-full h-full bg-gradient-to-br from-primary to-primary-container text-white flex items-center justify-center text-5xl font-black">
+                                            {user.name?.charAt(0).toUpperCase() || "U"}
+                                        </div>
+                                    )}
                                 </div>
+                                <button className="absolute -bottom-1 -right-1 w-9 h-9 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform">
+                                    <span className="material-symbols-outlined text-sm">edit</span>
+                                </button>
+                            </div>
+                            <h2 className="text-2xl font-black text-on-surface">{user.name}</h2>
+                            <p className="text-on-surface-variant text-sm mt-0.5">{user.email}</p>
+                            <span className="inline-block mt-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-orange-100 text-orange-700">
+                                {user.role || "admin"}
+                            </span>
+                        </div>
+
+                        {/* Stats Row */}
+                        <div className="grid grid-cols-3 divide-x divide-surface-container-high border-b border-surface-container-high">
+                            <div className="flex flex-col items-center py-5 gap-1">
+                                <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+                                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Products</p>
+                                <p className="text-xl font-black text-on-surface">—</p>
+                            </div>
+                            <div className="flex flex-col items-center py-5 gap-1">
+                                <span className="material-symbols-outlined text-secondary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>receipt_long</span>
+                                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Orders</p>
+                                <p className="text-xl font-black text-on-surface">—</p>
+                            </div>
+                            <div className="flex flex-col items-center py-5 gap-1">
+                                <span className="material-symbols-outlined text-tertiary text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>group</span>
+                                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Users</p>
+                                <p className="text-xl font-black text-on-surface">—</p>
                             </div>
                         </div>
+
+                        {/* Form Section */}
+                        <form onSubmit={handleSave} className="p-8 space-y-6">
+                            <div className="flex items-center gap-3 mb-2">
+                                <span className="material-symbols-outlined text-primary">settings</span>
+                                <h3 className="text-lg font-bold text-on-surface">Account Settings</h3>
+                            </div>
+
+                            {/* Name */}
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-1">Display Name</label>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">person</span>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={e => setName(e.target.value)}
+                                        className="w-full bg-surface-container-low rounded-2xl pl-12 pr-5 py-4 font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                                        placeholder="Your display name"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Email (read-only) */}
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-1">Email Address</label>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">mail</span>
+                                    <input
+                                        type="email"
+                                        value={user.email}
+                                        readOnly
+                                        className="w-full bg-surface-container-low/50 rounded-2xl pl-12 pr-5 py-4 font-medium text-on-surface-variant cursor-not-allowed opacity-70"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="flex items-center gap-3">
+                                <div className="flex-1 h-px bg-surface-container-high"></div>
+                                <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Change Password</span>
+                                <div className="flex-1 h-px bg-surface-container-high"></div>
+                            </div>
+
+                            {/* New Password */}
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-1">New Password</label>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">lock</span>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        className="w-full bg-surface-container-low rounded-2xl pl-12 pr-12 py-4 font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                                        placeholder="Leave blank to keep current"
+                                    />
+                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors">
+                                        <span className="material-symbols-outlined text-lg">{showPassword ? "visibility_off" : "visibility"}</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Confirm Password */}
+                            <div className="space-y-2">
+                                <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider ml-1">Confirm Password</label>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">lock_reset</span>
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        value={confirmPassword}
+                                        onChange={e => setConfirmPassword(e.target.value)}
+                                        className="w-full bg-surface-container-low rounded-2xl pl-12 pr-5 py-4 font-medium text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                                        placeholder="Confirm new password"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Error */}
+                            {error && (
+                                <div className="flex items-center gap-2 bg-error/10 text-error rounded-2xl px-4 py-3">
+                                    <span className="material-symbols-outlined text-base">error</span>
+                                    <p className="text-sm font-bold">{error}</p>
+                                </div>
+                            )}
+
+                            {/* Success */}
+                            {saved && (
+                                <div className="flex items-center gap-2 bg-green-50 text-green-700 rounded-2xl px-4 py-3">
+                                    <span className="material-symbols-outlined text-base">check_circle</span>
+                                    <p className="text-sm font-bold">Profile updated successfully!</p>
+                                </div>
+                            )}
+
+                            {/* Actions */}
+                            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                                <button
+                                    type="submit"
+                                    disabled={saving}
+                                    className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-primary-container text-on-primary py-4 rounded-2xl font-black shadow-lg hover:shadow-xl hover:opacity-95 active:scale-[0.98] transition-all disabled:opacity-60"
+                                >
+                                    {saving ? (
+                                        <>
+                                            <span className="material-symbols-outlined text-base animate-spin">progress_activity</span>
+                                            Saving...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span className="material-symbols-outlined text-base">save</span>
+                                            Save Changes
+                                        </>
+                                    )}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleSignOut}
+                                    className="flex items-center justify-center gap-2 border-2 border-error/20 text-error py-4 px-6 rounded-2xl font-bold hover:bg-error/5 active:scale-[0.98] transition-all"
+                                >
+                                    <span className="material-symbols-outlined text-base">logout</span>
+                                    Sign Out
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </main>
-            </div>
-        </>
+                </div>
+            </main>
+        </div>
     )
 }

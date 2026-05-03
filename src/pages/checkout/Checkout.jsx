@@ -433,7 +433,8 @@ export default function Checkout() {
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="font-bold text-sm truncate text-on-surface">{item.name}</p>
-                                            <p className="text-xs text-on-surface-variant">Qty: {item.qty}</p>
+                                            <p className="text-[10px] text-primary uppercase font-bold tracking-wider">{item.category}</p>
+                                            <p className="text-xs text-on-surface-variant mt-0.5">Qty: {item.qty}</p>
                                         </div>
                                         <p className="font-black text-primary text-sm">${(item.price * item.qty).toFixed(2)}</p>
                                     </div>

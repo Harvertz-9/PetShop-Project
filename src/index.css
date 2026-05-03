@@ -1,0 +1,107 @@
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: #f99a3f; /* primary-container */
+  color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8f9fa; /* surface */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dbc2ad; /* outline-variant */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8f4e00; /* primary */
+}
+
+/* Global Animations & Transitions */
+
+/* Fade in for page loads */
+@keyframes fadeInSlideUp {
+  from { 
+      opacity: 0; 
+      transform: translateY(20px); 
+  }
+  to { 
+      opacity: 1; 
+      transform: translateY(0); 
+  }
+}
+
+main > div {
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Button & Link Hover Dynamics */
+button, a {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active, a:active {
+  transform: scale(0.97);
+}
+
+/* Input Focus Dynamics */
+input, select, textarea {
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(143, 78, 0, 0.1), 0 8px 10px -6px rgba(143, 78, 0, 0.1);
+}
+
+/* Image Hover Dynamics */
+img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Loading Skeleton Animation */
+@keyframes skeletonLoading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f5 25%, #e1e3e4 50%, #f3f4f5 75%);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.5s infinite linear;
+}
+
+/* Table Row Hover Effects */
+tbody tr {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+tbody tr:hover {
+  transform: scale(1.005);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  z-index: 10;
+  position: relative;
+}
+
+/* Badge Pulsing for emphasis */
+.badge-pulse {
+  animation: pulse-soft 2s infinite;
+}
+
+@keyframes pulse-soft {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}

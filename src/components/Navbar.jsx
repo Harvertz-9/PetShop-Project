@@ -6,12 +6,21 @@ import { useCart } from '../context/useCart'
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [profileOpen, setProfileOpen] = useState(false)
+    const [scrolled, setScrolled] = useState(false)
     const { user, signOut } = useAuth()
     const { totalItems } = useCart()
     const navigate = useNavigate()
     const dropdownRef = useRef(null)
     const location = useLocation()
     const { pathname } = location
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20)
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
 
     const isActive = (path) => {
         if (path === '/') {
@@ -50,8 +59,12 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="fixed top-0 w-full z-50 bg-surface/60 dark:bg-slate-900/60 backdrop-blur-md shadow-[0_20px_40px_rgba(25,28,29,0.06)]">
-            <div className="flex justify-between items-center px-4 md:px-8 py-4 max-w-7xl mx-auto">
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out ${
+            scrolled 
+            ? "bg-surface/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-[0_20px_40px_rgba(25,28,29,0.08)] py-1" 
+            : "bg-surface/60 dark:bg-slate-900/60 backdrop-blur-md shadow-none py-3"
+        }`}>
+            <div className="flex justify-between items-center px-4 md:px-8 py-2 max-w-7xl mx-auto">
                 <div className="text-2xl font-bold tracking-tight text-orange-600 dark:text-orange-400 font-headline">Pet Atelier</div>
                 <div className="hidden lg:flex gap-6 items-center">
                     <Link to='/' className={getDesktopClass('/')}>Home</Link>

@@ -1,5 +1,7 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./context/useAuth"
+import { useEffect } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import Home from "./pages/home";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -9,6 +11,7 @@ import AdminDashboard from "./pages/dashboard/AdminDashboard";
 import ManageFood from "./pages/dashboard/ManageFood";
 import ManageToys from "./pages/dashboard/ManageToys";
 import ManageCollars from "./pages/dashboard/ManageCollars";
+import ManageUsers from "./pages/dashboard/ManageUsers";
 import ProfileDashboard from "./pages/dashboard/ProfileDashboard";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
@@ -21,6 +24,11 @@ import MyOrders from "./pages/user/MyOrders";
 // Guard: hanya admin yang bisa akses
 function AdminRoute({ children }) {
   const { user } = useAuth()
+  useEffect(() => {
+    if (!user) toast.error("Please sign in as admin first")
+    else if (user.role !== "admin") toast.error("Access denied. Admin only.")
+  }, [user])
+  
   if (!user) return <Navigate to="/SignIn" replace />
   if (user.role !== "admin") return <Navigate to="/" replace />
   return children
@@ -29,6 +37,10 @@ function AdminRoute({ children }) {
 // Guard: hanya user login yang bisa akses
 function PrivateRoute({ children }) {
   const { user } = useAuth()
+  useEffect(() => {
+    if (!user) toast.error("Please sign in to access this page")
+  }, [user])
+  
   if (!user) return <Navigate to="/SignIn" replace />
   return children
 }
@@ -41,8 +53,18 @@ function GuestRoute({ children }) {
 }
 
 function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, [pathname]);
+
   return (
     <>
+      <Toaster position="top-center" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/HomeServices" element={<HomeServices />} />
@@ -58,6 +80,7 @@ function App() {
         <Route path="/ManageToys" element={<ManageToys />} />
         <Route path="/ManageFood" element={<ManageFood />} />
         <Route path="/ManageCollars" element={<ManageCollars />} />
+        <Route path="/ManageUsers" element={<AdminRoute><ManageUsers /></AdminRoute>} />
         <Route path="/ProfileDashboard" element={<ProfileDashboard />} />
         <Route path="/my-profile" element={<PrivateRoute><MyProfile /></PrivateRoute>} />
         <Route path="/my-orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />

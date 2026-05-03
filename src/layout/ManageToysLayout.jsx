@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from "react"
 import Sidebar from "../components/Sidebar"
 import { useProduct } from "../context/useProduct"
+import Swal from "sweetalert2"
 
 // ── Shared Product Modal ────────────────────────────────────────────────────
-function ProductModal({ isOpen, onClose, onSave, initialData, title }) {
+function ProductModal({ isOpen, onClose, onSave, initialData, title, categoryOptions }) {
     const fileInputRef = useRef(null)
     const [form, setForm] = useState(initialData)
     const [preview, setPreview] = useState(initialData?.src || "")
@@ -159,16 +160,20 @@ function ProductModal({ isOpen, onClose, onSave, initialData, title }) {
                         />
                     </div>
 
-                    {/* Badge */}
+                    {/* Category */}
                     <div className="space-y-1.5">
-                        <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider">Badge (optional)</label>
-                        <input
-                            type="text"
-                            placeholder="e.g. Bestseller, New, Eco Friendly"
-                            value={form?.badge || ""}
-                            onChange={e => setForm(f => ({ ...f, badge: e.target.value || null }))}
-                            className="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-                        />
+                        <label className="text-xs font-black uppercase text-on-surface-variant tracking-wider">Category *</label>
+                        <select
+                            required
+                            value={form?.category || ""}
+                            onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
+                            className="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/30"
+                        >
+                            <option value="" disabled>Select a category</option>
+                            {categoryOptions?.map(opt => (
+                                <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                        </select>
                     </div>
 
                     {/* Actions */}
@@ -188,31 +193,6 @@ function ProductModal({ isOpen, onClose, onSave, initialData, title }) {
     )
 }
 
-// ── Delete Confirm Modal ─────────────────────────────────────────────────────
-function DeleteModal({ isOpen, onClose, onConfirm, productName }) {
-    if (!isOpen) return null
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm p-8 text-center">
-                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="material-symbols-outlined text-error text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>delete</span>
-                </div>
-                <h3 className="text-xl font-black text-on-surface mb-2">Delete Product?</h3>
-                <p className="text-sm text-on-surface-variant mb-6">
-                    Are you sure you want to delete <strong>"{productName}"</strong>? This action cannot be undone.
-                </p>
-                <div className="flex gap-3">
-                    <button onClick={onClose} className="flex-1 py-3 bg-surface-container-low rounded-xl font-bold text-sm hover:bg-surface-container transition-all">
-                        Cancel
-                    </button>
-                    <button onClick={onConfirm} className="flex-1 py-3 bg-error text-white rounded-xl font-black text-sm hover:opacity-90 active:scale-95 transition-all">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 // ── ManageToysLayout ─────────────────────────────────────────────────────────
 export default function ManageToysLayout() {
@@ -230,22 +210,52 @@ export default function ManageToysLayout() {
 
     const [addOpen, setAddOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
-    const [deleteOpen, setDeleteOpen] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
 
     const handleAdd = (data) => {
-        addProduct({ ...data, category: "Eco Toys" })
+        addProduct({ ...data })
+        Swal.fire({
+            title: "Success!",
+            text: "Product added successfully.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false
+        })
     }
 
     const handleEdit = (data) => {
         updateProduct(selectedProduct.id, data)
         setSelectedProduct(null)
+        Swal.fire({
+            title: "Success!",
+            text: "Product updated successfully.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false
+        })
     }
 
-    const handleDelete = () => {
-        deleteProduct(selectedProduct.id)
-        setDeleteOpen(false)
-        setSelectedProduct(null)
+    const confirmDelete = (product) => {
+        Swal.fire({
+            title: 'Delete Product?',
+            text: `Are you sure you want to delete "${product.name}"? This action cannot be undone.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct(product.id)
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Your product has been deleted.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                })
+            }
+        })
     }
 
     return (
@@ -295,14 +305,13 @@ export default function ManageToysLayout() {
                                             <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-on-surface-variant">Product</th>
                                             <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-on-surface-variant">Category</th>
                                             <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-on-surface-variant">Price</th>
-                                            <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-on-surface-variant">Rating</th>
                                             <th className="px-6 py-4 text-xs font-black uppercase tracking-wider text-on-surface-variant text-right">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-surface-container-high">
                                         {toyProducts.length === 0 ? (
                                             <tr>
-                                                <td colSpan={5} className="px-6 py-16 text-center text-on-surface-variant">
+                                                <td colSpan={4} className="px-6 py-16 text-center text-on-surface-variant">
                                                     <span className="material-symbols-outlined text-5xl block mb-3">toys</span>
                                                     No toy products yet. Click "Add New Toy" to get started.
                                                 </td>
@@ -333,12 +342,6 @@ export default function ManageToysLayout() {
                                                 </td>
                                                 <td className="px-6 py-4 font-black text-primary">${Number(product.price).toFixed(2)}</td>
                                                 <td className="px-6 py-4">
-                                                    <div className="flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-amber-400 text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                                                        <span className="text-sm font-bold">{product.rating || "5.0"}</span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4">
                                                     <div className="flex justify-end gap-1">
                                                         <button
                                                             onClick={() => { setSelectedProduct(product); setEditOpen(true) }}
@@ -347,7 +350,7 @@ export default function ManageToysLayout() {
                                                             <span className="material-symbols-outlined text-lg">edit</span>
                                                         </button>
                                                         <button
-                                                            onClick={() => { setSelectedProduct(product); setDeleteOpen(true) }}
+                                                            onClick={() => confirmDelete(product)}
                                                             className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-red-50 hover:text-error transition-all"
                                                             title="Delete">
                                                             <span className="material-symbols-outlined text-lg">delete</span>
@@ -370,9 +373,8 @@ export default function ManageToysLayout() {
             </div>
 
             {/* Modals */}
-            <ProductModal isOpen={addOpen} onClose={() => setAddOpen(false)} onSave={handleAdd} initialData={defaultForm} title="Add New Toy Product" />
-            <ProductModal isOpen={editOpen} onClose={() => { setEditOpen(false); setSelectedProduct(null) }} onSave={handleEdit} initialData={selectedProduct || defaultForm} title="Edit Toy Product" />
-            <DeleteModal isOpen={deleteOpen} onClose={() => { setDeleteOpen(false); setSelectedProduct(null) }} onConfirm={handleDelete} productName={selectedProduct?.name} />
+            <ProductModal isOpen={addOpen} onClose={() => setAddOpen(false)} onSave={handleAdd} initialData={defaultForm} title="Add New Toy Product" categoryOptions={["Eco Toys", "Interactive Toys", "Chew Toys", "Plush Toys"]} />
+            <ProductModal isOpen={editOpen} onClose={() => { setEditOpen(false); setSelectedProduct(null) }} onSave={handleEdit} initialData={selectedProduct || defaultForm} title="Edit Toy Product" categoryOptions={["Eco Toys", "Interactive Toys", "Chew Toys", "Plush Toys"]} />
         </>
     )
 }

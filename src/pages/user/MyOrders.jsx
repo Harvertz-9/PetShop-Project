@@ -13,7 +13,7 @@ const STATUS_CONFIG = {
     "Cancelled": { color: "bg-red-100 text-red-700", icon: "cancel", spin: false }
 }
 
-function OrderCard({ order }) {
+function OrderCard({ order, isAdmin, onUpdateStatus }) {
     const [expanded, setExpanded] = useState(false)
     const cfg = STATUS_CONFIG[order.status] || STATUS_CONFIG["Processing"]
     const formattedDate = new Date(order.date).toLocaleDateString("en-US", {
@@ -41,10 +41,27 @@ function OrderCard({ order }) {
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${cfg.color}`}>
-                        <span className={`material-symbols-outlined text-sm ${cfg.spin ? "animate-spin" : ""}`} style={{ fontVariationSettings: "'FILL' 1" }}>{cfg.icon}</span>
-                        {order.status}
-                    </span>
+                    {isAdmin ? (
+                        <div className="relative">
+                            <select
+                                value={order.status}
+                                onChange={(e) => onUpdateStatus(order.id, e.target.value)}
+                                className={`appearance-none outline-none pr-8 pl-3 py-1.5 rounded-full text-xs font-bold cursor-pointer transition-all ${cfg.color} border border-transparent hover:border-current/30 shadow-sm`}
+                            >
+                                <option value="Processing">Processing</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-base" style={{ fontVariationSettings: "'FILL' 1" }}>arrow_drop_down</span>
+                        </div>
+                    ) : (
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold ${cfg.color}`}>
+                            <span className={`material-symbols-outlined text-sm ${cfg.spin ? "animate-spin" : ""}`} style={{ fontVariationSettings: "'FILL' 1" }}>{cfg.icon}</span>
+                            {order.status}
+                        </span>
+                    )}
                     <button
                         onClick={() => setExpanded(!expanded)}
                         className="w-9 h-9 rounded-full bg-surface-container-low flex items-center justify-center hover:bg-surface-container transition-all active:scale-90"
@@ -118,7 +135,7 @@ function OrderCard({ order }) {
                         >
                             Shop Again
                         </Link>
-                        {order.status === "Delivered" && (
+                        {order.status === "Delivered" && !isAdmin && (
                             <button className="flex-1 text-xs font-bold py-3 rounded-xl bg-primary text-on-primary hover:opacity-90 transition-all">
                                 Leave a Review
                             </button>
@@ -130,51 +147,15 @@ function OrderCard({ order }) {
     )
 }
 
-// Mock orders untuk demo jika belum ada pesanan nyata
-const DEMO_ORDERS = [
-    {
-        id: "ORD-DEMO-001",
-        date: new Date(Date.now() - 86400000 * 2).toISOString(),
-        status: "Delivered",
-        items: [
-            { name: "Cognac Leather Heirloom Collar", price: 85, qty: 1, src: "https://lh3.googleusercontent.com/aida-public/AB6AXuAjUnC4mOdPixnlThKWLXMQPxBdfRuKohYfITSS01si8h1wdvajKJJHmD9tdoc33Kuqiv_7OlTbVrSi1wPELxPBqTmW_CjyLBojWRY04MZnyOXY8Z1iE61lZ6Nq-lARprIr_aHFz9pga4R4jTSi606OQJ2ExN_EcY_H6oOihLuvQZxIi0cV832qPJdiKebNUx8pRDHcYFXAGAJSm1fOvA9vXy7TwOeZHsEFalurG-o5418JzhGn9i2WhdIvinGMZc-FmWTadzCXmiOo" },
-            { name: "Sustainable Rubber Trio", price: 42, qty: 2, src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDf_JhvEKmR4GXO0fAHF1iEJTdDNejO_QwHpbz8B9dmCMorRKRfy8jYBYqEhixKHB8Tm8mc_vLF86eYv4bUYfUouHY8r78pAOif9yIkjBaZl4utjicdOhsGC0Ds_4sqPzAtSOQt95ghpL6qkNOFnCOA0MeuprEIx90urkdJv3N1bh7LJ1F9Fx6bdb6W0TR1zP2kXaJu8ByicNpKpdGtUp-mgTYymRJu0CzHAcp5DC-m-BFmhselhjKo62jSMi35wvEckU_b0ECt7_2j" }
-        ],
-        subtotal: 169, tax: 13.52, total: 182.52,
-        address: { name: "John Doe", street: "123 Maple St", city: "New York, NY 10001" }
-    },
-    {
-        id: "ORD-DEMO-002",
-        date: new Date(Date.now() - 3600000 * 5).toISOString(),
-        status: "Shipped",
-        items: [
-            { name: "Velvet Cloud Orthopedic Bed", price: 189, qty: 1, src: "https://lh3.googleusercontent.com/aida-public/AB6AXuArppzGznrIypbSSi88vlnY91DmaBFKQKTsUJznZjrnETnDhQ6jB3WTx1R1ZdT1Wi9l2anmZYKlUoZui_W1FG6SdtnsHsK4xZEAAv7q2bwILOQmfGhQbSmtmMXRfVQBa_UxK5ZYAuJyqd1fnuX-DNSnDwf0KQqdbOZLtlkHl_bn5_Jov8-WR8e2yUVrTOvODKTraujKVWYqoAsk94MrJT5QKte-OkPaD2KOk9ZsiO-slZx2lUSekrrebxLiK2oSJgbQUaz9Xx31mlxg" }
-        ],
-        subtotal: 189, tax: 15.12, total: 204.12,
-        address: { name: "Jane Smith", street: "456 Oak Ave", city: "Los Angeles, CA 90001" }
-    },
-    {
-        id: "ORD-DEMO-003",
-        date: new Date().toISOString(),
-        status: "Processing",
-        items: [
-            { name: "Wild-Caught Salmon & Pea", price: 64, qty: 1, src: "https://lh3.googleusercontent.com/aida-public/AB6AXuDasYj_2XclPu1SqHS8_rQxWjl08tMp68M2LXO30nMLTmU8ZKy3s8k4YVKVWh5B9LVk0lMdcxBIUa5Iw7IxPlugRLKh49GUxcbX3yqat4sVyVFs-EeCDxs08DlQ2s6GkNQ_DTkBQ_in1W0-zj_oYDtrdUWD5VbtLcd9UiiovCZOTvqjLLdTlCYryZ7prcHNIp_FSBc3lJTrvvd16kZio_r7FEJEfjAK31-7LA09LP9q23aa0ZLErXT0G1blNMLCr9yFS-s1LCUbVAsp" }
-        ],
-        subtotal: 64, tax: 5.12, total: 69.12,
-        address: { name: "Pet Owner", street: "789 Pine Rd", city: "Chicago, IL 60601" }
-    }
-]
-
 export default function MyOrders() {
-    const { orders } = useOrder()
+    const { orders, updateOrderStatus } = useOrder()
     const { user } = useAuth()
     const [filterStatus, setFilterStatus] = useState("All")
 
-    // Gabung real orders dari context + demo orders (hanya jika belum ada order nyata)
-    const displayOrders = orders.length > 0 ? orders : DEMO_ORDERS
+    const isAdmin = user?.role === "admin"
 
     const statuses = ["All", "Processing", "Confirmed", "Shipped", "Delivered", "Cancelled"]
-    const filtered = filterStatus === "All" ? displayOrders : displayOrders.filter(o => o.status === filterStatus)
+    const filtered = filterStatus === "All" ? orders : orders.filter(o => o.status === filterStatus)
 
     return (
         <>
@@ -184,17 +165,22 @@ export default function MyOrders() {
                     {/* Header */}
                     <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                         <div>
-                            <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">Account</p>
-                            <h1 className="text-4xl font-extrabold font-headline text-on-surface">My Orders</h1>
+                            <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">
+                                {isAdmin ? "Administration" : "Account"}
+                            </p>
+                            <h1 className="text-4xl font-extrabold font-headline text-on-surface">
+                                {isAdmin ? "Manage Orders" : "My Orders"}
+                            </h1>
                             <p className="text-on-surface-variant text-sm mt-1">
-                                {displayOrders.length} order{displayOrders.length !== 1 ? "s" : ""} total
-                                {orders.length === 0 && <span className="ml-2 text-xs text-amber-600 font-bold">(showing demo orders)</span>}
+                                {orders.length} order{orders.length !== 1 ? "s" : ""} total
                             </p>
                         </div>
-                        <Link to="/CatalogProduct" className="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-bold text-sm hover:opacity-90 transition-all shadow-lg self-start sm:self-auto">
-                            <span className="material-symbols-outlined text-base">add_shopping_cart</span>
-                            Shop Now
-                        </Link>
+                        {!isAdmin && (
+                            <Link to="/CatalogProduct" className="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-bold text-sm hover:opacity-90 transition-all shadow-lg self-start sm:self-auto">
+                                <span className="material-symbols-outlined text-base">add_shopping_cart</span>
+                                Shop Now
+                            </Link>
+                        )}
                     </div>
 
                     {/* Status Filter Chips */}
@@ -221,16 +207,23 @@ export default function MyOrders() {
                             </div>
                             <h3 className="text-xl font-bold text-on-surface mb-2">No Orders Found</h3>
                             <p className="text-on-surface-variant text-sm mb-6">
-                                {filterStatus === "All" ? "You haven't placed any orders yet." : `No orders with status "${filterStatus}".`}
+                                {filterStatus === "All" ? "There are no orders yet." : `No orders with status "${filterStatus}".`}
                             </p>
-                            <Link to="/CatalogProduct" className="bg-primary text-on-primary px-8 py-3.5 rounded-full font-bold hover:opacity-90 transition-all shadow-lg text-sm">
-                                Start Shopping
-                            </Link>
+                            {!isAdmin && (
+                                <Link to="/CatalogProduct" className="bg-primary text-on-primary px-8 py-3.5 rounded-full font-bold hover:opacity-90 transition-all shadow-lg text-sm">
+                                    Start Shopping
+                                </Link>
+                            )}
                         </div>
                     ) : (
                         <div className="space-y-4">
                             {filtered.map(order => (
-                                <OrderCard key={order.id} order={order} />
+                                <OrderCard 
+                                    key={order.id} 
+                                    order={order} 
+                                    isAdmin={isAdmin}
+                                    onUpdateStatus={updateOrderStatus}
+                                />
                             ))}
                         </div>
                     )}

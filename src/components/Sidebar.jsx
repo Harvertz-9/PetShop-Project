@@ -38,6 +38,10 @@ export default function Sidebar() {
                             <span className="material-symbols-outlined" data-icon="pets">pets</span>
                             <span className="font-medium">Manage Collars</span>
                         </Link>
+                        <Link to='/ManageUsers' className="flex items-center space-x-4 text-slate-600 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-300 px-6 py-3 transition-colors hover:bg-white/50 dark:hover:bg-slate-800 rounded-full transition-all">
+                            <span className="material-symbols-outlined" data-icon="group">group</span>
+                            <span className="font-medium">Manage Users</span>
+                        </Link>
                         <Link to='/ProfileDashboard' className="px-5 py-3 bg-white dark:bg-slate-900 rounded-xl flex items-center space-x-3">
                             {user?.avatar ? (
                                 <img alt={user?.name || "Admin"} className="w-10 h-10 rounded-full object-cover" src={user.avatar} />

@@ -5,7 +5,7 @@ import Footer from "../components/Footer"
 import { useCart } from "../context/useCart"
 import { useAuth } from "../context/useAuth"
 import { useProduct } from "../context/useProduct"
-
+import { toast } from "react-hot-toast"
 
 export default function ProductLayout() {
     const [filterDrawerOpen, setFilterDrawerOpen] = useState(false)
@@ -40,6 +40,7 @@ export default function ProductLayout() {
         e.preventDefault()  // mencegah Link navigate
         e.stopPropagation()
         if (!user) {
+            toast.error("Please sign in to add items to your cart!")
             navigate("/SignIn")
             return
         }
@@ -52,6 +53,7 @@ export default function ProductLayout() {
         e.preventDefault()
         e.stopPropagation()
         if (!user) {
+            toast.error("Please sign in to buy items!")
             navigate("/SignIn")
             return
         }
@@ -160,6 +162,9 @@ export default function ProductLayout() {
                                                 {product.badge}
                                             </span>
                                         )}
+                                    </div>
+                                    <div className="mb-1">
+                                        <span className="text-[9px] font-bold uppercase tracking-wider text-primary">{product.category}</span>
                                     </div>
                                     <h3 className="font-headline font-bold text-xs md:text-sm mb-0.5 group-hover:text-primary transition-colors line-clamp-1">
                                         {product.name}

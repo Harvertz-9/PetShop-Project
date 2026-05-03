@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useCart } from "../context/useCart"
 import { useAuth } from "../context/useAuth"
 import { useProduct } from "../context/useProduct"
+import { toast } from "react-hot-toast"
 
 export default function DetailProductLayout({ product }) {
     const navigate = useNavigate()
@@ -25,6 +26,7 @@ export default function DetailProductLayout({ product }) {
 
     const handleAddToCart = () => {
         if (!user) {
+            toast.error("Please sign in to add items to your cart!")
             navigate("/SignIn")
             return
         }
@@ -37,6 +39,7 @@ export default function DetailProductLayout({ product }) {
 
     const handleBuyNow = () => {
         if (!user) {
+            toast.error("Please sign in to buy items!")
             navigate("/SignIn")
             return
         }
@@ -185,8 +188,8 @@ export default function DetailProductLayout({ product }) {
                                 <div className="flex items-center justify-between gap-1">
                                     <p className="font-bold text-primary text-sm">${item.price.toFixed(2)}</p>
                                     <div className="flex items-center gap-1">
-                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!user) return navigate("/SignIn"); addToCart(item, 1); navigate("/checkout"); }} className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
-                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!user) return navigate("/SignIn"); addToCart(item, 1); }} className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
+                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!user) { toast.error("Please sign in to buy items!"); return navigate("/SignIn"); } addToCart(item, 1); navigate("/checkout"); }} className="bg-primary text-on-primary px-3 py-1.5 rounded-full font-bold text-[10px] hover:opacity-90 transition-all">Buy</button>
+                                        <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); if(!user) { toast.error("Please sign in to add items to your cart!"); return navigate("/SignIn"); } addToCart(item, 1); }} className="w-7 h-7 border border-outline-variant text-on-surface rounded-full flex items-center justify-center hover:bg-surface-container transition-all">
                                             <span className="material-symbols-outlined text-base">shopping_cart</span>
                                         </button>
                                     </div>

@@ -44,6 +44,7 @@ export default function CartLayout() {
                                         <div className="flex justify-between items-start gap-2">
                                             <div className="truncate">
                                                 <h3 className="text-base md:text-xl font-bold font-headline truncate">{item.name}</h3>
+                                                <p className="text-[10px] uppercase font-bold text-primary tracking-wider mb-1">{item.category}</p>
                                                 <p className="text-on-surface-variant text-xs md:text-sm">{item.desc}</p>
                                             </div>
                                             <span className="text-base md:text-xl font-bold text-primary shrink-0">
