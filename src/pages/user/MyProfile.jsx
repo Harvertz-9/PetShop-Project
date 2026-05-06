@@ -54,12 +54,6 @@ export default function MyProfile() {
             <Navbar />
             <main className="min-h-screen bg-gradient-to-br from-surface-container-lowest via-surface to-surface-container-low pt-24 pb-16 px-4">
                 <div className="max-w-2xl mx-auto">
-                    {/* Header */}
-                    <div className="mb-8">
-                        <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">Account</p>
-                        <h1 className="text-4xl font-extrabold font-headline text-on-surface">My Profile</h1>
-                    </div>
-
                     {/* Profile Card */}
                     <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(25,28,29,0.08)] overflow-hidden">
                         {/* Avatar Section */}

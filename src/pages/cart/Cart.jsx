@@ -11,12 +11,6 @@ export default function Cart() {
             <Navbar />
             <main className="max-w-7xl mx-auto px-4 md:px-6 pt-24 pb-12">
 
-                {/* Page Title */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-extrabold font-headline text-on-surface">My Cart</h1>
-                    <p className="text-on-surface-variant mt-1">{cartItems.length} item{cartItems.length !== 1 ? "s" : ""} in your cart</p>
-                </div>
-
                 {cartItems.length === 0 ? (
                     <div className="text-center py-32">
                         <span className="material-symbols-outlined text-8xl text-surface-container-highest block mb-6">shopping_cart</span>

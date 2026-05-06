@@ -19,7 +19,7 @@ export default function Sidebar() {
                     </div>
                     <nav className="flex-1 space-y-2">
                         <Link to='/' className="flex items-center space-x-4 text-slate-600 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-300 px-6 py-3 transition-colors hover:bg-white/50 dark:hover:bg-slate-800 rounded-full transition-all" href="#">
-                            <span className="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                            <span className="material-symbols-outlined">home</span>
                             <span className="font-medium">Home</span>
                         </Link>
                         <Link to='/AdminDashboard' className="flex items-center space-x-4 text-slate-600 dark:text-slate-400 hover:text-orange-500 dark:hover:text-orange-300 px-6 py-3 transition-colors hover:bg-white/50 dark:hover:bg-slate-800 rounded-full transition-all" href="#">

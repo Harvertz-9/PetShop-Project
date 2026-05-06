@@ -185,12 +185,6 @@ export default function Checkout() {
         <>
             <Navbar />
             <main className="max-w-5xl mx-auto px-4 md:px-6 pt-24 pb-16">
-                {/* Header */}
-                <div className="mb-8">
-                    <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">Pet Atelier</p>
-                    <h1 className="text-4xl font-extrabold font-headline text-on-surface">Checkout</h1>
-                </div>
-
                 <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
                     {/* ── LEFT: Form ── */}
                     <form onSubmit={handleOrder} className="space-y-6" id="checkout-form">

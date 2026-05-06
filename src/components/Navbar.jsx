@@ -131,16 +131,14 @@ export default function Navbar() {
                                             <span className="material-symbols-outlined text-lg text-slate-400">person</span>
                                             My Profile
                                         </Link>
-                                        {user.role !== "admin" && (
-                                            <Link
-                                                to="/my-orders"
-                                                onClick={() => setProfileOpen(false)}
-                                                className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors"
-                                            >
-                                                <span className="material-symbols-outlined text-lg text-slate-400">receipt_long</span>
-                                                My Orders
-                                            </Link>
-                                        )}
+                                        <Link
+                                            to="/my-orders"
+                                            onClick={() => setProfileOpen(false)}
+                                            className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-surface hover:bg-surface-container-low transition-colors"
+                                        >
+                                            <span className="material-symbols-outlined text-lg text-slate-400">receipt_long</span>
+                                            My Orders
+                                        </Link>
                                         <div className="border-t border-surface-container-high mt-1 pt-1">
                                             <button
                                                 onClick={handleSignOut}
