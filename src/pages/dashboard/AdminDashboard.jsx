@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Sidebar from "../../components/Sidebar"
+import AdminHeader from "../../components/AdminHeader"
 
 const WEEKLY_DATA = [
     { day: "Mon", value: 40, sales: "$3,200" },
@@ -111,11 +112,15 @@ function InteractiveChart() {
 }
 
 export default function AdminDashboard() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
     return (
         <>
-            <div className="flex">
-            <Sidebar />
-            <main className="flex-grow flex flex-col min-w-0">
+            <div className="flex flex-col md:flex-row min-h-screen">
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+            <div className="flex-1 flex flex-col min-w-0">
+                <AdminHeader onMenuClick={() => setIsSidebarOpen(true)} title="Dashboard" />
+                <main className="flex-grow flex flex-col min-w-0">
                 <div className="p-8 space-y-12">
                     <section className="flex flex-col md:flex-row justify-between items-end gap-6">
                         <div className="flex items-center justify-between w-full">
@@ -170,78 +175,13 @@ export default function AdminDashboard() {
                         </div>
                     </section>
                     <section className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        <div className="lg:col-span-8">
+                        <div className="md:col-span-8 lg:col-span-12">
                             <InteractiveChart />
-                        </div>
-                        <div className="lg:col-span-4 flex flex-col gap-8">
-
-                            <div className="bg-surface-container-lowest rounded-xl p-8 shadow-[0_20px_40px_rgba(25,28,29,0.06)] flex-grow flex flex-col">
-                                <h2 className="text-xl font-extrabold mb-6 flex items-center gap-2">
-                                    Upcoming Paws
-                                    <span className="px-2 py-0.5 bg-secondary-container/20 text-on-secondary-container rounded text-xs">4 Total</span>
-                                </h2>
-                                <div className="space-y-6 flex-grow">
-                                    <div className="flex items-start gap-4">
-                                        <div className="relative">
-                                            <img alt="A happy Beagle dog" className="w-14 h-14 rounded-lg object-cover" data-alt="close-up portrait of a friendly beagle with floppy ears and brown eyes, warm outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkQcXLcHpLEvpnx-v4cUIo_4JcfRSgROvLRtAwy4mZ3rECNWtnJgxp5Yy5tzmqoxwu6FFsKor2h81OMQs-wHgOskgY60w6XiDjPPY9huD455YKA312FV9qq_aB4AH2TTtK4HKnL6jAuDsR3AMYccbqWJor-rsG5IJi2vdpq-ivB7AqM3P4kkau5HlJJ-_EM7rZq0Qn6NN8mg_aJEJoTf5flbSquQIzwIvZAzReUTBhbg-kVpdGuw6a-UkJ_Hv6Wcybia5WwAkdhZ_Z" />
-                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-white rounded-full"></div>
-                                        </div>
-                                        <div className="flex-grow">
-                                            <div className="flex justify-between">
-                                                <p className="font-bold text-on-surface">Barnaby</p>
-                                                <p className="text-xs font-black text-secondary">09:30 AM</p>
-                                            </div>
-                                            <p className="text-xs text-on-surface-variant">Full Groom &amp; Spa</p>
-                                            <div className="mt-2 flex gap-1">
-                                                <span className="px-2 py-0.5 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-tighter">Gold Tier</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4">
-                                        <div className="relative">
-                                            <img alt="A fluffy white Pomeranian" className="w-14 h-14 rounded-lg object-cover" data-alt="close-up of a fluffy small white dog with bright dark eyes looking directly at the camera, soft indoor studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3q2lftsrm8_07uqV840oyMlrrtmN2hCncjbkWIYfWUKusP7uiFUrlX9CUcazGrP4WyhrH_riOLtyE6HSVNmqKO-U_E0oguv2f4Cevbx1wmB_iIOMRtfBYrD4G2CfhuCDcPbVCM78-CvqSMhzSoASSsfScLL9sGsD6Ix9bkYyrTlitPXPaoCJ_NihC5d-sf2YNWtp_Od5YzTmlbFhiXWU1Etf9PNLBgRRCpXXfqUoff8diHCtyc7TcDDFMTyzdU0db2FulZTugXWpg" />
-                                            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-orange-400 border-2 border-white rounded-full"></div>
-                                        </div>
-                                        <div className="flex-grow">
-                                            <div className="flex justify-between">
-                                                <p className="font-bold text-on-surface">Luna</p>
-                                                <p className="text-xs font-black text-secondary">11:15 AM</p>
-                                            </div>
-                                            <p className="text-xs text-on-surface-variant">Claw Trim Only</p>
-                                            <div className="mt-2 flex gap-1">
-                                                <span className="px-2 py-0.5 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-tighter">Regular</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-start gap-4 opacity-70">
-                                        <div className="relative">
-                                            <img alt="Golden Retriever" className="w-14 h-14 rounded-lg object-cover" data-alt="Golden Retriever puppy sitting in green grass during late afternoon golden hour with soft rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFGvJ013s5BlKPKOhLU0RRC_StpCM_LNV8w_8kapW9qdouWtSStCBYxxjeLtTg4uWuhMxPKI4VNpq2yscWmZNoQ-V4xV-QOYpD2X32Hy57LuJ0-nqKl53g6-WlCeNohPs4LW6N_PZLAW7X3G-fBMVAhsuEANQa157NJTIkflPKueDGc8csBPmXzJ7oRKdmSECpK36OVbPVKnHUD4fNJWUM5Bt7cEQ8oqRyTNQiRDs9FsgOzJGrH_XtMtzhDLLl3AUuApLsAXZx638i" />
-                                        </div>
-                                        <div className="flex-grow">
-                                            <div className="flex justify-between">
-                                                <p className="font-bold text-on-surface">Cooper</p>
-                                                <p className="text-xs font-black text-secondary">02:00 PM</p>
-                                            </div>
-                                            <p className="text-xs text-on-surface-variant">Teeth Cleaning</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="w-full mt-8 py-3 bg-surface-container text-on-surface-variant font-bold text-sm rounded-full hover:bg-surface-container-high transition-colors">
-                                    View All Appointments
-                                </button>
-                            </div>
-                            <div className="bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-white relative overflow-hidden">
-                                <div className="relative z-10">
-                                    <h3 className="text-xl font-extrabold leading-tight">Refill Inventory Now</h3>
-                                    <p className="text-sm opacity-90 mt-2">3 types of "Organic Lamb" are running low. Order before 4PM for tomorrow's delivery.</p>
-                                    <button className="mt-4 px-6 py-2 bg-white text-primary font-bold rounded-full text-xs">Manage Stock</button>
-                                </div>
-                                <span className="material-symbols-outlined absolute -bottom-4 -right-4 text-9xl opacity-10" data-icon="restaurant">restaurant</span>
-                            </div>
                         </div>
                     </section>
                 </div>
             </main> 
+            </div>
             </div>
         </>
     )

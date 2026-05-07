@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import Navbar from "../../components/Navbar"
 import { useCart } from "../../context/useCart"
@@ -7,12 +7,20 @@ import { useOrder } from "../../context/useOrder"
 
 // ── Secret Promo Codes ────────────────────────────────────────────────────────
 const PROMO_CODES = {
-    "PETLOVE10":  { discount: 0.10, label: "10% Off — Pet Love Special" },
-    "ATELIER20":  { discount: 0.20, label: "20% Off — Atelier Member" },
-    "PAWS50":     { discount: 0.50, label: "50% Off — VIP Exclusive 🎉" },
-    "WELCOME15":  { discount: 0.15, label: "15% Off — Welcome Gift" },
-    "FURRY25":    { discount: 0.25, label: "25% Off — Furry Friends Club" },
+    "PETLOVE10": { discount: 0.10, label: "10% Off — Pet Love Special" },
+    "ATELIER20": { discount: 0.20, label: "20% Off — Atelier Member" },
+    "PAWS50": { discount: 0.50, label: "50% Off — VIP Exclusive 🎉" },
+    "WELCOME15": { discount: 0.15, label: "15% Off — Welcome Gift" },
+    "FURRY25": { discount: 0.25, label: "25% Off — Furry Friends Club" },
 }
+
+const CONFETTI_PARTICLES = [...Array(20)].map((_, i) => ({
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 60}%`,
+    color: ["#F99A3F", "#4CAF50", "#2196F3", "#E91E63", "#9C27B0"][i % 5],
+    delay: `${Math.random() * 1}s`,
+    duration: `${0.8 + Math.random() * 0.8}s`,
+}))
 
 // ── Success Modal ─────────────────────────────────────────────────────────────
 function SuccessModal({ isOpen, order, onClose }) {
@@ -22,15 +30,15 @@ function SuccessModal({ isOpen, order, onClose }) {
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
             {/* Confetti dots */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {[...Array(20)].map((_, i) => (
+                {CONFETTI_PARTICLES.map((p, i) => (
                     <div key={i}
                         className="absolute w-2 h-2 rounded-full animate-bounce"
                         style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 60}%`,
-                            backgroundColor: ["#F99A3F","#4CAF50","#2196F3","#E91E63","#9C27B0"][i % 5],
-                            animationDelay: `${Math.random() * 1}s`,
-                            animationDuration: `${0.8 + Math.random() * 0.8}s`
+                            left: p.left,
+                            top: p.top,
+                            backgroundColor: p.color,
+                            animationDelay: p.delay,
+                            animationDuration: p.duration,
                         }}
                     />
                 ))}
@@ -57,11 +65,10 @@ function SuccessModal({ isOpen, order, onClose }) {
                         </div>
                         <div className="flex justify-between items-center border-t border-surface-container-high pt-3">
                             <span className="text-xs font-black uppercase tracking-wider text-on-surface-variant">Payment</span>
-                            <span className={`text-sm font-bold px-3 py-1 rounded-full ${
-                                order.paymentMethod === "cash"
-                                    ? "bg-green-100 text-green-700"
-                                    : "bg-blue-100 text-blue-700"
-                            }`}>
+                            <span className={`text-sm font-bold px-3 py-1 rounded-full ${order.paymentMethod === "cash"
+                                ? "bg-green-100 text-green-700"
+                                : "bg-blue-100 text-blue-700"
+                                }`}>
                                 {order.paymentMethod === "cash" ? "💵 Cash on Delivery" : "🏦 Bank Transfer"}
                             </span>
                         </div>
@@ -104,14 +111,27 @@ export default function Checkout() {
     const { addOrder } = useOrder()
     const navigate = useNavigate()
 
-    // Form state
-    const [form, setForm] = useState({
-        fullName: user?.name || "",
-        email: user?.email || "",
-        phone: "",
-        street: "",
-        city: "",
+    // Form state with persistence
+    const [form, setForm] = useState(() => {
+        try {
+            const saved = localStorage.getItem("petshop_checkout_form")
+            if (saved) return JSON.parse(saved)
+        } catch {
+            // handle error
+        }
+        return {
+            fullName: user?.name || "",
+            email: user?.email || "",
+            phone: "",
+            street: "",
+            city: "",
+        }
     })
+
+    // Save form to localStorage whenever it changes
+    React.useEffect(() => {
+        localStorage.setItem("petshop_checkout_form", JSON.stringify(form))
+    }, [form])
 
     // Payment
     const [paymentMethod, setPaymentMethod] = useState("cash") // "cash" | "transfer"
@@ -157,6 +177,7 @@ export default function Checkout() {
         if (cartItems.length === 0) return
 
         const newOrder = addOrder({
+            userId: user?.id,
             items: cartItems,
             subtotal,
             tax,
@@ -170,6 +191,9 @@ export default function Checkout() {
                 city: form.city,
             }
         })
+
+        // Clear form persistence on successful order
+        localStorage.removeItem("petshop_checkout_form")
 
         clearCart()
         setSuccessOrder(newOrder)
@@ -296,11 +320,10 @@ export default function Checkout() {
                                 <button
                                     type="button"
                                     onClick={() => setPaymentMethod("cash")}
-                                    className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all ${
-                                        paymentMethod === "cash"
-                                            ? "border-primary bg-primary/5 shadow-md"
-                                            : "border-surface-container-high hover:border-primary/30"
-                                    }`}
+                                    className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all ${paymentMethod === "cash"
+                                        ? "border-primary bg-primary/5 shadow-md"
+                                        : "border-surface-container-high hover:border-primary/30"
+                                        }`}
                                 >
                                     <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${paymentMethod === "cash" ? "bg-primary text-on-primary" : "bg-surface-container-low text-on-surface-variant"}`}>
                                         💵
@@ -320,11 +343,10 @@ export default function Checkout() {
                                 <button
                                     type="button"
                                     onClick={() => setPaymentMethod("transfer")}
-                                    className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all ${
-                                        paymentMethod === "transfer"
-                                            ? "border-primary bg-primary/5 shadow-md"
-                                            : "border-surface-container-high hover:border-primary/30"
-                                    }`}
+                                    className={`flex flex-col items-center gap-3 p-5 rounded-2xl border-2 transition-all ${paymentMethod === "transfer"
+                                        ? "border-primary bg-primary/5 shadow-md"
+                                        : "border-surface-container-high hover:border-primary/30"
+                                        }`}
                                 >
                                     <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${paymentMethod === "transfer" ? "bg-primary text-on-primary" : "bg-surface-container-low text-on-surface-variant"}`}>
                                         🏦
@@ -417,7 +439,7 @@ export default function Checkout() {
                             <h2 className="font-black text-lg text-on-surface">Order Summary</h2>
 
                             {/* Items */}
-                            <div className="space-y-3 max-h-64 overflow-y-auto">
+                            <div className="space-y-3 max-h-64 overflow-y-auto scrollbar-hide">
                                 {cartItems.length === 0 ? (
                                     <p className="text-sm text-on-surface-variant text-center py-6">Your cart is empty.</p>
                                 ) : cartItems.map(item => (

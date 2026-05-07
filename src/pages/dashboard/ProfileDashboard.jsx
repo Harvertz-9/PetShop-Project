@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Sidebar from "../../components/Sidebar"
+import AdminHeader from "../../components/AdminHeader"
 import { useAuth } from "../../context/useAuth"
 
 export default function ProfileDashboard() {
@@ -13,6 +14,7 @@ export default function ProfileDashboard() {
     const [saving, setSaving] = useState(false)
     const [saved, setSaved] = useState(false)
     const [error, setError] = useState("")
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const handleSave = (e) => {
         e.preventDefault()
@@ -49,16 +51,12 @@ export default function ProfileDashboard() {
     }
 
     return (
-        <div className="flex bg-surface-container-lowest min-h-screen">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto pt-16 pb-16 px-4 md:px-8">
+        <div className="flex flex-col md:flex-row bg-surface-container-lowest min-h-screen">
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+            <div className="flex-1 flex flex-col min-w-0">
+                <AdminHeader onMenuClick={() => setIsSidebarOpen(true)} title="Profile" />
+                <main className="flex-1 overflow-y-auto pt-8 md:pt-16 pb-16 px-4 md:px-8">
                 <div className="max-w-2xl mx-auto">
-                    {/* Header */}
-                    <div className="mb-8">
-                        <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">Dashboard</p>
-                        <h1 className="text-4xl font-extrabold font-headline text-on-surface">Admin Profile</h1>
-                    </div>
-
                     {/* Profile Card */}
                     <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(25,28,29,0.08)] overflow-hidden">
                         {/* Avatar Section */}
@@ -73,9 +71,6 @@ export default function ProfileDashboard() {
                                         </div>
                                     )}
                                 </div>
-                                <button className="absolute -bottom-1 -right-1 w-9 h-9 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform">
-                                    <span className="material-symbols-outlined text-sm">edit</span>
-                                </button>
                             </div>
                             <h2 className="text-2xl font-black text-on-surface">{user.name}</h2>
                             <p className="text-on-surface-variant text-sm mt-0.5">{user.email}</p>
@@ -227,6 +222,7 @@ export default function ProfileDashboard() {
                     </div>
                 </div>
             </main>
+            </div>
         </div>
     )
 }

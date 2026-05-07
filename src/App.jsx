@@ -12,6 +12,7 @@ import ManageFood from "./pages/dashboard/ManageFood";
 import ManageToys from "./pages/dashboard/ManageToys";
 import ManageCollars from "./pages/dashboard/ManageCollars";
 import ManageUsers from "./pages/dashboard/ManageUsers";
+import ManageOrders from "./pages/dashboard/ManageOrders";
 import ProfileDashboard from "./pages/dashboard/ProfileDashboard";
 import Cart from "./pages/cart/Cart";
 import Checkout from "./pages/checkout/Checkout";
@@ -80,6 +81,7 @@ function App() {
         <Route path="/ManageToys" element={<ManageToys />} />
         <Route path="/ManageFood" element={<ManageFood />} />
         <Route path="/ManageCollars" element={<ManageCollars />} />
+        <Route path="/ManageOrders" element={<AdminRoute><ManageOrders /></AdminRoute>} />
         <Route path="/ManageUsers" element={<AdminRoute><ManageUsers /></AdminRoute>} />
         <Route path="/ProfileDashboard" element={<ProfileDashboard />} />
         <Route path="/my-profile" element={<PrivateRoute><MyProfile /></PrivateRoute>} />

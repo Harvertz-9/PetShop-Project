@@ -4,6 +4,7 @@ import { OrderContext } from "./useOrder"
 const DEMO_ORDERS = [
     {
         id: "ORD-DEMO-001",
+        userId: 1,
         date: new Date(Date.now() - 86400000 * 2).toISOString(),
         status: "Delivered",
         items: [
@@ -15,6 +16,7 @@ const DEMO_ORDERS = [
     },
     {
         id: "ORD-DEMO-002",
+        userId: 1,
         date: new Date(Date.now() - 3600000 * 5).toISOString(),
         status: "Shipped",
         items: [
@@ -25,6 +27,7 @@ const DEMO_ORDERS = [
     },
     {
         id: "ORD-DEMO-003",
+        userId: 1,
         date: new Date().toISOString(),
         status: "Processing",
         items: [
@@ -53,6 +56,9 @@ export function OrderProvider({ children }) {
         localStorage.setItem("petshop_orders", JSON.stringify(orders))
     }, [orders])
 
+    // Cleanup logic: This could be added here if we had access to users, 
+    // but users are in AuthContext.
+
     const addOrder = (orderData) => {
         const newOrder = {
             id: `ORD-${Date.now()}`,
@@ -70,10 +76,14 @@ export function OrderProvider({ children }) {
         )
     }
 
+    const deleteOrder = (orderId) => {
+        setOrders(prev => prev.filter(o => o.id !== orderId))
+    }
+
     const clearOrders = () => setOrders([])
 
     return (
-        <OrderContext.Provider value={{ orders, addOrder, updateOrderStatus, clearOrders }}>
+        <OrderContext.Provider value={{ orders, addOrder, updateOrderStatus, clearOrders, deleteOrder }}>
             {children}
         </OrderContext.Provider>
     )

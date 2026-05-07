@@ -131,6 +131,7 @@ export default function Navbar() {
                                             <span className="material-symbols-outlined text-lg text-slate-400">person</span>
                                             My Profile
                                         </Link>
+                                        {user.role !== "admin" && (
                                         <Link
                                             to="/my-orders"
                                             onClick={() => setProfileOpen(false)}
@@ -139,6 +140,7 @@ export default function Navbar() {
                                             <span className="material-symbols-outlined text-lg text-slate-400">receipt_long</span>
                                             My Orders
                                         </Link>
+                                        )}
                                         <div className="border-t border-surface-container-high mt-1 pt-1">
                                             <button
                                                 onClick={handleSignOut}

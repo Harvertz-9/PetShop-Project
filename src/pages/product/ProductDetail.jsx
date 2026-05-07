@@ -200,12 +200,12 @@ function ProductDetailContent({ product }) {
                 </section>
             </main>
             <div className="fixed top-0 right-0 -z-50 opacity-10 lg:opacity-20 pointer-events-none">
-                <svg fill="none" height="800" viewbox="0 0 600 600" width="800" xmlns="http://www.w3.org/2000/svg">
+                <svg fill="none" height="800" viewBox="0 0 600 600" width="800" xmlns="http://www.w3.org/2000/svg">
                     <path d="M477.5 130.5C538.5 204.5 586.5 304.5 558.5 385.5C530.5 466.5 426.5 528.5 330.5 548.5C234.5 568.5 146.5 546.5 89.5 481.5C32.5 416.5 6.5 308.5 28.5 214.5C50.5 120.5 120.5 40.5 206.5 15.5C292.5 -9.5 416.5 56.5 477.5 130.5Z" fill="url(#paint0_linear_1_1)"></path>
                     <defs>
-                        <lineargradient gradientunits="userSpaceOnUse" id="paint0_linear_1_1" x1="56.5" x2="548.5" y1="41.5" y2="548.5">
-                            <stop stop-color="#F99A3F"></stop>
-                            <stop offset="1" stop-color="#FFDCC2" stop-opacity="0"></stop>
+                        <lineargradient gradientUnits="userSpaceOnUse" id="paint0_linear_1_1" x1="56.5" x2="548.5" y1="41.5" y2="548.5">
+                            <stop stopColor="#F99A3F"></stop>
+                            <stop offset="1" stopColor="#FFDCC2" stopOpacity="0"></stop>
                         </lineargradient>
                     </defs>
                 </svg>
@@ -235,4 +235,4 @@ export default function ProductDetail() {
     }
 
     return <ProductDetailContent product={product} />
-}
+}

@@ -9,13 +9,6 @@ const INITIAL_USERS = [
         password: "admin123", 
         role: "admin", 
         avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuBpvGPzJyvTxH5DrLqg5yEvcw5xU9xe3FU7ikIvGWihkIu4sYKctFxpiAk43rkO34fTtGNCOpdopdFKNKOOKins0_rKdfV1BrYeI5RSLMVUFVNOP5U5zWB8vV3AdihtpSZUKsAW17FAZiVJXgnsraNuVuYr3dGe81pItkII-npOnaeX5rfAluF8c5mw5gVHgzJ9yYxImUzV9EIjdqnVFE1mOh2xJ4LV6Qy1I3g4RasHJYHa7qSF58xx4yadI2hE74gQoMyNf5wOne8n" 
-    },
-    { id: 2, 
-        name: "John User", 
-        email: "user@gmail.com", 
-        password: "user123", 
-        role: "user", 
-        avatar: null 
     }
 ]
 
@@ -89,10 +82,14 @@ export function AuthProvider({ children }) {
         }
     }
 
+    const deleteUser = (userId) => {
+        setUsers(prev => prev.filter(u => u.id !== userId))
+    }
+
     const signOut = () => setUser(null)
 
     return (
-        <AuthContext.Provider value={{ users, user, error, signIn, signUp, signOut, updateProfile, updateUserRole }}>
+        <AuthContext.Provider value={{ users, user, error, signIn, signUp, signOut, updateProfile, updateUserRole, deleteUser }}>
             {children}
         </AuthContext.Provider>
     )

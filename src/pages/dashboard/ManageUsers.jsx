@@ -1,10 +1,13 @@
 import { useState } from "react"
 import Sidebar from "../../components/Sidebar"
+import AdminHeader from "../../components/AdminHeader"
 import { useAuth } from "../../context/useAuth"
+import Swal from "sweetalert2"
 
 export default function ManageUsers() {
-    const { users, updateUserRole, user: currentUser } = useAuth()
+    const { users, updateUserRole, deleteUser, user: currentUser } = useAuth()
     const [searchTerm, setSearchTerm] = useState("")
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const filteredUsers = users.filter(u => 
         u.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -16,10 +19,43 @@ export default function ManageUsers() {
         updateUserRole(userId, newRole)
     }
 
+    const handleDeleteUser = (userId, userName) => {
+        Swal.fire({
+            title: 'Hapus User?',
+            text: `Apakah Anda yakin ingin menghapus user "${userName}"? Tindakan ini tidak dapat dibatalkan.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ba1a1a',
+            cancelButtonColor: '#554434',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal',
+            background: '#ffffff',
+            borderRadius: '24px',
+            customClass: {
+                confirmButton: 'rounded-full px-6 py-2 font-bold',
+                cancelButton: 'rounded-full px-6 py-2 font-bold'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser(userId)
+                Swal.fire({
+                    title: 'Terhapus!',
+                    text: 'User telah berhasil dihapus.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    borderRadius: '24px'
+                })
+            }
+        })
+    }
+
     return (
-        <div className="flex bg-surface-container-lowest min-h-screen">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto">
+        <div className="flex flex-col md:flex-row bg-surface-container-lowest min-h-screen">
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+            <div className="flex-1 flex flex-col min-w-0">
+                <AdminHeader onMenuClick={() => setIsSidebarOpen(true)} title="Manage Users" />
+                <main className="flex-1 overflow-y-auto">
                 <div className="p-8 max-w-6xl mx-auto space-y-8">
                     {/* Header */}
                     <section className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -91,19 +127,28 @@ export default function ManageUsers() {
                                             <td className="px-6 py-4">
                                                 <div className="flex justify-end items-center gap-3">
                                                     {user.id !== currentUser?.id ? (
-                                                        <button 
-                                                            onClick={() => handleRoleChange(user.id, user.role)}
-                                                            className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 ${
-                                                                user.role === "admin"
-                                                                ? "bg-surface-container hover:bg-error/10 hover:text-error text-on-surface-variant"
-                                                                : "bg-primary text-on-primary shadow-md hover:opacity-90 hover:shadow-lg"
-                                                            }`}
-                                                        >
-                                                            <span className="material-symbols-outlined text-sm">
-                                                                {user.role === "admin" ? "person" : "shield_person"}
-                                                            </span>
-                                                            {user.role === "admin" ? "Demote to User" : "Promote to Admin"}
-                                                        </button>
+                                                        <>
+                                                            <button 
+                                                                onClick={() => handleRoleChange(user.id, user.role)}
+                                                                className={`px-4 py-2 rounded-full text-xs font-bold transition-all flex items-center gap-2 ${
+                                                                    user.role === "admin"
+                                                                    ? "bg-surface-container hover:bg-error/10 hover:text-error text-on-surface-variant"
+                                                                    : "bg-primary text-on-primary shadow-md hover:opacity-90 hover:shadow-lg"
+                                                                }`}
+                                                            >
+                                                                <span className="material-symbols-outlined text-sm">
+                                                                    {user.role === "admin" ? "person" : "shield_person"}
+                                                                </span>
+                                                                {user.role === "admin" ? "Demote" : "Promote"}
+                                                            </button>
+                                                            <button 
+                                                                onClick={() => handleDeleteUser(user.id, user.name)}
+                                                                className="p-2 rounded-full bg-error/10 text-error hover:bg-error hover:text-white transition-all flex items-center justify-center"
+                                                                title="Delete User"
+                                                            >
+                                                                <span className="material-symbols-outlined text-sm">delete</span>
+                                                            </button>
+                                                        </>
                                                     ) : (
                                                         <span className="text-xs font-bold text-on-surface-variant bg-surface-container-low px-4 py-2 rounded-full">
                                                             Current Session
@@ -119,6 +164,7 @@ export default function ManageUsers() {
                     </div>
                 </div>
             </main>
+            </div>
         </div>
     )
 }

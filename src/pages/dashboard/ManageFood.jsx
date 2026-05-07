@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import Sidebar from "../../components/Sidebar"
+import AdminHeader from "../../components/AdminHeader"
 import { useProduct } from "../../context/useProduct"
 import Swal from "sweetalert2"
 
@@ -8,12 +9,17 @@ function ProductModal({ isOpen, onClose, onSave, initialData, title, categoryOpt
     const [form, setForm] = useState(initialData)
     const [preview, setPreview] = useState(initialData?.src || "")
     const [imgTab, setImgTab] = useState("url")
+    const prevInitialData = useRef(initialData);
+    const prevIsOpen = useRef(isOpen);
 
     useEffect(() => {
-        setForm(initialData)
-        setPreview(initialData?.src || "")
+        if (prevIsOpen.current !== isOpen || prevInitialData.current !== initialData) {
+            setForm(initialData)
+            setPreview(initialData?.src || "")
+            prevIsOpen.current = isOpen
+            prevInitialData.current = initialData
+        }
     }, [initialData, isOpen])
-
     const handleFileChange = (e) => {
         const file = e.target.files[0]
         if (!file) return
@@ -158,6 +164,7 @@ export default function ManageFood() {
     const [addOpen, setAddOpen] = useState(false)
     const [editOpen, setEditOpen] = useState(false)
     const [selectedProduct, setSelectedProduct] = useState(null)
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const handleAdd = (data) => {
         addProduct({ ...data })
@@ -205,9 +212,11 @@ export default function ManageFood() {
 
     return (
         <>
-            <div className="flex">
-                <Sidebar />
-                <main className="flex-1 min-w-0">
+            <div className="flex flex-col md:flex-row min-h-screen">
+                <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+                <div className="flex-1 flex flex-col min-w-0">
+                    <AdminHeader onMenuClick={() => setIsSidebarOpen(true)} title="Manage Food" />
+                    <main className="flex-1 min-w-0">
                     <div className="p-8 max-w-7xl mx-auto space-y-8">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                             <div>
@@ -306,6 +315,7 @@ export default function ManageFood() {
                         </div>
                     </div>
                 </main>
+            </div>
             </div>
 
             <ProductModal isOpen={addOpen} onClose={() => setAddOpen(false)} onSave={handleAdd} initialData={defaultForm} title="Add New Food Product" categoryOptions={["Artisan Food", "Dry Food", "Wet Food", "Treats"]} />

@@ -68,9 +68,6 @@ export default function MyProfile() {
                                         </div>
                                     )}
                                 </div>
-                                <button className="absolute -bottom-1 -right-1 w-9 h-9 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform">
-                                    <span className="material-symbols-outlined text-sm">edit</span>
-                                </button>
                             </div>
                             <h2 className="text-2xl font-black text-on-surface">{user.name}</h2>
                             <p className="text-on-surface-variant text-sm mt-0.5">{user.email}</p>

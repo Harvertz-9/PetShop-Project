@@ -155,7 +155,10 @@ export default function MyOrders() {
     const isAdmin = user?.role === "admin"
 
     const statuses = ["All", "Processing", "Confirmed", "Shipped", "Delivered", "Cancelled"]
-    const filtered = filterStatus === "All" ? orders : orders.filter(o => o.status === filterStatus)
+    
+    // Filter by User ID if not Admin, then filter by Status
+    const userOrders = isAdmin ? orders : orders.filter(o => o.userId === user?.id)
+    const filtered = filterStatus === "All" ? userOrders : userOrders.filter(o => o.status === filterStatus)
 
     return (
         <>
@@ -165,18 +168,18 @@ export default function MyOrders() {
                     {/* Header */}
                     <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                         <div>
-                            <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1">
+                            <p className="text-primary font-bold text-xs tracking-[0.2em] uppercase mb-1 hidden">
                                 {isAdmin ? "Administration" : "Account"}
                             </p>
-                            <h1 className="text-4xl font-extrabold font-headline text-on-surface">
+                            <h1 className="text-4xl font-extrabold font-headline text-on-surface hidden">
                                 {isAdmin ? "Manage Orders" : "My Orders"}
                             </h1>
-                            <p className="text-on-surface-variant text-sm mt-1">
+                            <p className="text-on-surface-variant text-sm mt-1 hidden">
                                 {orders.length} order{orders.length !== 1 ? "s" : ""} total
                             </p>
                         </div>
                         {!isAdmin && (
-                            <Link to="/CatalogProduct" className="flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-bold text-sm hover:opacity-90 transition-all shadow-lg self-start sm:self-auto">
+                            <Link to="/CatalogProduct" className="flex hidden items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-full font-bold text-sm hover:opacity-90 transition-all shadow-lg self-start sm:self-auto">
                                 <span className="material-symbols-outlined text-base">add_shopping_cart</span>
                                 Shop Now
                             </Link>
