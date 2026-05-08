@@ -106,20 +106,9 @@ function ProductDetailContent({ product }) {
                                 </p>
                                 <button onClick={() => setIsReadMoreOpen(!isReadMoreOpen)} className="text-primary font-headline font-bold text-sm underline underline-offset-8 hover:text-primary-container transition-colors inline-flex items-center group">
                                     {isReadMoreOpen ? "Show Less" : "Read More"}
-                                    {/* <span className={`material-symbols-outlined ml-1 transition-transform ${isReadMoreOpen ? 'rotate-180' : 'group-hover:translate-x-1'}`}>
-                                        {isReadMoreOpen ? 'expand_less' : 'chevron_right'}
-                                    </span> */}
                                 </button>
                             </div>
                             <div className="p-6 md:p-8 rounded-2xl bg-surface-container-low border border-outline-variant/10 space-y-8">
-                                <div className="space-y-4">
-                                    <label className="font-label font-bold text-xs uppercase tracking-wider text-on-surface-variant">Select Variant</label>
-                                    <div className="flex flex-wrap gap-3">
-                                        <button className="w-16 h-16 rounded-xl overflow-hidden border-2 border-primary shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
-                                            <img src={product.src} alt="Variant" className="w-full h-full object-cover" />
-                                        </button>
-                                    </div>
-                                </div>
                                 <div className="space-y-4">
                                     <div className="flex flex-col sm:flex-row items-center gap-4">
                                         <div className="flex items-center bg-surface-container-highest rounded-xl p-1 w-full sm:w-auto border border-outline-variant/10">
@@ -147,20 +136,6 @@ function ProductDetailContent({ product }) {
                                     <button onClick={handleBuyNow} className="w-full bg-gradient-to-r from-primary to-primary-container text-on-primary py-5 rounded-xl font-headline font-extrabold text-lg shadow-[0_20px_40px_rgba(143,78,0,0.2)] hover:shadow-[0_25px_50px_rgba(143,78,0,0.3)] transition-all active:scale-[0.98]">
                                         Buy Now
                                     </button>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-outline-variant/15">
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1"}}>package_2</span>
-                                    <span className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant leading-tight">Fast Shipping</span>
-                                </div>
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1"}}>workspace_premium</span>
-                                    <span className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant leading-tight">Lifetime Warranty</span>
-                                </div>
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <span className="material-symbols-outlined text-primary text-2xl" style={{ fontVariationSettings: "'FILL' 1"}}>verified_user</span>
-                                    <span className="font-label text-[10px] font-bold uppercase tracking-widest text-on-surface-variant leading-tight">Secure Payment</span>
                                 </div>
                             </div>
                         </div>

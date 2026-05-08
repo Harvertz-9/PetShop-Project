@@ -1,206 +1,242 @@
+import { Link } from "react-router-dom"
+
+const FEATURES = [
+    {
+        icon: "verified",
+        title: "Vet-Approved Quality",
+        desc: "Every product we sell is strictly reviewed for safety, nutrition, and durability.",
+        color: "text-primary",
+        bg: "bg-primary/10"
+    },
+    {
+        icon: "eco",
+        title: "Eco-Friendly Sourcing",
+        desc: "Sustainable materials and ethical manufacturing for a healthier planet.",
+        color: "text-secondary",
+        bg: "bg-secondary/10"
+    },
+    {
+        icon: "local_shipping",
+        title: "Fast Nationwide Delivery",
+        desc: "Orders over $50 get free 2-day shipping straight to your doorstep.",
+        color: "text-tertiary",
+        bg: "bg-tertiary/10"
+    }
+]
+
+const COLLECTIONS = [
+    {
+        title: "Premium Toys",
+        desc: "Interactive & durable play essentials.",
+        img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDf_JhvEKmR4GXO0fAHF1iEJTdDNejO_QwHpbz8B9dmCMorRKRfy8jYBYqEhixKHB8Tm8mc_vLF86eYv4bUYfUouHY8r78pAOif9yIkjBaZl4utjicdOhsGC0Ds_4sqPzAtSOQt95ghpL6qkNOFnCOA0MeuprEIx90urkdJv3N1bh7LJ1F9Fx6bdb6W0TR1zP2kXaJu8ByicNpKpdGtUp-mgTYymRJu0CzHAcp5DC-m-BFmhselhjKo62jSMi35wvEckU_b0ECt7_2j",
+        color: "bg-tertiary",
+        accent: "text-tertiary"
+    },
+    {
+        title: "Organic Food",
+        desc: "Nutrient-rich meals for healthy pets.",
+        img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDasYj_2XclPu1SqHS8_rQxWjl08tMp68M2LXO30nMLTmU8ZKy3s8k4YVKVWh5B9LVk0lMdcxBIUa5Iw7IxPlugRLKh49GUxcbX3yqat4sVyVFs-EeCDxs08DlQ2s6GkNQ_DTkBQ_in1W0-zj_oYDtrdUWD5VbtLcd9UiiovCZOTvqjLLdTlCYryZ7prcHNIp_FSBc3lJTrvvd16kZio_r7FEJEfjAK31-7LA09LP9q23aa0ZLErXT0G1blNMLCr9yFS-s1LCUbVAsp",
+        color: "bg-primary",
+        accent: "text-primary"
+    },
+    {
+        title: "Artisan Collars",
+        desc: "Handcrafted style & everyday comfort.",
+        img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAjUnC4mOdPixnlThKWLXMQPxBdfRuKohYfITSS01si8h1wdvajKJJHmD9tdoc33Kuqiv_7OlTbVrSi1wPELxPBqTmW_CjyLBojWRY04MZnyOXY8Z1iE61lZ6Nq-lARprIr_aHFz9pga4R4jTSi606OQJ2ExN_EcY_H6oOihLuvQZxIi0cV832qPJdiKebNUx8pRDHcYFXAGAJSm1fOvA9vXy7TwOeZHsEFalurG-o5418JzhGn9i2WhdIvinGMZc-FmWTadzCXmiOo",
+        color: "bg-secondary",
+        accent: "text-secondary"
+    }
+]
+
 export default function MainLayout() {
     return (
-        <>
         <main className="pt-16">
-                <section className="relative overflow-hidden pt-8 md:pt-12 pb-16 md:pb-24 px-4 md:px-8 max-w-screen-2xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                        <div className="lg:col-span-6 z-10 text-center lg:text-left">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-container text-on-tertiary-container rounded-full mb-6">
-                                <span className="material-symbols-outlined text-sm" style= {{ fontVariationSettings: "'FILL' 1;"}}>colors_spark</span>
-                                <span className="text-xs font-bold uppercase tracking-wider font-label">Boutique Pet Care</span>
+            {/* ── Hero Section ── */}
+            <section className="relative overflow-hidden pt-12 md:pt-20 pb-20 md:pb-32 px-4 md:px-16 max-w-screen-2xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+                    <div className="lg:col-span-6 z-10 text-center lg:text-left">
+                        <div className="inline-flex items-center gap-2 px-5 py-2 bg-primary/10 text-primary rounded-full mb-8 border border-primary/20">
+                            <span className="material-symbols-outlined text-sm font-bold">storefront</span>
+                            <span className="text-sm font-bold uppercase tracking-widest">Premium Pet Store</span>
+                        </div>
+                        <h1 className="font-headline text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-black text-on-surface leading-[1.05] tracking-tighter mb-6">
+                            Where Pets <br />
+                            <span className="text-primary italic pr-2">Shop in Style.</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-on-surface-variant mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed font-medium">
+                            Elevate your pet's lifestyle. We curate the finest <strong className="text-on-surface">toys, organic food, and artisan collars</strong> delivered straight to your door.
+                        </p>
+                        <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4">
+                            <Link to="/CatalogProduct" className="bg-primary text-on-primary px-10 py-5 rounded-2xl font-bold text-lg hover:-translate-y-1 transition-all shadow-xl shadow-primary/25 flex items-center justify-center gap-3">
+                                <span className="material-symbols-outlined text-xl">shopping_bag</span>
+                                Shop the Catalog
+                            </Link>
+                            <Link to="/HomeServices" className="bg-surface-container-high text-on-surface px-10 py-5 rounded-2xl font-bold text-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-3 shadow-sm border border-outline-variant/20">
+                                View Categories
+                            </Link>
+                        </div>
+                        
+                        {/* Trust indicators */}
+                        <div className="flex items-center justify-center lg:justify-start gap-8 mt-12">
+                            <div className="flex items-center gap-3">
+                                <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>stars</span>
+                                <div className="text-left">
+                                    <p className="font-black text-on-surface leading-none">4.9/5</p>
+                                    <p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider mt-1">Store Rating</p>
+                                </div>
                             </div>
-                            <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold text-on-surface leading-tight md:leading-[1.1] tracking-tight mb-6 md:mb-8">
-                                Every Pet Deserves a <span className="text-primary italic">Little Sparkle</span>
-                            </h1>
-                            <p className="text-lg md:text-xl text-on-surface-variant mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                                Step into a world of bespoke grooming, curated toys, and organic treats. We don't just care for pets; we celebrate them.
+                            <div className="flex items-center gap-3">
+                                <span className="material-symbols-outlined text-secondary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>inventory_2</span>
+                                <div className="text-left">
+                                    <p className="font-black text-on-surface leading-none">500+</p>
+                                    <p className="text-xs text-on-surface-variant font-medium uppercase tracking-wider mt-1">Premium Items</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="lg:col-span-6 relative mt-12 lg:mt-0">
+                        <div className="relative z-10 rounded-[2rem] overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-700 shadow-2xl border-8 border-white">
+                            <img alt="Happy Golden Retriever with shopping bags" className="w-full h-[500px] lg:h-[650px] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQm5l1r0Q8Uwnw4kzgEs6RJ0tuZSByzZjXlkltu7c3PAVezyo3ZWGU7u2Ll_r4Erz-m8gi4_Q0dmumcHtkClgXmr4ylkLUznnx02p_Kb70B69Jj_fIrF1tZ2Hu-eRzU4osjemSjH4lr7oF_wqvpCtXdSBg_EEUL-3i7kKjNB7ht4jlNXvey_ZXRPhObti-Rw03Z_2SXFsE7U5jvlXb4o-wEUVN54lBt6buSEQ9IHSixtzCZlItC0gSAI7lpPhnrhqjgipxcIR-X6V4" />
+                        </div>
+                        {/* Floating Feature Card */}
+                        <div className="absolute -bottom-10 left-8 md:-left-12 z-20 bg-white p-6 rounded-3xl shadow-[0_30px_60px_rgba(25,28,29,0.12)] border border-outline-variant/10 max-w-xs transform hover:-translate-y-2 transition-transform">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center shrink-0">
+                                    <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+                                </div>
+                                <div>
+                                    <p className="font-black font-headline text-lg text-on-surface leading-tight">Vet Approved</p>
+                                    <p className="text-sm text-on-surface-variant">100% Quality Guaranteed</p>
+                                </div>
+                            </div>
+                            <div className="flex -space-x-3">
+                                <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUy2Vz2jEXwXgrOf4xx0SEnkG6g9UKIuTv6mhE7tiLnSw1_Rle6dHHHidQLSyAizjb4GMzy_pWCc-Ohc0o6AL6d_UumeMIlBwcZpBoAflyxLARzFNJ064M8maAI9xmsfKh2BD5ZdnpqSyjrtp1UxZokiabTalyLX0K8RhOfKBJCncNC5Q9h9MkPlJHLR4qPuCaY46j8l5dD0LLFkOQoUr7FYxv45WM8UAX9Uj7pmT681jvJfqY9QyeUF99grP5h5aWkNE-ohlFRmBt" />
+                                <img className="w-10 h-10 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVOWbBeKmrIs7Hl1j2eQbkNctjI2j_46AuwScnMa7YkBm364WUxo2MmqQfC7YnGvHh4CIsfyehUw5HFd8HHCfUpV590HjF4NBvdzCiM2Ql1J0Ye-zvgqhi6219zrP603729-e2_4c7IZjO6P7v6Co7-pLL48aZOFUpRQcF9bcp8JT7iOQ6Zz1YuZioUOesE07Vo5A0wJakBszdCLRa8boP3V3OZP6tYL8eKIdTxH4yfYkQA4WJCAmjBt0D4CUiVWsujz40TVSwe8Iy" />
+                                <div className="w-10 h-10 rounded-full border-2 border-white bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold">+5k</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Shop by Category ── */}
+            <section className="py-24 px-4 md:px-16 bg-surface-container-lowest">
+                <div className="max-w-screen-2xl mx-auto">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                        <div className="max-w-2xl">
+                            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-4">Our Collections</span>
+                            <h2 className="font-headline text-4xl sm:text-5xl font-black text-on-surface mb-6">Explore the Essentials</h2>
+                            <p className="text-lg text-on-surface-variant font-medium">From nutrition to playtime, we've organized our catalog into three focused categories so you can easily find exactly what your pet needs.</p>
+                        </div>
+                        <Link to="/CatalogProduct" className="group flex items-center gap-2 font-bold text-primary hover:text-primary-600 transition-colors">
+                            View All Products 
+                            <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </Link>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {COLLECTIONS.map((col, idx) => (
+                            <Link to="/CatalogProduct" key={idx} className="group relative block rounded-[2rem] overflow-hidden bg-white shadow-[0_20px_40px_rgba(25,28,29,0.06)] hover:-translate-y-2 transition-all duration-500 border border-outline-variant/10">
+                                <div className="h-72 w-full overflow-hidden relative">
+                                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10" />
+                                    <img src={col.img} alt={col.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                </div>
+                                <div className="p-8 relative bg-white">
+                                    <div className={`absolute -top-8 right-8 w-16 h-16 rounded-2xl ${col.color} text-white flex items-center justify-center shadow-lg transform -rotate-6 group-hover:rotate-0 transition-transform z-20`}>
+                                        <span className="material-symbols-outlined text-3xl">shopping_bag</span>
+                                    </div>
+                                    <h3 className={`font-headline text-2xl font-black mb-2 ${col.accent}`}>{col.title}</h3>
+                                    <p className="text-on-surface-variant text-base font-medium mb-6">{col.desc}</p>
+                                    <span className="inline-flex items-center gap-1 text-sm font-bold uppercase tracking-wider text-on-surface group-hover:text-primary transition-colors">
+                                        Shop Category <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                                    </span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Features / Why Us ── */}
+            <section className="py-24 px-4 md:px-16 bg-surface">
+                <div className="max-w-screen-2xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-widest uppercase mb-6">The Atelier Difference</span>
+                            <h2 className="font-headline text-4xl sm:text-5xl md:text-6xl font-black text-on-surface mb-8 leading-tight">
+                                More Than Just a <br /><span className="text-secondary italic">Pet Store.</span>
+                            </h2>
+                            <p className="text-lg md:text-xl text-on-surface-variant mb-10 leading-relaxed font-medium">
+                                We believe pet ownership is a journey best supported by quality. We cut through the noise of the pet industry to bring you only products that pass our rigorous standards.
                             </p>
-                            <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4">
-                                <button className="bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 md:px-10 py-4 md:py-5 rounded-xl font-bold text-base md:text-lg hover:opacity-90 transition-all shadow-xl flex items-center justify-center gap-3 group">
-                                    Explore Services
-                                    <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                                </button>
-                                <button className="bg-secondary-container text-on-secondary-container px-8 md:px-10 py-4 md:py-5 rounded-xl font-bold text-base md:text-lg hover:opacity-90 transition-all flex items-center justify-center gap-3">
-                                    View Catalog
-                                </button>
-                            </div>
-                        </div>
-                        <div className="lg:col-span-6 relative mt-8 lg:mt-0">
-                            <div className="relative z-10 rounded-lg overflow-hidden transform lg:rotate-2 hover:rotate-0 transition-transform duration-500 shadow-2xl">
-                                <img alt="Happy Golden Retriever" className="w-full h-[400px] md:h-[500px] lg:h-[600px] object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQm5l1r0Q8Uwnw4kzgEs6RJ0tuZSByzZjXlkltu7c3PAVezyo3ZWGU7u2Ll_r4Erz-m8gi4_Q0dmumcHtkClgXmr4ylkLUznnx02p_Kb70B69Jj_fIrF1tZ2Hu-eRzU4osjemSjH4lr7oF_wqvpCtXdSBg_EEUL-3i7kKjNB7ht4jlNXvey_ZXRPhObti-Rw03Z_2SXFsE7U5jvlXb4o-wEUVN54lBt6buSEQ9IHSixtzCZlItC0gSAI7lpPhnrhqjgipxcIR-X6V4" />
-                            </div>
-                            <div className="absolute -top-10 -right-10 w-48 md:w-64 h-48 md:h-64 bg-primary-container/20 rounded-full blur-3xl"></div>
-                            <div className="absolute -bottom-10 -left-10 w-64 md:w-80 h-64 md:h-80 bg-secondary-container/20 rounded-full blur-3xl"></div>
-                            <div className="absolute bottom-6 -right-2 md:bottom-10 md:right-10 z-20 bg-white/60 backdrop-blur-xl p-4 md:p-6 rounded-lg shadow-[0_20px_40px_rgba(25,28,29,0.06)] border border-white/40 max-w-[240px] md:max-w-xs">
-                                <div className="flex items-center gap-3 md:gap-4 mb-3">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary-fixed flex items-center justify-center shrink-0">
-                                        <span className="material-symbols-outlined text-primary text-xl md:text-2xl" style= {{ fontVariationSettings: "'FILL' 1;"}}>pets</span>
-                                    </div>
-                                    <div>
-                                        <p className="text-xs md:text-sm font-bold font-headline">Next Grooming</p>
-                                        <p className="text-[10px] md:text-xs text-on-surface-variant">Today at 2:30 PM</p>
-                                    </div>
-                                </div>
-                                <div className="flex -space-x-2 md:-space-x-3">
-                                    <img className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtg7FwMw-fJ7Pdctyq5jYjzupADuYYGBzDfIxHk6um3Yc3WQbawatfM-z3YFdQJZYbCyLKoxaA2Vku4PVT2SFtJizWRs3LoCDGSRD0S8MEVZ9_I5LiJD6NVQu3PCmu21RLOKOrgN577fdzXy625wXyviilh_bqYAmulqfGHP5QFMlDJTrCo6bRi0z8aUo_aLvwbYQ2sG3_xN8C5tQwaH3eiIg7yjl-0Va7X4KG1fCjL0u_1z4r20obDlH3XisRpv1eJxOx398A060i" />
-                                    <img className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBy_umyKUYo4GkvTpl055LzK97yfBssARSBiH_vnrPuJv_p7kwJ80GKnIEToaYkWPuPfODM5OiAxVZeJlaTOlNakdX1SPlab0Vm17wa2l6ypIuSMlx_0unYADhUFej15MI3OT_jBtXcWVkXWtw9p1w8F1SKA3Ryq2IOIWcAdgjRRLNUC7_0HpIFGcq4N4YjYDhZ89JRZgzOPizn29qX7w060q5z8QTDTdBSb4_2nfcKVeZWimXXWPV-f2GRfTmBoZkTDCN5gERdtArK" />
-                                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full border-2 border-white bg-surface-container-high flex items-center justify-center text-[8px] md:text-[10px] font-bold">+12</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="relative py-20 md:py-32 px-4 md:px-8 overflow-hidden">
-                    <div className="absolute inset-0 z-0">
-                        <img alt="Premium pets background" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB37G-lTeHG7ZD_KBe9wuYyJJMOig80yU9xXfIY0ZYxKLk9a63Glh9FxOUewuIxUcezsvrlpgZq_F7mkIyB4q4Ug_Tfj-VM3igihMuJxf0cB96-nzq4MzZdPvV9CU0h7jtpWxTGTxC5bZyduPTCjnX7GquZq_XvA7SYMzgH6MVmh5nBflls-7Qqe-LEA2y4SlyzJ9iICbJJ3ZvIvBYhlMzceMFWDcXe3qNmJGinbLA_PdF5RWb3heNr0UNh4KhKSXYkf8Xb1KhMZLw-" />
-                        <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/85 backdrop-blur-[2px]"></div>
-                    </div>
-                    <div className="max-w-screen-2xl mx-auto relative z-10">
-                        <div className="text-center mb-16 md:mb-20">
-                            <h2 className="font-headline text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 tracking-tight text-on-surface">Crafted with Love</h2>
-                            <p className="text-lg md:text-xl text-on-surface-variant max-w-2xl mx-auto font-medium">Experience our suite of premium services designed to keep your companions healthy, happy, and stylish.</p>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                            <div className="md:col-span-2 lg:col-span-1 lg:row-span-2 group relative overflow-hidden bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-lg p-8 md:p-10 flex flex-col justify-end transition-all hover:shadow-2xl hover:-translate-y-2 border border-white/20">
-                                <div className="absolute inset-0 z-0">
-                                    <img alt="Grooming" className="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2-AtjHcXtrkHovE7EnDhcfDOsUwG8bMl7LZjrelKdW9E214pyl96N_h8TwAecjuDYndf4q7xzkouTPixtZ8sLDx51vQh4dVnvSp7kju6mIiV-mamc0CpD_gFM1SULRrWiqxctnn6sGYH8xZakpCiuUgZjALIlny4HhOcm2O5aVOkDNMTIK4YVonF9DTfvy7OycNN6WWsQtOI6z69AJudkLn01eCgGvVbPiwMSl3JhSajgl18UBKzkC3bcYfLzSuqmTtMXkIOtWXWn" />
-                                </div>
-                                <div className="relative z-10">
-                                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-primary text-on-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20">
-                                        <span className="material-symbols-outlined text-2xl md:text-3xl">content_cut</span>
-                                    </div>
-                                    <h3 className="font-headline text-2xl md:text-3xl font-bold mb-4">Artisan Grooming</h3>
-                                    <p className="text-on-surface-variant mb-6 text-base leading-relaxed">Signature cuts, aromatherapy baths, and paw-pedicures for the discerning pet.</p>
-                                    <a className="text-primary font-bold flex items-center gap-2 hover:underline decoration-2 underline-offset-4" href="#">
-                                        Book Now <span className="material-symbols-outlined text-sm">open_in_new</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="md:col-span-2 group bg-secondary-container/90 dark:bg-secondary-container/80 backdrop-blur-md text-on-secondary-container rounded-lg p-8 md:p-10 flex flex-col sm:flex-row items-center gap-8 transition-all hover:shadow-2xl hover:-translate-y-2 border border-secondary/10">
-                                <div className="flex-1 order-2 sm:order-1">
-                                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-secondary text-on-secondary flex items-center justify-center mb-6 shadow-lg shadow-secondary/20">
-                                        <span className="material-symbols-outlined text-2xl md:text-3xl">home_work</span>
-                                    </div>
-                                    <h3 className="font-headline text-2xl md:text-3xl font-bold mb-4">The Playground</h3>
-                                    <p className="opacity-90 mb-6 text-base leading-relaxed">Supervised social play in our temperature-controlled indoor-outdoor meadow.</p>
-                                    <button className="bg-white/30 backdrop-blur-md px-6 py-3 rounded-full font-bold text-sm md:text-base w-full sm:w-auto hover:bg-white/40 transition-colors border border-white/30 shadow-sm">Tour Our Facility</button>
-                                </div>
-                                <div className="flex-1 w-full h-48 sm:h-64 md:h-full rounded-lg overflow-hidden shadow-xl order-1 sm:order-2">
-                                    <img alt="Dogs playing" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADpvLryTLRwB3pUIYk3gZKl5FMLTSkTu8JGjrljocARdCC5Jm90gRYt-xeAQzTiMzIFHkJiY1L_EiBuK-6gEJxArYjY3br7MTL3zUrkOUEzkJNzqiFL6IcfmubEEAC984B3JM9CzDs8Q_9rgorQ2T2w5W2_8GVAVIYjz4CFVjh6RXNwGTgFiV8WxtZ28226Am8fojqpEujgvrV1mxIZnUDlZcQjxAJBSzcw17p7fi41H3Nz_CU9c4XYeKLfUuOQlWfBpzR3zdi-cTg" />
-                                </div>
-                            </div>
-                            <div className="group bg-tertiary/90 dark:bg-tertiary/80 backdrop-blur-md text-on-tertiary rounded-lg p-8 md:p-10 transition-all hover:shadow-2xl hover:-translate-y-2 border border-tertiary-container/10">
-                                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center mb-6 shadow-lg shadow-tertiary-fixed/20">
-                                    <span className="material-symbols-outlined text-2xl md:text-3xl">shopping_bag</span>
-                                </div>
-                                <h3 className="font-headline text-2xl md:text-3xl font-bold mb-4">Curated Shop</h3>
-                                <p className="opacity-90 mb-6 text-base leading-relaxed">Hand-picked toys and accessories from ethical artisans worldwide.</p>
-                                <a className="font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform text-sm md:text-base decoration-2 underline-offset-4" href="#">
-                                    Browse Catalog <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                                </a>
-                            </div>
-                            <div className="group bg-white/90 dark:bg-slate-800/90 backdrop-blur-md rounded-lg p-8 md:p-10 transition-all hover:shadow-2xl hover:-translate-y-2 border border-white/20">
-                                <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white dark:bg-slate-700 flex items-center justify-center mb-6 shadow-sm border border-slate-100 dark:border-slate-600">
-                                    <span className="material-symbols-outlined text-2xl md:text-3xl text-primary">school</span>
-                                </div>
-                                <h3 className="font-headline text-2xl md:text-3xl font-bold mb-4">Manner Academy</h3>
-                                <p className="text-on-surface-variant mb-6 text-base leading-relaxed">Positive reinforcement training focusing on the bond between you and your pet.</p>
-                                <span className="inline-block px-4 py-1.5 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-widest shadow-sm">Coming Soon</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="py-16 md:py-24 px-4 md:px-8 bg-surface">
-                    <div className="max-w-screen-2xl mx-auto">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8 mb-12 md:mb-16">
-                            <div>
-                                <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4">Meet Our Happy Clients</h2>
-                                <p className="text-base md:text-lg text-on-surface-variant max-w-xl">Every tail wag and purr is a testament to the love we put into our work.</p>
-                            </div>
-                            <button className="bg-outline-variant/10 text-outline px-6 md:px-8 py-3 md:py-4 rounded-full font-bold hover:bg-outline-variant/20 transition-all text-sm md:text-base w-full sm:w-auto">Join the Family</button>
-                        </div>
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-                            <div className="space-y-3 md:space-y-4">
-                                <img className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUjCOFi8-y9hoA5tQJqyX0oRzbZvOHB2-wwYmRDAvm0ZwwAAAtDSnt6m2JReQjUJqrSmYFEDUruRHJAhwkWCND-D1utG0rdXAGHrPY-u8QS2AEM_dXhwgpTAK7HpOfPkhsUyObgZ1pjpu1H295dNlX6J8Tr4w7Y5qPgUl6wUrJvKLsS-NgH75yK0wRMQ4-l0zBgliuCDq24-MWtYTMfo86QwhpgSgmCz9IACUI5L2a5cT2VNWOoHSNxRYYkRFUepkw9vEplXOMe1-T" />
-                                <img className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRnX3uYt5lKQQuA9CMqc6uBsEMKml9ACZ5S62t_ug9QbTuhdqo7PyWwQoGC4UMMG1heoohHi3_jiGDNQbGm2Wspik6ctiV6obii3qyJYnoOobHGIW6aZ-D26fdYEq9L62izil1_cZFW_t1Iwn8At6raNUv6_6JoffjxTr0qskvd-b__XDBEaeYbTM6tVWiSRoU-btU3qWSypHbqZubXGVT4A2Nt-GRgo7lClBHxdtIViDwfXXQjHK4gYOkLqmAz51Ub1HiiqJ78gf" />
-                            </div>
-                            <div className="lg:pt-8 space-y-3 md:space-y-4">
-                                <img className="w-full h-64 sm:h-96 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrdF2-8q5LHM92LJk-vkWiAA_3JFVcEqsqUr9zl4GtDDcmSGpB2MYIZAGzl2-NKzWXFlSaBhcIBQWyd3rwUREp8NSJXwjZypOqMYEWmu3mHQ_HV3FggMEghuXZwbEKXCgeruqEARwuIQ3zAuqROslt1pk3-aLmEeEakPqzl9R9DQRRnpkb2WqZxh0ISUrjDl9MVX3vh4AnHatTd3fo-5BSf53KsWz-FWQV-JVH9HCS7b8uarihrDno0WHKEQF2G_bt1jSFgBbbW-WI" />
-                                <img className="w-full h-40 sm:h-48 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs5sW7d8eB9geQfZthmXeXoj_MTZG4BlIXhFS_WmdORt64V7oW96nuXe0qthSxu2RUTdEkSC9c7JKuFafwuGRcQ1ql_XeuRp87Tw1etnbV-GAvEqHbclfNx2Nd3T8oaoNHsif_oMJL61RtEjMLvQtNFxljNNtnUorQTa-m5XukdtRUR3lyWe7s2yz_LYpGCsq4p1V3cKi5wSSLcg9GHYgf1evgL1CJUJWgvbA9ZS2PnyZsr7lKf1gejVCtueD_Hm0gq15By4_ryTl9" />
-                            </div>
-                            <div className="space-y-3 md:space-y-4">
-                                <img className="w-full h-56 sm:h-72 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaVb7cV83yWtLScxSTaOMlDrC29xAd4A9pIVX6e6XwjwutYx-XNUjjN8TxlTeamQ9TSEHMHve0mezazZzpeu3RNxhgEo00Se1xz8HHYCx4kp3RRQXPPGl48-3a_S7LDdzwIIM2B2Is6BGut-_q1aqR8YJjlIX2PPpGawQC2yzxVaPnmBUCMXgkmhaCYQhVQMBabYK1DDBigqkzzjjrMXPCfr3oLGijpMvdtvBfE79hrSusECyk1FWGoYMzTV9q0VgwwCOqqPY-8AXo" />
-                                <img className="w-full h-56 sm:h-72 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJNvne6osE67YCT9u4qM1LSXQOiZVDPgEZitPg-QPniSUTiKjywRGXdu4wbmaYTP_ZTkUMHGnrToESsc6tLvo0QnN6mnFNlq6RVPehdGzJJkCB_q09q6FsjaKHMxGoj2XcE-Djzh3AqvrGWOXysp9KH4shrCSLc-qvXifeIX6ueZapUIWgGWtqgLtNoC4Vu56SOxYjBB5481imRFpNAM1ly2eDibok-Diek73wEc6FduCOwdh8enKaFL-VxqeC8d9km08EhDG5qMjI" />
-                            </div>
-                            <div className="lg:pt-12 space-y-3 md:space-y-4">
-                                <img className="w-full h-48 sm:h-64 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXcWT27WWK2zcBu8tBEkOalRjdasiZLxg2pt--m-au-G1wjG18qpcWP2zWC-f0A7-3LK_yM6hNHfqWWYgY6k3QgBfqcfJPZ-4mk5ovItvpfZusqB4DXP4qqybcMWCSWMSOkzqcoF-6UQLp5wvLz_7es5M_6Jenmi_iQ6Ctn0Yl1o_Uq4OTk9u3ux2jnUeXDLloM_9MX8jdNKnvAZl5USxjvFwF0wyULMGM-FbcSZfsBqXfOoFs_TTNK8-c2pB2WUm7nwyeuPy3OUnC" />
-                                <img className="w-full h-64 sm:h-80 object-cover rounded-lg shadow-lg" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPzR4nzvaqMgtZtwqSSWbOkWqi8_s0E2Rolt5F0E9pVis5OMn0SrapNAj0ihsquq1eNW0vdk_DfPrIJqy9ARWrIKMBEFNT_sBMPp175QpoNtcBruS28h830SZI0gCynSlDsluFRMYUoW0QYqsrpDBHfLC2q8wwek99V3nrGna7DeaqnhondCxOvrIbluMsZZmsCsvqqd3S9hrVA3GMjfc1rwOhLFR5ilMNRzdKHywtxLETKT-aZm-k_TMxVi6XLL8jOrUM7JNSh6bi" />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section className="py-16 md:py-24 px-4 md:px-8 bg-surface-container-lowest">
-                    <div className="max-w-screen-2xl mx-auto">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                            <div>
-                                <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold mb-8 text-center lg:text-left">What Pet Parents Say</h2>
-                                <div className="space-y-8">
-                                    <div className="relative pl-10 md:pl-12">
-                                        <span className="material-symbols-outlined absolute left-0 top-0 text-primary-container text-3xl md:text-4xl">format_quote</span>
-                                        <p className="text-lg md:text-xl italic text-on-surface-variant mb-4">"The grooming at Pet Atelier is unmatched. Bella comes home looking like a superstar and she's always so happy when we arrive!"</p>
-                                        <div className="flex items-center gap-3">
-                                            <img className="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUy2Vz2jEXwXgrOf4xx0SEnkG6g9UKIuTv6mhE7tiLnSw1_Rle6dHHHidQLSyAizjb4GMzy_pWCc-Ohc0o6AL6d_UumeMIlBwcZpBoAflyxLARzFNJ064M8maAI9xmsfKh2BD5ZdnpqSyjrtp1UxZokiabTalyLX0K8RhOfKBJCncNC5Q9h9MkPlJHLR4qPuCaY46j8l5dD0LLFkOQoUr7FYxv45WM8UAX9Uj7pmT681jvJfqY9QyeUF99grP5h5aWkNE-ohlFRmBt" />
-                                            <div>
-                                                <p className="font-bold font-headline text-sm">Sarah Jenkins</p>
-                                                <p className="text-xs text-on-surface-variant">Owner of Bella (Cockapoo)</p>
-                                            </div>
+                            
+                            <div className="space-y-8">
+                                {FEATURES.map((feat, idx) => (
+                                    <div key={idx} className="flex gap-6">
+                                        <div className={`w-16 h-16 rounded-2xl ${feat.bg} flex items-center justify-center shrink-0`}>
+                                            <span className={`material-symbols-outlined text-3xl ${feat.color}`} style={{ fontVariationSettings: "'FILL' 1" }}>{feat.icon}</span>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-headline text-xl font-black text-on-surface mb-2">{feat.title}</h4>
+                                            <p className="text-on-surface-variant leading-relaxed">{feat.desc}</p>
                                         </div>
                                     </div>
-                                    <div className="relative pl-10 md:pl-12">
-                                        <span className="material-symbols-outlined absolute left-0 top-0 text-secondary-container text-3xl md:text-4xl">format_quote</span>
-                                        <p className="text-lg md:text-xl italic text-on-surface-variant mb-4">"I love their curated shop. We found the most durable yet stylish toys that Cooper hasn't been able to destroy. A true boutique experience!"</p>
-                                        <div className="flex items-center gap-3">
-                                            <img className="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVOWbBeKmrIs7Hl1j2eQbkNctjI2j_46AuwScnMa7YkBm364WUxo2MmqQfC7YnGvHh4CIsfyehUw5HFd8HHCfUpV590HjF4NBvdzCiM2Ql1J0Ye-zvgqhi6219zrP603729-e2_4c7IZjO6P7v6Co7-pLL48aZOFUpRQcF9bcp8JT7iOQ6Zz1YuZioUOesE07Vo5A0wJakBszdCLRa8boP3V3OZP6tYL8eKIdTxH4yfYkQA4WJCAmjBt0D4CUiVWsujz40TVSwe8Iy" />
-                                            <div>
-                                                <p className="font-bold font-headline text-sm">Michael Thorne</p>
-                                                <p className="text-xs text-on-surface-variant">Owner of Cooper (Golden Retriever)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="bg-primary/5 rounded-lg p-8 md:p-12 text-center">
-                                <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8 shadow-xl">
-                                    <span className="material-symbols-outlined text-4xl md:text-5xl text-primary" style= {{ fontVariationSettings: "'FILL' 1;"}}>stars</span>
-                                </div>
-                                <h3 className="font-headline text-2xl md:text-3xl font-bold mb-4">4.9/5 Rating</h3>
-                                <p className="text-sm md:text-base text-on-surface-variant mb-6 md:mb-8">Based on 500+ verified reviews from our community of pet lovers.</p>
-                                <div className="flex justify-center gap-1 mb-6 md:mb-8">
-                                    <span className="material-symbols-outlined text-tertiary-container" style= {{ fontVariationSettings: "'FILL' 1;"}}>star</span>
-                                    <span className="material-symbols-outlined text-tertiary-container" style= {{ fontVariationSettings: "'FILL' 1;"}}>star</span>
-                                    <span className="material-symbols-outlined text-tertiary-container" style= {{ fontVariationSettings: "'FILL' 1;"}}>star</span>
-                                    <span className="material-symbols-outlined text-tertiary-container" style= {{ fontVariationSettings: "'FILL' 1;"}}>star</span>
-                                    <span className="material-symbols-outlined text-tertiary-container" style= {{ fontVariationSettings: "'FILL' 1;"}}>star</span>
-                                </div>
-                                <button className="bg-primary text-on-primary px-6 md:px-8 py-3 md:py-4 rounded-full font-bold w-full sm:w-auto text-sm md:text-base">Read All Reviews</button>
+                                ))}
                             </div>
                         </div>
-                    </div>
-                </section>
-                <section className="py-16 md:py-24 px-4 md:px-8">
-                    <div className="max-w-4xl mx-auto bg-gradient-to-br from-primary to-primary-container rounded-lg p-8 md:p-20 text-center text-on-primary relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-                        <div className="relative z-10">
-                            <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6">Stay Pawsome</h2>
-                            <p className="text-lg md:text-xl mb-8 md:mb-10 opacity-90 max-w-xl mx-auto">Get exclusive tips, early access to new collections, and a special treat for your pet's birthday.</p>
-                            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-                                <input className="flex-1 px-6 py-4 rounded-full border-none focus:ring-2 focus:ring-secondary text-on-surface text-sm md:text-base" placeholder="Your email address" type="email" />
-                                <button className="bg-on-primary-fixed text-primary-fixed px-8 md:px-10 py-4 rounded-full font-bold hover:scale-105 transition-transform text-sm md:text-base">Subscribe</button>
-                            </form>
+                        
+                        <div className="relative hidden lg:block">
+                            <div className="w-full aspect-square rounded-full bg-surface-container-high relative overflow-hidden border-[16px] border-white shadow-[0_30px_60px_rgba(25,28,29,0.1)]">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB37G-lTeHG7ZD_KBe9wuYyJJMOig80yU9xXfIY0ZYxKLk9a63Glh9FxOUewuIxUcezsvrlpgZq_F7mkIyB4q4Ug_Tfj-VM3igihMuJxf0cB96-nzq4MzZdPvV9CU0h7jtpWxTGTxC5bZyduPTCjnX7GquZq_XvA7SYMzgH6MVmh5nBflls-7Qqe-LEA2y4SlyzJ9iICbJJ3ZvIvBYhlMzceMFWDcXe3qNmJGinbLA_PdF5RWb3heNr0UNh4KhKSXYkf8Xb1KhMZLw-" alt="Pet lifestyle" className="w-full h-full object-cover" />
+                            </div>
+                            {/* Floating decorative elements */}
+                            <div className="absolute top-10 right-10 w-24 h-24 bg-primary/20 rounded-full blur-2xl" />
+                            <div className="absolute bottom-10 left-10 w-32 h-32 bg-secondary/20 rounded-full blur-2xl" />
                         </div>
                     </div>
-                </section>
-            </main>
-        </>
+                </div>
+            </section>
+
+            {/* ── Testimonials ── */}
+            <section className="py-24 px-4 md:px-8 bg-surface-container-low overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-white rounded-full blur-3xl opacity-50 pointer-events-none translate-x-1/3 -translate-y-1/3" />
+                <div className="max-w-screen-xl mx-auto relative z-10 text-center">
+                    <span className="material-symbols-outlined text-6xl text-primary/20 mb-8" style={{ fontVariationSettings: "'FILL' 1" }}>format_quote</span>
+                    <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-on-surface mb-12 max-w-4xl mx-auto leading-tight italic">
+                        "The curated shop is a lifesaver. We found the most durable yet stylish toys that Cooper hasn't been able to destroy. Everything arrives so fast and beautifully packaged!"
+                    </h2>
+                    <div className="flex flex-col items-center">
+                        <img className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-xl mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVOWbBeKmrIs7Hl1j2eQbkNctjI2j_46AuwScnMa7YkBm364WUxo2MmqQfC7YnGvHh4CIsfyehUw5HFd8HHCfUpV590HjF4NBvdzCiM2Ql1J0Ye-zvgqhi6219zrP603729-e2_4c7IZjO6P7v6Co7-pLL48aZOFUpRQcF9bcp8JT7iOQ6Zz1YuZioUOesE07Vo5A0wJakBszdCLRa8boP3V3OZP6tYL8eKIdTxH4yfYkQA4WJCAmjBt0D4CUiVWsujz40TVSwe8Iy" alt="Customer avatar" />
+                        <p className="font-black font-headline text-xl text-on-surface">Michael Thorne</p>
+                        <p className="text-primary font-bold text-sm tracking-widest uppercase mt-1">Pet Parent to Cooper</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* ── Final CTA ── */}
+            <section className="py-24 px-4 md:px-8 bg-surface">
+                <div className="max-w-5xl mx-auto bg-gradient-to-br from-primary to-primary-container rounded-[3rem] p-12 md:p-20 text-center text-surface relative overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/30 rounded-full blur-3xl pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/30 rounded-full blur-3xl pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                        <span className="material-symbols-outlined text-6xl mb-6 text-white" style={{ fontVariationSettings: "'FILL' 1" }}>pets</span>
+                        <h2 className="font-headline text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight">Ready to Treat Your Pet?</h2>
+                        <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto font-medium">Join thousands of happy pet parents who trust Pet Atelier for their daily essentials.</p>
+                        
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Link to="/CatalogProduct" className="bg-primary text-on-primary px-10 py-5 rounded-2xl font-black text-lg hover:scale-105 transition-transform shadow-xl shadow-primary/20 flex items-center justify-center gap-3">
+                                <span className="material-symbols-outlined">shopping_bag</span>
+                                Shop the Catalog
+                            </Link>
+                            <Link to="/SignUp" className="bg-white text-primary border border-white/20 backdrop-blur-md px-10 py-5 rounded-2xl font-bold text-lg hover:bg-white/20 transition-colors flex items-center justify-center gap-3">
+                                Create an Account
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     )
 }
